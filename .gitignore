@@ -16,7 +16,6 @@ PLBlocks.framework/*
 *~.nib/ 
 *.perspective 
 *.perspectivev3
-build/
 # Xcode 4
 xcuserdata/
 project.xcworkspace/
