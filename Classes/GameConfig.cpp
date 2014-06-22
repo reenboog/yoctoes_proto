@@ -6,6 +6,7 @@
 #include "rapidjson/document.h"
 #include <string>
 
+using namespace std;
 using namespace cocos2d;
 
 GameConfig *GameConfig::__sharedInstance = nullptr;
@@ -53,7 +54,6 @@ void GameConfig::loadFilePaths() {
     delete[] t;
     t = NULL;
 
-
     LanguageType currentLanguage = Application::getInstance()->getCurrentLanguage();
 
     string languagePrefix = Localized::languageShortNameForType(currentLanguage);
@@ -89,7 +89,6 @@ void GameConfig::loadFilePaths() {
                     const auto &requiredEntry = designEntriesArray[requiredEntryIndex];
                     double requiredBaseDimension = requiredEntry[layoutBaseDimensionType.c_str()].GetDouble();
 
-                    //
                     double layoutWidth = requiredEntry["designWidth"].GetDouble();
                     double layoutHeight = requiredEntry["designHeight"].GetDouble();
 

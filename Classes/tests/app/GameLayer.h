@@ -3,22 +3,19 @@
 
 #include "cocos2d.h"
 
-USING_NS_CC;
-
-using namespace std;
-
-class GameLayer: public Layer {
+class GameLayer : public cocos2d::Layer {
 public:
     virtual ~GameLayer();
 
-    static Scene* scene();
+    static cocos2d::Scene *scene();
+
     virtual bool init();
-    
+
     GameLayer();
-    
+
     CREATE_FUNC(GameLayer);
 private:
-    Sprite *back;
+    cocos2d::Sprite *back_;
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __GAME_LAYER_H__

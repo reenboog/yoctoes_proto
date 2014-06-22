@@ -1,16 +1,9 @@
-//
-//  Localized.cpp
-//  astroGems
-//
-//  Created by Alex Gievsky on 30.10.13.
-//
-//
-
 #include "Localized.h"
 #include "Shared.h"
 #include "rapidjson/document.h"
-#include "Shared.h"
-#include "Constants.h"
+
+using namespace std;
+using namespace cocos2d;
 
 Localized *Localized::__sharedInstance = nullptr;
 
@@ -23,36 +16,36 @@ Localized::Localized() {
 }
 
 void Localized::load() {
-   if(__sharedInstance == nullptr) {
+    if (__sharedInstance == nullptr) {
         __sharedInstance = new Localized();
     } else {
         return;
     }
-    
+
     unsigned char *t = nullptr;
     ssize_t stringsDataSize = 0;
     t = (FileUtils::getInstance()->getFileData("strings.json", "r", &stringsDataSize));
-    
+
     char *stringsData = new char[stringsDataSize + 1];
     memcpy(stringsData, t, stringsDataSize);
     stringsData[stringsDataSize] = NULL;
-    
+
     delete[] t;
     t = NULL;
-    
+
     rapidjson::Document stringsDoc;
     stringsDoc.Parse<0>(stringsData);
-    
+
     const auto &stringsMap = stringsDoc["strings"];
-    if(stringsMap.IsObject()) {
-        for(auto it = stringsMap.MemberBegin(); it != stringsMap.MemberEnd(); ++it) {
+    if (stringsMap.IsObject()) {
+        for (auto it = stringsMap.MemberBegin(); it != stringsMap.MemberEnd(); ++it) {
             string key = it->name.GetString();
             string value = it->value.GetString();
-            
+
             __sharedInstance->strings.insert(make_pair(key, value));
         }
     }
-    
+
     delete[] stringsData;
 }
 
@@ -62,55 +55,69 @@ void Localized::purge() {
 }
 
 string Localized::getString(const string &key) {
-    if(__sharedInstance == nullptr) {
+    if (__sharedInstance == nullptr) {
         Localized::load();
     }
-    
+
     auto stringIt = __sharedInstance->strings.find(key);
-    
-    if(stringIt != __sharedInstance->strings.end()) {
+
+    if (stringIt != __sharedInstance->strings.end()) {
         return stringIt->second;
     } else {
         CCLOG("String not found for key: %s", key.c_str());
     }
-    
+
     return "notFound";
 }
 
 string Localized::languageShortNameForType(cocos2d::LanguageType type) {
     string languagePrefix = "unknown";
-    switch(type) {
+    switch (type) {
         case LanguageType::ENGLISH:
-            languagePrefix = "en"; break;
+            languagePrefix = "en";
+            break;
         case LanguageType::CHINESE:
-            languagePrefix = "zh"; break;
+            languagePrefix = "zh";
+            break;
         case LanguageType::FRENCH:
-            languagePrefix = "fr"; break;
+            languagePrefix = "fr";
+            break;
         case LanguageType::ITALIAN:
-            languagePrefix = "it"; break;
+            languagePrefix = "it";
+            break;
         case LanguageType::GERMAN:
-            languagePrefix = "de"; break;
+            languagePrefix = "de";
+            break;
         case LanguageType::SPANISH:
-            languagePrefix = "es"; break;
+            languagePrefix = "es";
+            break;
         case LanguageType::RUSSIAN:
-            languagePrefix = "ru"; break;
+            languagePrefix = "ru";
+            break;
         case LanguageType::KOREAN:
-            languagePrefix = "ko"; break;
+            languagePrefix = "ko";
+            break;
         case LanguageType::JAPANESE:
-            languagePrefix = "ja"; break;
+            languagePrefix = "ja";
+            break;
         case LanguageType::HUNGARIAN:
-            languagePrefix = "hu"; break;
+            languagePrefix = "hu";
+            break;
         case LanguageType::PORTUGUESE:
-            languagePrefix = "pt"; break;
+            languagePrefix = "pt";
+            break;
         case LanguageType::ARABIC:
-            languagePrefix = "ar"; break;
+            languagePrefix = "ar";
+            break;
         case LanguageType::NORWEGIAN:
-            languagePrefix = "nb"; break;
+            languagePrefix = "nb";
+            break;
         case LanguageType::POLISH:
-            languagePrefix = "pl"; break;
+            languagePrefix = "pl";
+            break;
         default:
             break;
     }
-    
+
     return languagePrefix;
 }

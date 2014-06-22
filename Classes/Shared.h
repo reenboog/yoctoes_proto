@@ -1,27 +1,18 @@
-//
-//  Shared.h
-//  1pGigTickets
-//
-//  Created by Alex Gievsky on 18.09.13.
-//
-//
-
-#ifndef ___pGigTickets__Shared__
-#define ___pGigTickets__Shared__
+#ifndef __SHARED_H__
+#define __SHARED_H__
 
 #include "cocos2d.h"
 
-USING_NS_CC;
-
-using std::string;
-
 class Shared {
 private:
-    Shared() {};
-    ~Shared() {};
+    Shared() {
+    };
+
+    ~Shared() {
+    };
 public:
-	//static cocos2d::Animation* loadAnimation(string file, string name);
-    
+
 };
 
-#endif /* defined(___pGigTickets__Shared__) */
+#endif // __SHARED_H__
+

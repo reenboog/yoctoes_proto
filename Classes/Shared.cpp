@@ -1,12 +1,7 @@
-//
-//  Shared.cpp
-//  1pGigTickets
-//
-//  Created by Alex Gievsky on 18.09.13.
-//
-//
-
 #include "Shared.h"
+
+using namespace std;
+using namespace cocos2d;
 
 //Animation* Shared::loadAnimation(string file, string name) {
 //    Animation *animation = nullptr;

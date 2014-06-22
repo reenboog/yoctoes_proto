@@ -1,39 +1,30 @@
-//
-//  Localized.h
-//  astroGems
-//
-//  Created by Alex Gievsky on 30.10.13.
-//
-//
-
-#ifndef __astroGems__Localized__
-#define __astroGems__Localized__
+#ifndef __LOCALIZED_H__
+#define __LOCALIZED_H__
 
 #include <map>
 #include <string>
 
 #include "cocos2d.h"
 
-USING_NS_CC;
-
-using namespace std;
-
 class Localized {
-    typedef map<string, string> StringStringMap;
+    typedef std::map <std::string, std::string> StringStringMap;
 private:
     virtual ~Localized();
+
     Localized();
+
 public:
-    static string getString(const string &key);
-    
-    static string languageShortNameForType(LanguageType type);
+    static std::string getString(const std::string &key);
+
+    static std::string languageShortNameForType(cocos2d::LanguageType type);
 
     static void purge();
-    
+
     static void load();
+
 private:
     StringStringMap strings;
     static Localized *__sharedInstance;
 };
 
-#endif /* defined(__astroGems__Localized__) */
+#endif // __LOCALIZED_H__
