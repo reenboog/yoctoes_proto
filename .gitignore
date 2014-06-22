@@ -21,8 +21,9 @@ xcuserdata/
 project.xcworkspace/
 *.xcuserstate
 
-# appcode noise
+# appcode noise #
 .idea/*
+.idea/
 
 # tags
 tags

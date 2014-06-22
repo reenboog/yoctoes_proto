@@ -3,28 +3,29 @@
 
 #include "cocos2d.h"
 
-USING_NS_CC;
-
-using namespace std;
-
-class GameLayer: public Layer {
+class GameLayer : public cocos2d::Layer {
 public:
     virtual ~GameLayer();
 
-    static Scene* scene();
+    static cocos2d::Scene *scene();
+
     virtual bool init();
-    
+
     GameLayer();
-    
+
     CREATE_FUNC(GameLayer);
-    
+
     // touches
-    bool onTouchBegan(Touch *touch, Event *event);
-    void onTouchEnded(Touch *touch, Event *event);
-    void onTouchMoved(Touch *touch, Event *event);
-    void onTouchCancelled(Touch *touch, Event *event);
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+
+    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+
+    void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+
+    void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
+
 private:
-    Sprite *back;
+    cocos2d::Sprite *back_;
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __GAME_LAYER_H__

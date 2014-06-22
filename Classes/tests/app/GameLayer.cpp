@@ -8,7 +8,7 @@ GameLayer::~GameLayer() {
 }
 
 GameLayer::GameLayer(): Layer() {
-    this->back = false;
+    this->back = NULL;
 }
 
 Scene* GameLayer::scene() {
