@@ -31,14 +31,14 @@ public:
     void setCurrentLanguageType(int type);
     int getCurrentLanguageType();
 
-    void loadFilePaths();
+//    void loadFilePaths();
 
     static GameConfig *sharedInstance();
 
     static void purge();
 
 private:
-    static GameConfig *__sharedInstance;
+    static GameConfig *sharedInstance_;
 
     GameConfig();
 
