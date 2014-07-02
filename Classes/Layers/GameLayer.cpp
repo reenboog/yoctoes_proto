@@ -3,11 +3,16 @@
 
 using namespace cocos2d;
 
-const int board_[4][4] = {
-        {1, 0, 0, 0},
-        {0, 0, 0, 1},
-        {0, 0, 0, 0},
-        {1, 0, 0, 0}
+// 0 - empty
+// 1 - road
+// 2 - tower
+
+const int board_[5][9] = {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1, 2, 1, 0, 0},
+        {0, 0, 1, 1, 1, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0, 0, 1, 1, 2},
+        {0, 2, 1, 0, 0, 0, 0, 0, 0},
 };
 
 GameLayer::~GameLayer() {
@@ -44,11 +49,21 @@ bool GameLayer::init() {
 #pragma mark - map
 
 void GameLayer::createBoard() {
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
-            if (board_[i][j] > 0) {
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 9; ++j) {
+            if (board_[i][j] == 0) {
+                Sprite *empty = Sprite::create("empty.png");
+                empty->setAnchorPoint({0.0f, 0.0f});
+                empty->setPosition({32.0f * j, 32.0f * (5 - i)});
+                this->addChild(empty);
+            } else if (board_[i][j] == 1) {
+                Sprite *road = Sprite::create("road.png");
+                road->setAnchorPoint({0.0f, 0.0f});
+                road->setPosition({32.0f * j, 32.0f * (5 - i)});
+                this->addChild(road);
+            } else if (board_[i][j] == 2) {
                 Tower *tower = Tower::createWithType(Constants::TowerType::common);
-                tower->setPosition({50.0f * j, 50.0f * (3 - i)});
+                tower->setPosition({32.0f * j, 32.0f * (5 - i)});
                 this->addChild(tower);
 
                 towers_.push_back(tower);
