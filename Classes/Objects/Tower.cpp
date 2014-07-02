@@ -1,7 +1,13 @@
 #include "Tower.h"
 
 Tower *Tower::createWithType(Constants::TowerType type) {
-    return nullptr;
+    Tower *tower = new Tower();
+    if (tower->initWithType(type)) {
+        tower->autorelease();
+    } else {
+        CC_SAFE_DELETE(tower);
+    }
+    return tower;
 }
 
 Tower::~Tower() {
@@ -9,10 +15,13 @@ Tower::~Tower() {
 }
 
 bool Tower::initWithType(Constants::TowerType type) {
-    if (!(Sprite::init()))
+    //TODO: fill filename here
+    if (!Sprite::initWithFile("tower.png"))
         return false;
 
-    type_ = Constants::TowerType::common;
+    this->setAnchorPoint({0.0f, 0.0f});
+
+    type_ = type;
     element_ = Constants::TowerElement::none;
 
     return true;

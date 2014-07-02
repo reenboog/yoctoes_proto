@@ -3,15 +3,12 @@
 
 #include "cocos2d.h"
 
+class Tower;
+
 class GameLayer : public cocos2d::Layer {
 public:
-    virtual ~GameLayer();
-
     static cocos2d::Scene *scene();
-
-    virtual bool init();
-
-    GameLayer();
+    ~GameLayer();
 
     CREATE_FUNC(GameLayer);
 
@@ -21,8 +18,15 @@ public:
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
 
+    std::vector<Tower *> towers_;
+
 private:
+    virtual bool init();
+    void createBoard();
+
     cocos2d::Sprite *back_;
+
+
 };
 
 #endif // __GAME_LAYER_H__

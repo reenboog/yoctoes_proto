@@ -31,7 +31,7 @@ public:
     void setCurrentLanguageType(int type);
     int getCurrentLanguageType();
 
-//    void loadFilePaths();
+    void loadFilePaths();
 
     static GameConfig *sharedInstance();
 

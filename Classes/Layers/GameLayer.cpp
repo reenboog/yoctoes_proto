@@ -1,12 +1,16 @@
 #include "GameLayer.h"
+#include "Tower.h"
 
 using namespace cocos2d;
 
-GameLayer::~GameLayer() {
-}
+const int board_[4][4] = {
+        {1, 0, 0, 0},
+        {0, 0, 0, 1},
+        {0, 0, 0, 0},
+        {1, 0, 0, 0}
+};
 
-GameLayer::GameLayer() : Layer() {
-    this->back_ = NULL;
+GameLayer::~GameLayer() {
 }
 
 Scene *GameLayer::scene() {
@@ -30,10 +34,27 @@ bool GameLayer::init() {
     listener->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
     listener->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
     listener->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
-
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+    this->createBoard();
+
     return true;
+}
+
+#pragma mark - map
+
+void GameLayer::createBoard() {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            if (board_[i][j] > 0) {
+                Tower *tower = Tower::createWithType(Constants::TowerType::common);
+                tower->setPosition({50.0f * j, 50.0f * (3 - i)});
+                this->addChild(tower);
+
+                towers_.push_back(tower);
+            }
+        }
+    }
 }
 
 #pragma mark - touches
