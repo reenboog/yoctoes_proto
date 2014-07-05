@@ -14,8 +14,9 @@ public:
 private:
     bool initWithType(Constants::TowerType type);
 
-    Constants::TowerType type_;
+    Constants::TowerType towertype_;
     Constants::TowerElement element_;
+    Constants::TileType  tileType_;
 };
 
 #endif //__TOWER_H_

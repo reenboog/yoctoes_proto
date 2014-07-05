@@ -1,18 +1,21 @@
 #include "GameLayer.h"
 #include "Tower.h"
+#include "RoadTile.h"
 
+using namespace std;
 using namespace cocos2d;
 
 // 0 - empty
 // 1 - road
 // 2 - tower
-
-const int board_[5][9] = {
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 2, 1, 0, 0},
-        {0, 0, 1, 1, 1, 0, 1, 0, 0},
-        {0, 0, 1, 0, 0, 0, 1, 1, 2},
-        {0, 2, 1, 0, 0, 0, 0, 0, 0},
+const int n = 5;
+const int m = 9;
+int board_[n][m] = {
+        {0, 0,  0,  0,  0,  0,  0,  0, 0},
+        {0, 0, -1,  0, -1, -1, -1, -1, 0},
+        {0, 0, -1, -1, -1,  0, -1,  0, 0},
+        {0, -1,-1,  0,  0, -1, -1,  0, 0},
+        {0, 0,  0,  0,  0,  0,  0,  0, 0},
 };
 
 GameLayer::~GameLayer() {
@@ -49,18 +52,19 @@ bool GameLayer::init() {
 #pragma mark - map
 
 void GameLayer::createBoard() {
-    for (int i = 0; i < 5; ++i) {
-        for (int j = 0; j < 9; ++j) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
             if (board_[i][j] == 0) {
                 Sprite *empty = Sprite::create("empty.png");
                 empty->setAnchorPoint({0.0f, 0.0f});
-                empty->setPosition({32.0f * j, 32.0f * (5 - i)});
+                empty->setPosition({32.0f * j, 32.0f * (n - i)});
                 this->addChild(empty);
-            } else if (board_[i][j] == 1) {
-                Sprite *road = Sprite::create("road.png");
-                road->setAnchorPoint({0.0f, 0.0f});
-                road->setPosition({32.0f * j, 32.0f * (5 - i)});
-                this->addChild(road);
+            } else if (board_[i][j] == -1) {
+                RoadTile *roadTile = RoadTile::createWithType(Constants::RoadType::flat);
+                roadTile->setPosition({32.0f * j, 32.0f * (n - i)});
+                this->addChild(roadTile);
+
+                roadTiles_.push_back(roadTile);
             } else if (board_[i][j] == 2) {
                 Tower *tower = Tower::createWithType(Constants::TowerType::common);
                 tower->setPosition({32.0f * j, 32.0f * (5 - i)});
@@ -69,6 +73,56 @@ void GameLayer::createBoard() {
                 towers_.push_back(tower);
             }
         }
+    }
+
+    vector<pair<int, int> > oldWave;
+    oldWave.push_back(pair<int, int>(3, 1));
+    int nstep = 0;
+    board_[3][1] = nstep;
+    const int dx[] = {0, 1, 0, -1};
+    const int dy[] = {-1, 0, 1, 0};
+    while (oldWave.size() > 0) {
+        ++nstep;
+        wave.clear();
+        for (vector<pair<int, int> >::iterator i = oldWave.begin(); i != oldWave.end(); ++i) {
+            for (int d = 0; d < 4; ++d) {
+                int nx = i->first + dx[d];
+                int ny = i->second + dy[d];
+                if (board_[nx][ny] == -1) {
+                    wave.push_back(pair<int, int>(nx, ny));
+                    board_[nx][ny] = nstep;
+                    if (nx == 1 && ny == 7)
+                        goto done;
+                }
+            }
+        }
+        oldWave = wave;
+    }
+    done:
+    CCLOG("done");
+    int x = 1;
+    int y = 7;
+    wave.clear();
+    wave.push_back(pair<int, int>(x, y));
+    while (board_[x][y] != 0) {
+        for (int d = 0; d < 4; ++d) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+            if (board_[x][y] - 1 == board_[nx][ny]) {
+                x = nx;
+                y = ny;
+                wave.push_back(pair<int, int>(x, y));
+                break;
+            }
+        }
+    }
+
+    for (vector<pair<int, int> >::iterator i = wave.begin(); i != wave.end(); ++i) {
+        Sprite *point = Sprite::create("unit.png");
+        point->setAnchorPoint({0.0f, 0.0f});
+        point->setScale(0.6f);
+        point->setPosition({32.0f * i->second, 32.0f * (n - i->first)});
+        this->addChild(point);
     }
 }
 

@@ -3,16 +3,28 @@
 
 namespace Constants {
 
-    enum TowerType : int {
+    enum class TileType : int {
+        nothing = 0,
+        road = 1,
+        tower = 2,
+    };
+
+    enum class TowerType : int {
         common = 0,
     };
 
-    enum TowerElement : int {
+    enum class TowerElement : int {
         none = 0,
         water,
         fire,
         air,
         earth,
+    };
+
+    enum class RoadType : int {
+        flat = 0,
+        leftAngle,
+        rightAngle,
     };
 
 };

@@ -8,8 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		1A40501FF4ABDC355EB3E008 /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */; };
+		1A4051CFFE52BD2CACDA6CCF /* RoadTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4052496103683BC4CE9C25 /* RoadTile.cpp */; };
+		1A40529890675214BFCF69A7 /* TileNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4058A9902017F636C0AFA7 /* TileNode.cpp */; };
+		1A4052EBDFDB898B382BA791 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
+		1A40534C34A8D9B19345627F /* TileNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4058A9902017F636C0AFA7 /* TileNode.cpp */; };
+		1A405389B962433FBEF7F80E /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
+		1A40542EEE9402D441FD4A6D /* RoadTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4052496103683BC4CE9C25 /* RoadTile.cpp */; };
+		1A4054783B8BBEA271DF91F5 /* TileNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4058A9902017F636C0AFA7 /* TileNode.cpp */; };
+		1A405901C836BA73EE073C28 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405653EB635CD23270AFEF /* Map.cpp */; };
+		1A40592582B42323992B4989 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405653EB635CD23270AFEF /* Map.cpp */; };
 		1A4059AABCC2132A2B1A918D /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */; };
 		1A405D664ED9BE312D607B00 /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */; };
+		1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
+		1A405E182E3C7DDE83948070 /* RoadTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4052496103683BC4CE9C25 /* RoadTile.cpp */; };
+		1A405EEBF6BFFF1E89FEDAB5 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405653EB635CD23270AFEF /* Map.cpp */; };
 		1A405F77D68B934E3592125D /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */; };
 		1A405FA5BBA89E5E96705C3A /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */; };
 		1AC6FB1F180E996B004C840B /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAFF180E9839004C840B /* libbox2d Mac.a */; };
@@ -296,7 +308,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1A4052496103683BC4CE9C25 /* RoadTile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RoadTile.cpp; sourceTree = "<group>"; };
+		1A4054FC6D9AFD980AB5D2DD /* TileNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileNode.h; sourceTree = "<group>"; };
+		1A405626206FAB81D3B13F24 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
+		1A405653EB635CD23270AFEF /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		1A4056D2A541FFD74B12985B /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
+		1A4056F4FDB3302A76D94EA2 /* RoadTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoadTile.h; sourceTree = "<group>"; };
+		1A4057A45E9CD17423206A06 /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
+		1A40584B00A71B11BE162BA9 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
+		1A4058A9902017F636C0AFA7 /* TileNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileNode.cpp; sourceTree = "<group>"; };
 		1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tower.cpp; sourceTree = "<group>"; };
 		1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLayer.cpp; sourceTree = "<group>"; };
 		1A405FC2F4020791D817F64C /* Tower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tower.h; sourceTree = "<group>"; };
@@ -497,6 +517,14 @@
 			children = (
 				1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */,
 				1A405FC2F4020791D817F64C /* Tower.h */,
+				1A4052496103683BC4CE9C25 /* RoadTile.cpp */,
+				1A4056F4FDB3302A76D94EA2 /* RoadTile.h */,
+				1A405653EB635CD23270AFEF /* Map.cpp */,
+				1A4057A45E9CD17423206A06 /* Map.h */,
+				1A40584B00A71B11BE162BA9 /* Unit.cpp */,
+				1A405626206FAB81D3B13F24 /* Unit.h */,
+				1A4058A9902017F636C0AFA7 /* TileNode.cpp */,
+				1A4054FC6D9AFD980AB5D2DD /* TileNode.h */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -916,6 +944,10 @@
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				1A405FA5BBA89E5E96705C3A /* GameLayer.cpp in Sources */,
 				1A405D664ED9BE312D607B00 /* Tower.cpp in Sources */,
+				1A405E182E3C7DDE83948070 /* RoadTile.cpp in Sources */,
+				1A40592582B42323992B4989 /* Map.cpp in Sources */,
+				1A405389B962433FBEF7F80E /* Unit.cpp in Sources */,
+				1A40529890675214BFCF69A7 /* TileNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,6 +962,10 @@
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				1A4059AABCC2132A2B1A918D /* GameLayer.cpp in Sources */,
 				1A405F77D68B934E3592125D /* Tower.cpp in Sources */,
+				1A4051CFFE52BD2CACDA6CCF /* RoadTile.cpp in Sources */,
+				1A405EEBF6BFFF1E89FEDAB5 /* Map.cpp in Sources */,
+				1A4052EBDFDB898B382BA791 /* Unit.cpp in Sources */,
+				1A4054783B8BBEA271DF91F5 /* TileNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -953,6 +989,10 @@
 				B82FAFAD1956C9E000498F94 /* main.cpp in Sources */,
 				B82FAFC61956CA9900498F94 /* GameLayer.cpp in Sources */,
 				1A40501FF4ABDC355EB3E008 /* Tower.cpp in Sources */,
+				1A40542EEE9402D441FD4A6D /* RoadTile.cpp in Sources */,
+				1A405901C836BA73EE073C28 /* Map.cpp in Sources */,
+				1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */,
+				1A40534C34A8D9B19345627F /* TileNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
