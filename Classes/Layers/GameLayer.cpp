@@ -130,8 +130,7 @@ void GameLayer::dijkstra(int src) {
     bool sptSet[towersCount_];
 
     for (int i = 0; i < towersCount_; i++) {
-        dist[i] = INT_MAX;
-        sptSet[i] = false;
+        dist[i] = INT_MAX, sptSet[i] = false;
     }
 
     dist[src] = 0;
@@ -152,15 +151,15 @@ void GameLayer::dijkstra(int src) {
 }
 
 int GameLayer::minDistance(int dist[], bool sptSet[]) {
-    int min = INT_MAX, min_index = 0;
+    int min = INT_MAX, minIndex = 0;
 
     for (int v = 0; v < towersCount_; v++) {
         if (!sptSet[v] && dist[v] <= min) {
-            min = dist[v], min_index = v;
+            min = dist[v], minIndex = v;
         }
     }
 
-    return min_index;
+    return minIndex;
 }
 
 int GameLayer::printSolution(int dist[], int n) {
