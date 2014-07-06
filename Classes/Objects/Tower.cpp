@@ -19,8 +19,6 @@ bool Tower::initWithType(Constants::TowerType type) {
     if (!Sprite::initWithFile("tower.png"))
         return false;
 
-    this->setAnchorPoint({0.0f, 0.0f});
-
     towertype_ = type;
     element_ = Constants::TowerElement::none;
     tileType_ = Constants::TileType::tower;

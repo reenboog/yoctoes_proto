@@ -21,13 +21,18 @@ public:
     void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
 
     std::vector<Tower *> towers_;
-    std::vector<RoadTile *> roadTiles_;
+    //todo: create map of roads
 
 private:
     virtual bool init();
-    void createBoard();
+    void showBoard();
+    void createGraphAndRoards();
+    void dijkstra(int src);
+    int minDistance(int dist[], bool sptSet[]);
+    int printSolution(int dist[], int n);
 
-    std::vector<std::pair<int, int> > wave;
+    int **graph_;
+    int towersCount_;
 };
 
 #endif // __GAME_LAYER_H__

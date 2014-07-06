@@ -1,24 +1,30 @@
 #include "GameLayer.h"
 #include "Tower.h"
-#include "RoadTile.h"
 
 using namespace std;
 using namespace cocos2d;
 
-// 0 - empty
-// 1 - road
-// 2 - tower
-const int n = 5;
-const int m = 9;
-int board_[n][m] = {
-        {0, 0,  0,  0,  0,  0,  0,  0, 0},
-        {0, 0, -1,  0, -1, -1, -1, -1, 0},
-        {0, 0, -1, -1, -1,  0, -1,  0, 0},
-        {0, -1,-1,  0,  0, -1, -1,  0, 0},
-        {0, 0,  0,  0,  0,  0,  0,  0, 0},
+static inline int generateID(int i, int j) {
+    return (100 + i) * 100 + 200 + j;
+}
+
+const int n = 9;
+const int testMap_[n][n] = {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _},*/
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _},*/
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _},*/
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _},*/
+        {0, 2, 1, 0, 0, 0, 2, 0, 0},/*{_, 1, _, _, _, _, 3, _, _},*/
+        {0, 0, 1, 0, 0, 0, 1, 0, 0},/*{_, _, _, _, _, _, _, _, _},*/
+        {0, 0, 1, 1, 2, 1, 1, 0, 0},/*{_, _, _, _, 2, _, _, _, _},*/
+        {0, 2, 1, 0, 0, 0, 0, 0, 0},/*{_, 0, _, _, _, _, _, _, _},*/
+        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _},*/
 };
 
 GameLayer::~GameLayer() {
+    for (int i = 0; i < towersCount_; ++i)
+        delete[] graph_[i];
+    delete[] graph_;
 }
 
 Scene *GameLayer::scene() {
@@ -44,86 +50,123 @@ bool GameLayer::init() {
     listener->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
-    this->createBoard();
+    this->showBoard();
+
+    this->createGraphAndRoards();
+    this->dijkstra(0);
 
     return true;
 }
 
 #pragma mark - map
 
-void GameLayer::createBoard() {
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < m; ++j) {
-            if (board_[i][j] == 0) {
-                Sprite *empty = Sprite::create("empty.png");
-                empty->setAnchorPoint({0.0f, 0.0f});
-                empty->setPosition({32.0f * j, 32.0f * (n - i)});
-                this->addChild(empty);
-            } else if (board_[i][j] == -1) {
-                RoadTile *roadTile = RoadTile::createWithType(Constants::RoadType::flat);
-                roadTile->setPosition({32.0f * j, 32.0f * (n - i)});
-                this->addChild(roadTile);
+void GameLayer::showBoard() {
+    float tileWidth = 38.0f;
 
-                roadTiles_.push_back(roadTile);
-            } else if (board_[i][j] == 2) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (testMap_[i][j] == 0) {
+
+                Sprite *empty = Sprite::create("empty.png");
+                empty->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
+                this->addChild(empty);
+
+            } else if (testMap_[i][j] == 1) {
+
+                Sprite *road = Sprite::create("road.png");
+                road->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
+                this->addChild(road);
+
+            } else if (testMap_[i][j] == 2) {
+
                 Tower *tower = Tower::createWithType(Constants::TowerType::common);
-                tower->setPosition({32.0f * j, 32.0f * (5 - i)});
+                tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
                 this->addChild(tower);
 
+                tower->setID(generateID(i, j));
                 towers_.push_back(tower);
-            }
-        }
-    }
 
-    vector<pair<int, int> > oldWave;
-    oldWave.push_back(pair<int, int>(3, 1));
-    int nstep = 0;
-    board_[3][1] = nstep;
-    const int dx[] = {0, 1, 0, -1};
-    const int dy[] = {-1, 0, 1, 0};
-    while (oldWave.size() > 0) {
-        ++nstep;
-        wave.clear();
-        for (vector<pair<int, int> >::iterator i = oldWave.begin(); i != oldWave.end(); ++i) {
-            for (int d = 0; d < 4; ++d) {
-                int nx = i->first + dx[d];
-                int ny = i->second + dy[d];
-                if (board_[nx][ny] == -1) {
-                    wave.push_back(pair<int, int>(nx, ny));
-                    board_[nx][ny] = nstep;
-                    if (nx == 1 && ny == 7)
-                        goto done;
+                if (i == 7 && j == 1) {
+                    tower->setIndex(0);
+                }
+                if (i == 4 && j == 1) {
+                    tower->setIndex(1);
+                }
+                if (i == 6 && j == 4) {
+                    tower->setIndex(2);
+                }
+                if (i == 4 && j == 6) {
+                    tower->setIndex(3);
                 }
             }
         }
-        oldWave = wave;
     }
-    done:
-    CCLOG("done");
-    int x = 1;
-    int y = 7;
-    wave.clear();
-    wave.push_back(pair<int, int>(x, y));
-    while (board_[x][y] != 0) {
-        for (int d = 0; d < 4; ++d) {
-            int nx = x + dx[d];
-            int ny = y + dy[d];
-            if (board_[x][y] - 1 == board_[nx][ny]) {
-                x = nx;
-                y = ny;
-                wave.push_back(pair<int, int>(x, y));
-                break;
+}
+
+void GameLayer::createGraphAndRoards() {
+    towersCount_ = 4;   //todo: fill value from tmx
+    graph_ = new int *[towersCount_];
+    for (int i = 0; i < towersCount_; ++i)
+        graph_[i] = new int[towersCount_];
+
+//  roads
+//    {0, 5, 4, 0,}
+//    {5, 0, 5, 0,}
+//    {4, 5, 0, 4,}
+//    {0, 0, 4, 0,}
+
+    for (int i = 0; i < towersCount_; ++i) {
+        for (int j = 0; j < towersCount_; ++j) {
+            graph_[i][j] = 0;
+        }
+    }
+    graph_[0][1] = graph_[1][0] = graph_[1][2] = graph_[2][1] = 5;
+    graph_[0][2] = graph_[2][0] = graph_[2][3] = graph_[3][2] = 4;
+}
+
+void GameLayer::dijkstra(int src) {
+    int dist[towersCount_];
+
+    bool sptSet[towersCount_];
+
+    for (int i = 0; i < towersCount_; i++) {
+        dist[i] = INT_MAX;
+        sptSet[i] = false;
+    }
+
+    dist[src] = 0;
+
+    for (int count = 0; count < towersCount_ - 1; count++) {
+        int u = minDistance(dist, sptSet);
+
+        sptSet[u] = true;
+
+        for (int v = 0; v < towersCount_; v++) {
+            if (!sptSet[v] && graph_[u][v] && dist[u] != INT_MAX && dist[u] + graph_[u][v] < dist[v]) {
+                dist[v] = dist[u] + graph_[u][v];
             }
         }
     }
 
-    for (vector<pair<int, int> >::iterator i = wave.begin(); i != wave.end(); ++i) {
-        Sprite *point = Sprite::create("unit.png");
-        point->setAnchorPoint({0.0f, 0.0f});
-        point->setScale(0.6f);
-        point->setPosition({32.0f * i->second, 32.0f * (n - i->first)});
-        this->addChild(point);
+    printSolution(dist, towersCount_);
+}
+
+int GameLayer::minDistance(int dist[], bool sptSet[]) {
+    int min = INT_MAX, min_index = 0;
+
+    for (int v = 0; v < towersCount_; v++) {
+        if (!sptSet[v] && dist[v] <= min) {
+            min = dist[v], min_index = v;
+        }
     }
+
+    return min_index;
+}
+
+int GameLayer::printSolution(int dist[], int n) {
+    printf("Vertex   Distance from Source\n");
+    for (int i = 0; i < towersCount_; i++)
+        printf("%d \t\t %d\n", i, dist[i]);
 }
 
 #pragma mark - touches
