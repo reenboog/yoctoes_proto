@@ -2,7 +2,6 @@
 #define __GAME_LAYER_H__
 
 #include "cocos2d.h"
-#import <CoreGraphics/CoreGraphics.h>
 
 class Road;
 class Tower;
@@ -23,6 +22,7 @@ public:
     std::vector<Road *> roads_;
     std::vector<Tower *> towers_;
     std::vector<Tower *> towersCopy_;
+    std::map<std::string, std::vector<cocos2d::Point>> savedRoads_;
 
 private:
     virtual bool init();
@@ -34,7 +34,7 @@ private:
     std::vector<Tower *> *adjacentRemainingTowers(Tower *tower);
     int distance(Tower *towerOne, Tower *towerTwo);
     bool contains(std::vector<Tower *> &towers, Tower *tower);
-    void printShortestRouteTo(Tower *destination);
+    std::vector<cocos2d::Point> routeFromTowerToTower(Tower *source, Tower *destination);
 
     Tower *towerWithID(char id);
 };

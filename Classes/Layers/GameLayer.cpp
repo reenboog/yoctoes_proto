@@ -1,6 +1,7 @@
 #include "GameLayer.h"
 #include "Tower.h"
 #include "Road.h"
+#include "Unit.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -49,13 +50,17 @@ bool GameLayer::init() {
     this->showBoard();
     this->createRoadsManually();
 
-    towersCopy_ = towers_;
-    Tower *src = this->towerWithID('g');
-    Tower *dst = this->towerWithID('a');
+    Tower *src = this->towerWithID('a');
+    Tower *dst = this->towerWithID('f');
 
-    src->setDistanceFromStart(0);
-    this->dijkstra();
-    this->printShortestRouteTo(dst);
+    vector<cocos2d::Point> points = this->routeFromTowerToTower(src, dst);
+
+    const int size = points.size();
+    for (int i = 0; i < size; ++i) {
+        Unit *unit = Unit::create();
+        unit->setPosition(points.at(i));
+        this->addChild(unit);
+    }
 
     return true;
 }
@@ -200,6 +205,7 @@ Tower *GameLayer::extractSmallest(vector<Tower *> &towers) {
 
 vector<Tower *> *GameLayer::adjacentRemainingTowers(Tower *tower) {
     vector<Tower *> *adjacentTowers = new vector<Tower *>();
+
     const int size = roads_.size();
     for (int i = 0; i < size; ++i) {
         Road *road = roads_.at(i);
@@ -237,16 +243,62 @@ bool GameLayer::contains(vector<Tower *> &towers, Tower *tower) {
     return false;
 }
 
-void GameLayer::printShortestRouteTo(Tower *destination) {
+std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {
+    string key;
+    key.push_back(destination->getID());
+    key.push_back(source->getID());
+    map<string, vector<cocos2d::Point>>::const_iterator it = savedRoads_.find(key);
+    if (it != savedRoads_.end()) {
+        return savedRoads_[key];
+    }
+
+    towersCopy_ = towers_;
+    source->setDistanceFromStart(0);
+
+    this->dijkstra();
+
+    vector<char> pathTowers;
+    vector<cocos2d::Point> pointsForMove;
+
     Tower *previous = destination;
-    printf("Distance from start: %d\n", destination->getDistanceFromStart());
     while (previous) {
-        printf("%c ", previous->getID());
+        pathTowers.push_back(previous->getID());
         previous = previous->getPrevious();
     }
-    printf("\n");
-}
 
+    int size = pathTowers.size();
+    for (int i = 0; i < size - 1; ++i) {
+        char first = pathTowers.at(i);
+        char second = pathTowers.at(i + 1);
+
+        for (std::vector<Road *>::iterator it = roads_.begin(); it != roads_.end(); ++it) {
+            Road *currentRoad = *it;
+            if (currentRoad->getTowerOne()->getID() == first && currentRoad->getTowerTwo()->getID() == second) {
+                vector<cocos2d::Point> points = currentRoad->getRoadPoints();
+                int count = points.size();
+                for (int i = 0; i < count; ++i) {
+                    pointsForMove.push_back(points.at(i));
+                }
+                pointsForMove.push_back(this->towerWithID(second)->getPosition());
+                break;
+            } else if (currentRoad->getTowerOne()->getID() == second && currentRoad->getTowerTwo()->getID() == first) {
+                vector<cocos2d::Point> points = currentRoad->getRoadPoints();
+                int count = points.size();
+                for (int i = count - 1; i >= 0; --i) {
+                    pointsForMove.push_back(points.at(i));
+                }
+                pointsForMove.push_back(this->towerWithID(second)->getPosition());
+                break;
+            }
+        }
+    }
+
+    savedRoads_.insert(std::pair<string,vector<cocos2d::Point>>(key, pointsForMove));
+    source->setDistanceFromStart(INT_MAX);
+
+    return pointsForMove;
+
+}
 
 Tower *GameLayer::towerWithID(char id) {
     for (std::vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {

@@ -2,7 +2,7 @@
 #define __ROAD_H_
 
 #include <deque>
-#import <CoreGraphics/CoreGraphics.h>
+#include "cocos2d.h"
 
 class Tower;
 
@@ -16,15 +16,15 @@ public:
     Tower *getTowerTwo() const;
     int getDistance() const;
 
-    void addRoadPoint(CGPoint point);
-    std::deque<CGPoint> const &getRoadPoints() const;
+    void addRoadPoint(cocos2d::Point point);
+    std::vector<cocos2d::Point> getRoadPoints() const;
 
 private:
     Tower *towerOne_;
     Tower *towerTwo_;
     int distance_;
 
-    std::deque<CGPoint> roadPoints_;
+    std::vector<cocos2d::Point> roadPoints_;
 };
 
 inline Tower *Road::getTowerOne() const {
@@ -39,7 +39,7 @@ inline int Road::getDistance() const {
     return distance_;
 }
 
-inline std::deque<CGPoint> const &Road::getRoadPoints() const {
+inline std::vector<cocos2d::Point> Road::getRoadPoints() const {
     return roadPoints_;
 }
 
