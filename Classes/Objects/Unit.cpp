@@ -19,7 +19,7 @@ bool Unit::init() {
     if (!Sprite::initWithFile("unit.png"))
         return false;
 
-    this->setAnchorPoint({0.0f, 0.0f});
+    this->setScale(0.5f);
 
     return true;
 }

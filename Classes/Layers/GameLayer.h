@@ -20,8 +20,9 @@ public:
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
 
-    std::vector<Tower *> towers_;
     std::vector<Road *> roads_;
+    std::vector<Tower *> towers_;
+    std::vector<Tower *> towersCopy_;
 
 private:
     virtual bool init();

@@ -18,6 +18,7 @@ const int testMap_[n][n] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _}, 8 */
         /*                             0  1  2  3  4  5  6  7  8    */
 };
+const float tileWidth = 38.0f;
 
 GameLayer::~GameLayer() {
 }
@@ -48,6 +49,7 @@ bool GameLayer::init() {
     this->showBoard();
     this->createRoadsManually();
 
+    towersCopy_ = towers_;
     Tower *src = this->towerWithID('g');
     Tower *dst = this->towerWithID('a');
 
@@ -61,8 +63,6 @@ bool GameLayer::init() {
 #pragma mark - board and path
 
 void GameLayer::showBoard() {
-    float tileWidth = 38.0f;
-
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (testMap_[i][j] == 0) {
@@ -115,36 +115,58 @@ void GameLayer::createRoadsManually() {
     Road *road;
 
     road = new Road(this->towerWithID('a'), this->towerWithID('c'), 2);
+    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 5)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('a'), this->towerWithID('d'), 4);
+    road = new Road(this->towerWithID('a'), this->towerWithID('d'), 3);
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 6)});
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 7)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('b'), this->towerWithID('c'), 4);
+    road = new Road(this->towerWithID('b'), this->towerWithID('c'), 3);
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 4)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('c'), this->towerWithID('d'), 2);
+    road = new Road(this->towerWithID('c'), this->towerWithID('d'), 1);
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 6)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('b'), this->towerWithID('f'), 7);
+    road = new Road(this->towerWithID('b'), this->towerWithID('f'), 6);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 4)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('c'), this->towerWithID('e'), 3);
+    road = new Road(this->towerWithID('c'), this->towerWithID('e'), 2);
+    road->addRoadPoint({tileWidth * 4 + tileWidth / 2, tileWidth * (n - 5)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 5)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('e'), this->towerWithID('f'), 2);
+    road = new Road(this->towerWithID('e'), this->towerWithID('f'), 1);
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 5)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('d'), this->towerWithID('g'), 2);
+    road = new Road(this->towerWithID('d'), this->towerWithID('g'), 1);
+    road->addRoadPoint({tileWidth * 4 + tileWidth / 2, tileWidth * (n - 7)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('g'), this->towerWithID('f'), 5);
+    road = new Road(this->towerWithID('g'), this->towerWithID('f'), 4);
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 6)});
     roads_.push_back(road);
 }
 
 void GameLayer::dijkstra() {
-    while (towers_.size() > 0) {
-        Tower *smallest = extractSmallest(towers_);
+    while (towersCopy_.size() > 0) {
+        Tower *smallest = extractSmallest(towersCopy_);
         vector<Tower *> *adjacentTowers = adjacentRemainingTowers(smallest);
 
         const int size = adjacentTowers->size();
@@ -187,7 +209,7 @@ vector<Tower *> *GameLayer::adjacentRemainingTowers(Tower *tower) {
         } else if (road->getTowerTwo() == tower) {
             adjacent = road->getTowerOne();
         }
-        if (adjacent && contains(towers_, adjacent)) {
+        if (adjacent && contains(towersCopy_, adjacent)) {
             adjacentTowers->push_back(adjacent);
         }
     }
@@ -240,7 +262,18 @@ Tower *GameLayer::towerWithID(char id) {
 #pragma mark - touches
 
 bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
-    return true;
+    cocos2d::Point locationInWorld = this->convertToWorldSpace(touch->getLocation());
+    for (std::vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
+        Tower *currentTower = *it;
+        cocos2d::Point position = currentTower->getPosition();
+        cocos2d::Size size = currentTower->getContentSize();
+        cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
+        if (rect.containsPoint(locationInWorld)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void GameLayer::onTouchEnded(Touch *touch, Event *event) {
