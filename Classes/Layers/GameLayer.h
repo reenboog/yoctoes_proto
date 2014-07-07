@@ -4,8 +4,8 @@
 #include "cocos2d.h"
 #import <CoreGraphics/CoreGraphics.h>
 
+class Road;
 class Tower;
-class RoadTile;
 
 class GameLayer : public cocos2d::Layer {
 public:
@@ -21,18 +21,21 @@ public:
     void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
 
     std::vector<Tower *> towers_;
-    //todo: create map of roads
+    std::vector<Road *> roads_;
 
 private:
     virtual bool init();
     void showBoard();
-    void createGraphAndRoards();
-    void dijkstra(int src);
-    int minDistance(int dist[], bool sptSet[]);
-    int printSolution(int dist[], int n);
+    void createRoadsManually();
 
-    int **graph_;
-    int towersCount_;
+    void dijkstra();
+    Tower *extractSmallest(std::vector<Tower *> &towers);
+    std::vector<Tower *> *adjacentRemainingTowers(Tower *tower);
+    int distance(Tower *towerOne, Tower *towerTwo);
+    bool contains(std::vector<Tower *> &towers, Tower *tower);
+    void printShortestRouteTo(Tower *destination);
+
+    Tower *towerWithID(char id);
 };
 
 #endif // __GAME_LAYER_H__

@@ -9,37 +9,44 @@ public:
     static Tower *createWithType(Constants::TowerType type);
     ~Tower();
 
-    void updateToType(Constants::TowerType type);
-    inline int getID() const;
-    inline void setID(int id);
-    int getIndex() const;
-    void setIndex(int index);
+    char getID() const;
+    void setID(char id);
+    Tower *getPrevious() const;
+    void setPrevious(Tower *previous);
+    int getDistanceFromStart() const;
+    void setDistanceFromStart(int distanceFromStart);
 
 private:
     bool initWithType(Constants::TowerType type);
 
     Constants::TowerType towertype_;
-    Constants::TowerElement element_;
-    Constants::TileType tileType_;
-    int id_;
-    int index_;
+    char id_;
+    Tower *previous_;
+    int distanceFromStart_;
 };
 
-// id in format: (100 + i) * 100 + 200 + j; example: 101213
-inline int Tower::getID() const {
+inline char Tower::getID() const {
     return id_;
 }
 
-inline void Tower::setID(int id) {
+inline void Tower::setID(char id) {
     id_ = id;
 }
 
-inline int Tower::getIndex() const {
-    return index_;
+inline Tower *Tower::getPrevious() const {
+    return previous_;
 }
 
-inline void Tower::setIndex(int index) {
-    index_ = index;
+inline void Tower::setPrevious(Tower *previous) {
+    previous_ = previous;
+}
+
+inline int Tower::getDistanceFromStart() const {
+    return distanceFromStart_;
+}
+
+inline void Tower::setDistanceFromStart(int distanceFromStart) {
+    distanceFromStart_ = distanceFromStart;
 }
 
 #endif //__TOWER_H_

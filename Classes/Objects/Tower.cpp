@@ -20,14 +20,10 @@ bool Tower::initWithType(Constants::TowerType type) {
         return false;
 
     towertype_ = type;
-    element_ = Constants::TowerElement::none;
-    tileType_ = Constants::TileType::tower;
+    distanceFromStart_ = INT_MAX;
 
     return true;
 }
 
 #pragma mark -
 
-void Tower::updateToType(Constants::TowerType type) {
-
-}
