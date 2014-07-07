@@ -50,17 +50,16 @@ bool GameLayer::init() {
     this->showBoard();
     this->createRoadsManually();
 
-    Tower *src = this->towerWithID('a');
-    Tower *dst = this->towerWithID('f');
+    Tower *src = this->towerWithID('b');
+    Tower *dst = this->towerWithID('e');
 
     vector<cocos2d::Point> points = this->routeFromTowerToTower(src, dst);
 
-    const int size = points.size();
-    for (int i = 0; i < size; ++i) {
-        Unit *unit = Unit::create();
-        unit->setPosition(points.at(i));
-        this->addChild(unit);
-    }
+    Unit *unit = Unit::create();
+    unit->setPosition(dst->getPosition());
+    unit->setWayPoints(points);
+    this->addChild(unit);
+    unit->startTrek();
 
     return true;
 }
