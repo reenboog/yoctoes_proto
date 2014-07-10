@@ -47,10 +47,10 @@ bool GameLayer::init() {
     listener->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
-    this->showBoard();
+    this->createBoard();
     this->createRoadsManually();
 
-    Tower *src = this->towerWithID('b');
+    Tower *src = this->towerWithID('g');
     Tower *dst = this->towerWithID('e');
 
     vector<cocos2d::Point> points = this->routeFromTowerToTower(src, dst);
@@ -66,7 +66,7 @@ bool GameLayer::init() {
 
 #pragma mark - board and path
 
-void GameLayer::showBoard() {
+void GameLayer::createBoard() {
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (testMap_[i][j] == 0) {
@@ -94,7 +94,7 @@ void GameLayer::showBoard() {
                     tower->setID('b');
                 }
                 if (i == 5 && j == 3) {
-                    tower->setID('c');;
+                    tower->setID('c');
                 }
                 if (i == 7 && j == 3) {
                     tower->setID('d');
@@ -242,7 +242,7 @@ bool GameLayer::contains(vector<Tower *> &towers, Tower *tower) {
     return false;
 }
 
-std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {
+std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {   //todo: refactor me!
     string key;
     key.push_back(destination->getID());
     key.push_back(source->getID());
@@ -299,17 +299,6 @@ std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Towe
 
 }
 
-Tower *GameLayer::towerWithID(char id) {
-    for (std::vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
-        Tower *currentTower = *it;
-        if (currentTower->getID() == id) {
-            return currentTower;
-        }
-    }
-
-    return NULL;
-}
-
 #pragma mark - touches
 
 bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
@@ -334,4 +323,17 @@ void GameLayer::onTouchMoved(Touch *touch, Event *event) {
 }
 
 void GameLayer::onTouchCancelled(Touch *touch, Event *event) {
+}
+
+#pragma mark - other
+
+Tower *GameLayer::towerWithID(char id) {
+    for (std::vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
+        Tower *currentTower = *it;
+        if (currentTower->getID() == id) {
+            return currentTower;
+        }
+    }
+
+    return NULL;
 }

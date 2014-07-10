@@ -11,7 +11,6 @@ Tower *Tower::createWithType(Constants::TowerType type) {
 }
 
 Tower::~Tower() {
-    //
 }
 
 bool Tower::initWithType(Constants::TowerType type) {

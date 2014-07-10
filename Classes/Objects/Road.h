@@ -9,6 +9,7 @@ class Tower;
 class Road {
 public:
     Road(Tower *towerOne, Tower *towerTwo, int distance);
+    ~Road();
 
     bool connects(Tower *towerOne, Tower *towerTwo);
 

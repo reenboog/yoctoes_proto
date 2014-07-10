@@ -26,7 +26,7 @@ public:
 
 private:
     virtual bool init();
-    void showBoard();
+    void createBoard();
     void createRoadsManually();
 
     void dijkstra();
