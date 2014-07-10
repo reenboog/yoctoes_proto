@@ -11,18 +11,12 @@ public:
 
     char getID() const;
     void setID(char id);
-    Tower *getPrevious() const;
-    void setPrevious(Tower *previous);
-    int getDistanceFromStart() const;
-    void setDistanceFromStart(int distanceFromStart);
 
 private:
     bool initWithType(Constants::TowerType type);
 
     Constants::TowerType towertype_;
     char id_;
-    Tower *previous_;
-    int distanceFromStart_;
 };
 
 inline char Tower::getID() const {
@@ -31,22 +25,6 @@ inline char Tower::getID() const {
 
 inline void Tower::setID(char id) {
     id_ = id;
-}
-
-inline Tower *Tower::getPrevious() const {
-    return previous_;
-}
-
-inline void Tower::setPrevious(Tower *previous) {
-    previous_ = previous;
-}
-
-inline int Tower::getDistanceFromStart() const {
-    return distanceFromStart_;
-}
-
-inline void Tower::setDistanceFromStart(int distanceFromStart) {
-    distanceFromStart_ = distanceFromStart;
 }
 
 #endif //__TOWER_H_

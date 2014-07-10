@@ -16,14 +16,11 @@
 		1A4052EBDFDB898B382BA791 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
 		1A405389B962433FBEF7F80E /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
 		1A40579D895B31B7C73012DA /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051C952D31D0ED6806853 /* Shared.cpp */; };
-		1A4057EFB733C8D49725E6A8 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051D2C6B72E8988E83006 /* PathFinder.cpp */; };
 		1A4057F5777C794DDE01CA80 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A4058C7AD7F4D377BFE39FE /* Localized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054DABE5EA18E8C853ECB /* Localized.cpp */; };
 		1A4059AABCC2132A2B1A918D /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */; };
-		1A405A00F175FED80851E9B4 /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051D2C6B72E8988E83006 /* PathFinder.cpp */; };
 		1A405A855323F1A144A4BCAD /* Localized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054DABE5EA18E8C853ECB /* Localized.cpp */; };
 		1A405CA478B3234E6A70BAE8 /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051C952D31D0ED6806853 /* Shared.cpp */; };
-		1A405D3C9BB34BD5343BFFBE /* PathFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051D2C6B72E8988E83006 /* PathFinder.cpp */; };
 		1A405D664ED9BE312D607B00 /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */; };
 		1A405D6D775BF65F3C73C154 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
@@ -306,7 +303,6 @@
 
 /* Begin PBXFileReference section */
 		1A4051C952D31D0ED6806853 /* Shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shared.cpp; sourceTree = "<group>"; };
-		1A4051D2C6B72E8988E83006 /* PathFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathFinder.cpp; sourceTree = "<group>"; };
 		1A4053F28F986F04A3A3540F /* Road.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Road.h; sourceTree = "<group>"; };
 		1A4054DABE5EA18E8C853ECB /* Localized.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Localized.cpp; sourceTree = "<group>"; };
 		1A40556F8EC15E1705474576 /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
@@ -315,7 +311,6 @@
 		1A405626206FAB81D3B13F24 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
 		1A4056D2A541FFD74B12985B /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
 		1A40584B00A71B11BE162BA9 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
-		1A4059B78A47B13822745EB9 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
 		1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tower.cpp; sourceTree = "<group>"; };
 		1A405B37B0FAE378ABC7791C /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
 		1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLayer.cpp; sourceTree = "<group>"; };
@@ -511,8 +506,6 @@
 			children = (
 				1A40556F8EC15E1705474576 /* Shared.h */,
 				1A4051C952D31D0ED6806853 /* Shared.cpp */,
-				1A4051D2C6B72E8988E83006 /* PathFinder.cpp */,
-				1A4059B78A47B13822745EB9 /* PathFinder.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -945,7 +938,6 @@
 				1A405389B962433FBEF7F80E /* Unit.cpp in Sources */,
 				1A40502DC5316FB826C1F321 /* Road.cpp in Sources */,
 				1A4051E6C20F587F391AC1D7 /* Shared.cpp in Sources */,
-				1A405D3C9BB34BD5343BFFBE /* PathFinder.cpp in Sources */,
 				1A405F3368717ED1BF24125C /* GameConfig.cpp in Sources */,
 				1A405A855323F1A144A4BCAD /* Localized.cpp in Sources */,
 			);
@@ -962,7 +954,6 @@
 				1A4052EBDFDB898B382BA791 /* Unit.cpp in Sources */,
 				1A405D6D775BF65F3C73C154 /* Road.cpp in Sources */,
 				1A40579D895B31B7C73012DA /* Shared.cpp in Sources */,
-				1A405A00F175FED80851E9B4 /* PathFinder.cpp in Sources */,
 				1A4051B48F94A5FF48B87716 /* GameConfig.cpp in Sources */,
 				1A4058C7AD7F4D377BFE39FE /* Localized.cpp in Sources */,
 			);
@@ -988,7 +979,6 @@
 				1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */,
 				1A4057F5777C794DDE01CA80 /* Road.cpp in Sources */,
 				1A405CA478B3234E6A70BAE8 /* Shared.cpp in Sources */,
-				1A4057EFB733C8D49725E6A8 /* PathFinder.cpp in Sources */,
 				1A40503D7E9FACC0473C845E /* GameConfig.cpp in Sources */,
 				1A405086AB032D97E8AC8BA4 /* Localized.cpp in Sources */,
 			);

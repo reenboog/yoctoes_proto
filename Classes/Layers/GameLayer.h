@@ -9,6 +9,7 @@ class Tower;
 class GameLayer : public cocos2d::Layer {
 public:
     static cocos2d::Scene *scene();
+
     ~GameLayer();
 
     CREATE_FUNC(GameLayer);
@@ -19,12 +20,13 @@ public:
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
 
+private:
     std::vector<Road *> roads_;
     std::vector<Tower *> towers_;
     std::vector<Tower *> towersCopy_;
-    std::map<std::string, std::vector<cocos2d::Point>> savedRoads_;
+    std::map<Tower *, Tower *> previousForTower_;
+    std::map<Tower *, int> distanceFromStartForTower_;
 
-private:
     virtual bool init();
     void createBoard();
     void createRoadsManually();

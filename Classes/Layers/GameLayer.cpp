@@ -110,6 +110,7 @@ void GameLayer::createBoard() {
                 }
 
                 towers_.push_back(tower);
+                distanceFromStartForTower_[tower] = INT_MAX;
             }
         }
     }
@@ -176,10 +177,10 @@ void GameLayer::dijkstra() {
         const int size = adjacentTowers->size();
         for (int i = 0; i < size; ++i) {
             Tower *adjacent = adjacentTowers->at(i);
-            int distance = this->distance(smallest, adjacent) + smallest->getDistanceFromStart();
-            if (distance < adjacent->getDistanceFromStart()) {
-                adjacent->setDistanceFromStart(distance);
-                adjacent->setPrevious(smallest);
+            int distance = this->distance(smallest, adjacent) + distanceFromStartForTower_[smallest];
+            if (distance < distanceFromStartForTower_[adjacent]) {
+                distanceFromStartForTower_[adjacent] = distance;
+                previousForTower_[adjacent] = smallest;
             }
         }
         delete adjacentTowers;
@@ -193,7 +194,7 @@ Tower *GameLayer::extractSmallest(vector<Tower *> &towers) {
     Tower *smallest = towers.at(0);
     for (int i = 1; i < size; ++i) {
         Tower *current = towers.at(i);
-        if (current->getDistanceFromStart() < smallest->getDistanceFromStart()) {
+        if (distanceFromStartForTower_[current] < distanceFromStartForTower_[smallest]) {
             smallest = current;
             smallestPosition = i;
         }
@@ -243,16 +244,8 @@ bool GameLayer::contains(vector<Tower *> &towers, Tower *tower) {
 }
 
 std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {   //todo: refactor me!
-    string key;
-    key.push_back(destination->getID());
-    key.push_back(source->getID());
-    map<string, vector<cocos2d::Point>>::const_iterator it = savedRoads_.find(key);
-    if (it != savedRoads_.end()) {
-        return savedRoads_[key];
-    }
-
     towersCopy_ = towers_;
-    source->setDistanceFromStart(0);
+    distanceFromStartForTower_[source] = 0;
 
     this->dijkstra();
 
@@ -262,7 +255,7 @@ std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Towe
     Tower *previous = destination;
     while (previous) {
         pathTowers.push_back(previous->getID());
-        previous = previous->getPrevious();
+        previous = previousForTower_[previous];
     }
 
     int size = pathTowers.size();
@@ -292,8 +285,7 @@ std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Towe
         }
     }
 
-    savedRoads_.insert(std::pair<string,vector<cocos2d::Point>>(key, pointsForMove));
-    source->setDistanceFromStart(INT_MAX);
+    distanceFromStartForTower_[source] = INT_MAX;
 
     return pointsForMove;
 

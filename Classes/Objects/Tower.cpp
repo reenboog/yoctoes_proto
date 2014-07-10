@@ -19,7 +19,6 @@ bool Tower::initWithType(Constants::TowerType type) {
         return false;
 
     towertype_ = type;
-    distanceFromStart_ = INT_MAX;
 
     return true;
 }
