@@ -1,4 +1,5 @@
 #include "Tower.h"
+#include "Unit.h"
 
 Tower *Tower::createWithType(Constants::TowerType type) {
     Tower *tower = new Tower();
@@ -14,8 +15,13 @@ Tower::~Tower() {
 }
 
 bool Tower::initWithType(Constants::TowerType type) {
-    //TODO: fill filename here
-    if (!Sprite::initWithFile("tower.png"))
+    std::string filename = "tower.png"; //todo: add default value
+    if (type == Constants::TowerType::player) {
+        filename = "tower.png";
+    } else if (type == Constants::TowerType::enemy) {
+        filename = "enemy_tower.png";
+    }
+    if (!Sprite::initWithFile(filename))
         return false;
 
     towertype_ = type;
@@ -23,5 +29,7 @@ bool Tower::initWithType(Constants::TowerType type) {
     return true;
 }
 
-#pragma mark -
-
+bool Tower::applyUnit(Unit *unit) {
+    printf("check mek mek");
+    return false;
+}

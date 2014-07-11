@@ -10,7 +10,10 @@ namespace Constants {
     };
 
     enum class TowerType : int {
-        common = 0,
+        neutral = 0,
+        player,
+        enemy
+
     };
 
     enum class TowerElement : int {

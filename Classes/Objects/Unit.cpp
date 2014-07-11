@@ -1,4 +1,6 @@
 #include "Unit.h"
+#include "Road.h"
+#include "Tower.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -20,35 +22,62 @@ bool Unit::init() {
     if (!Sprite::initWithFile("unit.png"))
         return false;
 
-    this->setScale(0.5f);
-    speed_ = 1.0f;
+    speed_ = 1.0f;  //seconds from one tile to another
 
     return true;
 }
 
 void Unit::startTrek() {
-    vector<FiniteTimeAction *> actions;
+    int size = route_.size();
+    Sequence *resultAction = nullptr;
 
-    const int size = wayPoints_.size();
+    Tower *currentTowerDestination = nullptr;
     for (int i = 0; i < size; ++i) {
-        MoveTo *moveTo = MoveTo::create(speed_, wayPoints_.at(i));
-        actions.push_back(moveTo);
+        vector<cocos2d::Point> currentPoints;
+        if (i == 0) {
+            if (needSwapFirst_) {
+                currentTowerDestination = route_[i]->getTowerOne();
+                currentPoints = route_[i]->getRoadPoints();
+                reverse(currentPoints.begin(), currentPoints.end());
+            } else {
+                currentTowerDestination = route_[i]->getTowerTwo();
+                currentPoints = route_[i]->getRoadPoints();
+            }
+        } else {
+            if (currentTowerDestination == route_[i]->getTowerOne()) {
+                currentTowerDestination = route_[i]->getTowerTwo();
+                currentPoints = route_[i]->getRoadPoints();
+            } else {    // currentTowerDestination == route_[i]->getTowerTwo()
+                currentTowerDestination = route_[i]->getTowerOne();
+                currentPoints = route_[i]->getRoadPoints();
+                reverse(currentPoints.begin(), currentPoints.end());
+            }
+        }
+        currentPoints.push_back(currentTowerDestination->getPosition());
+
+        int size = currentPoints.size();
+        vector<FiniteTimeAction *> actions;
+        for (int i = 0; i < size; ++i) {
+            MoveTo *moveTo = MoveTo::create(speed_, currentPoints.at(i));
+            actions.push_back(moveTo);
+        }
+
+        resultAction = addActionsToSequence(actions, resultAction);
     }
 
-    Sequence *action = makeSequence(actions);
-    this->runAction(action);
+    this->runAction(resultAction);
 }
 
-Sequence *Unit::makeSequence(vector<FiniteTimeAction *> actions) {
-    Sequence *seq = NULL;
+Sequence *Unit::addActionsToSequence(vector<FiniteTimeAction *> actions, Sequence *sequence) {
     int size = actions.size();
     for (int i = 0; i < size; ++i) {
         FiniteTimeAction *action = actions.at(i);
-        if (!seq) {
-            seq = Sequence::create(action, NULL);
+        if (!sequence) {
+            sequence = Sequence::create(action, NULL);
         } else {
-            seq = Sequence::create(seq, action, NULL);
+            sequence = Sequence::create(sequence, action, NULL);
         }
     }
-    return seq;
+
+    return sequence;
 }

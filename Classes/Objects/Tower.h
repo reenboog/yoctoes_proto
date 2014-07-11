@@ -4,6 +4,8 @@
 #include "CCSprite.h"
 #include "Constants.h"
 
+class Unit;
+
 class Tower : public cocos2d::Sprite {
 public:
     static Tower *createWithType(Constants::TowerType type);
@@ -11,6 +13,7 @@ public:
 
     char getID() const;
     void setID(char id);
+    bool applyUnit(Unit *unit);
 
 private:
     bool initWithType(Constants::TowerType type);

@@ -75,7 +75,12 @@ void GameLayer::createBoard() {
 
             } else if (testMap_[i][j] == 2) {
 
-                Tower *tower = Tower::createWithType(Constants::TowerType::common);
+                Tower *tower;
+                if (i == 5 && j == 6) {
+                    tower = Tower::createWithType(Constants::TowerType::enemy);
+                } else {
+                    tower = Tower::createWithType(Constants::TowerType::player);
+                }
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
                 this->addChild(tower);
 
@@ -235,60 +240,35 @@ bool GameLayer::contains(vector<Tower *> &towers, Tower *tower) {
     return false;
 }
 
-std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {   //todo: refactor me!
+vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {
     towersCopy_ = towers_;
-    distanceFromStartForTower_[source] = 0;
+    distanceFromStartForTower_[source] = 0; //todo: change to destination
 
     this->dijkstra();
 
     vector<char> pathTowers;
-    vector<cocos2d::Point> pointsForMove;
+    vector<Road *> route;
 
-    Tower *previous = destination;
-    printf("%p\n", previous);
+    Tower *previous = destination;  //todo: change to source
     while (previous) {
         pathTowers.push_back(previous->getID());
         previous = previousForTower_[previous];
-        printf("%p\n", previous);
     }
 
     int size = pathTowers.size();
     for (int i = 0; i < size - 1; ++i) {
         char first = pathTowers.at(i);
         char second = pathTowers.at(i + 1);
-
-        for (std::vector<Road *>::iterator it = roads_.begin(); it != roads_.end(); ++it) {
+        for (vector<Road *>::iterator it = roads_.begin(); it != roads_.end(); ++it) {
             Road *currentRoad = *it;
-            if (currentRoad->getTowerOne()->getID() == first && currentRoad->getTowerTwo()->getID() == second) {
-                vector<cocos2d::Point> points = currentRoad->getRoadPoints();
-                int count = points.size();
-                for (int i = 0; i < count; ++i) {
-                    pointsForMove.push_back(points.at(i));
-                }
-                pointsForMove.push_back(this->towerWithID(second)->getPosition());
-                break;
-            } else if (currentRoad->getTowerOne()->getID() == second && currentRoad->getTowerTwo()->getID() == first) {
-                vector<cocos2d::Point> points = currentRoad->getRoadPoints();
-                int count = points.size();
-                for (int i = count - 1; i >= 0; --i) {
-                    pointsForMove.push_back(points.at(i));
-                }
-                pointsForMove.push_back(this->towerWithID(second)->getPosition());
-                break;
+            if ((currentRoad->getTowerOne()->getID() == first && currentRoad->getTowerTwo()->getID() == second) ||
+                    (currentRoad->getTowerOne()->getID() == second && currentRoad->getTowerTwo()->getID() == first)) {
+                route.push_back(currentRoad);
             }
         }
     }
 
-    for(map<Tower *, int>::iterator it = distanceFromStartForTower_.begin(); it != distanceFromStartForTower_.end(); ++it) {
-        distanceFromStartForTower_[it->first] = INT_MAX;
-    }
-//    for(map<Tower *, Tower *>::iterator it = previousForTower_.begin(); it != previousForTower_.end(); ++it) {
-//        previousForTower_[it->first] = NULL;
-//    }
-    previousForTower_.clear();
-
-    return pointsForMove;
-
+    return route;
 }
 
 #pragma mark - touches
@@ -315,16 +295,21 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
 
 void GameLayer::onTouchEnded(Touch *touch, Event *event) {
     if (src_ && dst_) {
-        vector<cocos2d::Point> points = this->routeFromTowerToTower(dst_, src_);
+        vector<Road *> route = this->routeFromTowerToTower(dst_, src_);
 
         Unit *unit = Unit::create();
         unit->setPosition(src_->getPosition());
-        unit->setWayPoints(points);
+        if (route.at(0)->getTowerOne() != src_) {  //fixme
+            unit->setRoute(route, true);
+        } else {
+            unit->setRoute(route);
+        }
         this->addChild(unit);
         unit->startTrek();
 
         src_ = NULL;
         dst_ = NULL;
+        route.clear();
     }
 }
 
