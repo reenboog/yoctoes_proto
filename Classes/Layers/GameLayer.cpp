@@ -50,16 +50,8 @@ bool GameLayer::init() {
     this->createBoard();
     this->createRoadsManually();
 
-    Tower *src = this->towerWithID('g');
-    Tower *dst = this->towerWithID('e');
-
-    vector<cocos2d::Point> points = this->routeFromTowerToTower(src, dst);
-
-    Unit *unit = Unit::create();
-    unit->setPosition(dst->getPosition());
-    unit->setWayPoints(points);
-    this->addChild(unit);
-    unit->startTrek();
+    src_ = NULL;
+    dst_ = NULL;
 
     return true;
 }
@@ -253,9 +245,11 @@ std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Towe
     vector<cocos2d::Point> pointsForMove;
 
     Tower *previous = destination;
+    printf("%p\n", previous);
     while (previous) {
         pathTowers.push_back(previous->getID());
         previous = previousForTower_[previous];
+        printf("%p\n", previous);
     }
 
     int size = pathTowers.size();
@@ -285,7 +279,13 @@ std::vector<cocos2d::Point> GameLayer::routeFromTowerToTower(Tower *source, Towe
         }
     }
 
-    distanceFromStartForTower_[source] = INT_MAX;
+    for(map<Tower *, int>::iterator it = distanceFromStartForTower_.begin(); it != distanceFromStartForTower_.end(); ++it) {
+        distanceFromStartForTower_[it->first] = INT_MAX;
+    }
+//    for(map<Tower *, Tower *>::iterator it = previousForTower_.begin(); it != previousForTower_.end(); ++it) {
+//        previousForTower_[it->first] = NULL;
+//    }
+    previousForTower_.clear();
 
     return pointsForMove;
 
@@ -301,6 +301,11 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
+            if (src_ == NULL) {
+                src_ = currentTower;
+            } else {
+                dst_ = currentTower;
+            }
             return true;
         }
     }
@@ -309,6 +314,18 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
 }
 
 void GameLayer::onTouchEnded(Touch *touch, Event *event) {
+    if (src_ && dst_) {
+        vector<cocos2d::Point> points = this->routeFromTowerToTower(dst_, src_);
+
+        Unit *unit = Unit::create();
+        unit->setPosition(src_->getPosition());
+        unit->setWayPoints(points);
+        this->addChild(unit);
+        unit->startTrek();
+
+        src_ = NULL;
+        dst_ = NULL;
+    }
 }
 
 void GameLayer::onTouchMoved(Touch *touch, Event *event) {

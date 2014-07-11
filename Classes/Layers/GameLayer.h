@@ -27,6 +27,9 @@ private:
     std::map<Tower *, Tower *> previousForTower_;
     std::map<Tower *, int> distanceFromStartForTower_;
 
+    Tower *src_;
+    Tower *dst_;
+
     virtual bool init();
     void createBoard();
     void createRoadsManually();
