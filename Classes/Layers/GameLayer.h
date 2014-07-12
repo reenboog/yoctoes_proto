@@ -33,6 +33,7 @@ private:
     virtual bool init();
     void createBoard();
     void createRoadsManually();
+    void update(float dt);
 
     void dijkstra();
     Tower *extractSmallest(std::vector<Tower *> &towers);

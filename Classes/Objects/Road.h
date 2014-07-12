@@ -16,8 +16,6 @@ public:
     Tower *getTowerOne() const;
     Tower *getTowerTwo() const;
     int getDistance() const;
-    bool isEnableForMove() const;
-    void setEnableForMove(bool enableForMove);
 
     void addRoadPoint(cocos2d::Point point);
     std::vector<cocos2d::Point> getRoadPoints() const;
@@ -26,7 +24,6 @@ private:
     Tower *towerOne_;
     Tower *towerTwo_;
     int distance_;
-    bool enableForMove_;
 
     std::vector<cocos2d::Point> roadPoints_;
 };
@@ -45,14 +42,6 @@ inline int Road::getDistance() const {
 
 inline std::vector<cocos2d::Point> Road::getRoadPoints() const {
     return roadPoints_;
-}
-
-inline bool Road::isEnableForMove() const {
-    return enableForMove_;
-}
-
-inline void Road::setEnableForMove(bool enableForMove) {
-    enableForMove_ = enableForMove;
 }
 
 #endif //__ROAD_H_

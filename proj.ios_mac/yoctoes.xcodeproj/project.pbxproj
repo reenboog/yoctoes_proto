@@ -310,6 +310,7 @@
 		1A4055D28ECB86E8B3DA9396 /* Road.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Road.cpp; sourceTree = "<group>"; };
 		1A405626206FAB81D3B13F24 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
 		1A4056D2A541FFD74B12985B /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
+		1A4057BBCD132DB92855D8FB /* Func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Func.h; sourceTree = "<group>"; };
 		1A40584B00A71B11BE162BA9 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tower.cpp; sourceTree = "<group>"; };
 		1A405B37B0FAE378ABC7791C /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
@@ -506,6 +507,7 @@
 			children = (
 				1A40556F8EC15E1705474576 /* Shared.h */,
 				1A4051C952D31D0ED6806853 /* Shared.cpp */,
+				1A4057BBCD132DB92855D8FB /* Func.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

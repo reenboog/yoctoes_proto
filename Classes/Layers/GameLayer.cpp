@@ -53,7 +53,16 @@ bool GameLayer::init() {
     src_ = NULL;
     dst_ = NULL;
 
+    this->scheduleUpdate();
+
     return true;
+}
+
+void GameLayer::update(float dt) {
+    int size = towers_.size();
+    for (int i = 0; i < size; ++i) {
+        towers_.at(i)->update(dt);
+    }
 }
 
 #pragma mark - board and path
@@ -82,7 +91,7 @@ void GameLayer::createBoard() {
                     tower = Tower::createWithType(Constants::TowerType::type1);
                 }
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
-                this->addChild(tower);
+                this->addChild(tower, 10);
 
                 if (i == 5 && j == 1) {
                     tower->setID('a');
@@ -313,7 +322,7 @@ void GameLayer::onTouchEnded(Touch *touch, Event *event) {
         } else {
             unit->setRoute(route);
         }
-        this->addChild(unit);
+        this->addChild(unit, 20);
         unit->startTrek();
 
         src_ = NULL;
