@@ -77,9 +77,9 @@ void GameLayer::createBoard() {
 
                 Tower *tower;
                 if (i == 5 && j == 6) {
-                    tower = Tower::createWithType(Constants::TowerType::enemy);
+                    tower = Tower::createWithType(Constants::TowerType::type2);
                 } else {
-                    tower = Tower::createWithType(Constants::TowerType::player);
+                    tower = Tower::createWithType(Constants::TowerType::type1);
                 }
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
                 this->addChild(tower);
@@ -167,6 +167,7 @@ void GameLayer::createRoadsManually() {
 }
 
 void GameLayer::dijkstra() {
+    Constants::TeamType team = Constants::TeamType::red;    //fixme
     while (towersCopy_.size() > 0) {
         Tower *smallest = extractSmallest(towersCopy_);
         vector<Tower *> *adjacentTowers = adjacentRemainingTowers(smallest);
@@ -176,6 +177,9 @@ void GameLayer::dijkstra() {
             Tower *adjacent = adjacentTowers->at(i);
             int distance = this->distance(smallest, adjacent) + distanceFromStartForTower_[smallest];
             if (distance < distanceFromStartForTower_[adjacent]) {
+                if (team != adjacent->getTeam() && adjacent->getTeam() != Constants::TeamType::neutral) {
+                    distance = distance * 30;   //fixme
+                }
                 distanceFromStartForTower_[adjacent] = distance;
                 previousForTower_[adjacent] = smallest;
             }

@@ -16,15 +16,17 @@ Tower::~Tower() {
 
 bool Tower::initWithType(Constants::TowerType type) {
     std::string filename = "tower.png"; //todo: add default value
-    if (type == Constants::TowerType::player) {
+    if (type == Constants::TowerType::type1) {
         filename = "tower.png";
-    } else if (type == Constants::TowerType::enemy) {
+        team_ = Constants::TeamType::red;
+    } else if (type == Constants::TowerType::type2) {
         filename = "enemy_tower.png";
+        team_ = Constants::TeamType::blue;
     }
     if (!Sprite::initWithFile(filename))
         return false;
 
-    towertype_ = type;
+    towerType_ = type;
 
     return true;
 }

@@ -10,9 +10,9 @@ namespace Constants {
     };
 
     enum class TowerType : int {
-        neutral = 0,
-        player,
-        enemy
+        type0 = 0,
+        type1,
+        type2,
 
     };
 
@@ -28,6 +28,12 @@ namespace Constants {
         flat = 0,
         leftAngle,
         rightAngle,
+    };
+
+    enum class TeamType : int {
+        neutral = 0,
+        red,
+        blue,
     };
 
 };

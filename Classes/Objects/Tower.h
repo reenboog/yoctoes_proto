@@ -13,13 +13,15 @@ public:
 
     char getID() const;
     void setID(char id);
+    const Constants::TeamType &getTeam() const;
     bool applyUnit(Unit *unit);
 
 private:
     bool initWithType(Constants::TowerType type);
 
-    Constants::TowerType towertype_;
     char id_;
+    Constants::TeamType team_;
+    Constants::TowerType towerType_;
 };
 
 inline char Tower::getID() const {
@@ -28,6 +30,10 @@ inline char Tower::getID() const {
 
 inline void Tower::setID(char id) {
     id_ = id;
+}
+
+inline const Constants::TeamType &Tower::getTeam() const {
+    return team_;
 }
 
 #endif //__TOWER_H_
