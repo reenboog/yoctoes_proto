@@ -268,6 +268,11 @@ vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destinatio
         }
     }
 
+    previousForTower_.clear();
+    for (map<Tower *, int>::iterator it = distanceFromStartForTower_.begin(); it != distanceFromStartForTower_.end(); ++it) {
+        distanceFromStartForTower_[it->first] = INT_MAX;
+    }
+
     return route;
 }
 
@@ -275,7 +280,7 @@ vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destinatio
 
 bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
     cocos2d::Point locationInWorld = this->convertToWorldSpace(touch->getLocation());
-    for (std::vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
+    for (vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
         Tower *currentTower = *it;
         cocos2d::Point position = currentTower->getPosition();
         cocos2d::Size size = currentTower->getContentSize();
