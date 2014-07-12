@@ -315,13 +315,19 @@ void GameLayer::onTouchEnded(Touch *touch, Event *event) {
     if (src_ && dst_) {
         vector<Road *> route = this->routeFromTowerToTower(dst_, src_);
 
+        int unitsForSend = 0;
         Unit *unit = Unit::create();
         unit->setPosition(src_->getPosition());
         if (route.at(0)->getTowerOne() != src_) {  //fixme
             unit->setRoute(route, true);
+            unitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
+            unit->setTeam(route.at(0)->getTowerTwo()->getTeam());
         } else {
             unit->setRoute(route);
+            unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
+            unit->setTeam(route.at(0)->getTowerOne()->getTeam());
         }
+        unit->setCount(unitsForSend);
         this->addChild(unit, 20);
         unit->startTrek();
 

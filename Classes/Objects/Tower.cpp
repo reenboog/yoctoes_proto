@@ -39,7 +39,7 @@ bool Tower::initWithType(Constants::TowerType type) {
     unitsLabel_->setPosition(32.0f, 32.0f); //fixme
     this->addChild(unitsLabel_);
 
-    generateUnitTime_ = Constants::TowerType::type0 == type ? 0 : randInRangef(4.0f, 6.0f);
+    generateUnitTime_ = Constants::TowerType::type0 == type ? 0 : randInRangef(2.0f, 3.0f);
 
     towerType_ = type;
 
@@ -58,11 +58,29 @@ void Tower::update(float dt) {
     }
 }
 
-bool Tower::applyUnit(Unit *unit) {
-    printf("check mek mek");
-    return false;
+void Tower::checkForApplying(Unit *unit) {
+    if (team_ != unit->getTeam()) {
+        this->applyUnit(unit);
+    }
+}
+
+void Tower::applyUnit(Unit *unit) {
+    int count = unit->getCount();
+    unit->stopAllActions();
+    unit->removeFromParentAndCleanup(true);
+
+    int sign = team_ != unit->getTeam() ? -1 : 1;
+    unitsCount_ = MAX(unitsCount_ + sign * count, 0);
+    this->updadeUnitsLabel();
 }
 
 void Tower::updadeUnitsLabel() {
     unitsLabel_->setString(stringWithFormat("%d", unitsCount_));
+}
+
+int Tower::takeHalfUnits() {    //todo: refactor me!
+    int takingCount = unitsCount_ / 2;
+    unitsCount_ = unitsCount_ - takingCount;
+    this->updadeUnitsLabel();
+    return takingCount;
 }

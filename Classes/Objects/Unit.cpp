@@ -62,8 +62,21 @@ void Unit::startTrek() {
             actions.push_back(moveTo);
         }
 
+        CallFunc *checkForApplyingAction =  CallFunc::create([this, currentTowerDestination]() {
+            currentTowerDestination->checkForApplying(this);
+        });
+        actions.push_back(checkForApplyingAction);
+
         resultAction = addActionsToSequence(actions, resultAction);
     }
+
+    vector<FiniteTimeAction *> actions;
+    CallFunc *applyUnitAction =  CallFunc::create([this, currentTowerDestination]() {
+        currentTowerDestination->applyUnit(this);
+    });
+    actions.push_back(applyUnitAction);
+
+    resultAction = addActionsToSequence(actions, resultAction);
 
     this->runAction(resultAction);
 }

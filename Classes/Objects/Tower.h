@@ -19,7 +19,9 @@ public:
     const Constants::TeamType &getTeam() const;
     int getUnitsCount() const;
 
-    bool applyUnit(Unit *unit);
+    void applyUnit(Unit *unit);
+    void checkForApplying(Unit *unit);
+    int takeHalfUnits();
 
 private:
     bool initWithType(Constants::TowerType type);
