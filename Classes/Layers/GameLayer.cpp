@@ -80,7 +80,7 @@ void GameLayer::createBoard() {
                 this->addChild(road);
 
             } else {
-                Tower *tower;
+                Tower *tower = nullptr;
                 if (testMap_[i][j] == 2) {  //neutral
                     tower = Tower::createWithType(Constants::TeamType::neutral);
                 } else if (testMap_[i][j] == 3) {   //me
@@ -334,9 +334,9 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
-            if (currentTower->getTeam() != playerTeam_ && selectedTowers_.size() == 0) {
-                return false;
-            }
+//            if (currentTower->getTeam() != playerTeam_ && selectedTowers_.size() == 0) {
+//                return false;
+//            }
             if (this->isTowerSelected(currentTower)) {
                 currentTower->setSelected(false);
                 selectedTowers_.erase(std::remove(selectedTowers_.begin(), selectedTowers_.end(), currentTower), selectedTowers_.end());

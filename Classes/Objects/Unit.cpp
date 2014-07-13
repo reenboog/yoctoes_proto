@@ -75,7 +75,6 @@ void Unit::startTrek() {
         currentTowerDestination->applyUnit(this);
     });
     actions.push_back(applyUnitAction);
-
     resultAction = addActionsToSequence(actions, resultAction);
 
     this->runAction(resultAction);

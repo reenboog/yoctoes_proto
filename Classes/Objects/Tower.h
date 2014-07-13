@@ -38,6 +38,7 @@ private:
     bool selectionAnimated_;
     cocos2d::Label *unitsLabel_;
     cocos2d::Sprite *selection_;
+    bool alreadyApplied_;
 };
 
 inline char Tower::getID() const {

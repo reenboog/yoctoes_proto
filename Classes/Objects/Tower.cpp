@@ -72,14 +72,24 @@ void Tower::applyUnit(Unit *unit) {
     int count = unit->getCount();
     unit->stopAllActions();
     unit->removeFromParentAndCleanup(true);
+    if (alreadyApplied_)
+        return;
+    alreadyApplied_ = true;
 
-    unitsCount_ = unitsCount_ + count;
     if (team_ == Constants::TeamType::neutral) {
+        unitsCount_ = unitsCount_ + count;
         this->changeToTeam(unit->getTeam());
-    } else if (unitsCount_ < 0) {
-        unitsCount_ = -unitsCount_;
-        this->changeToTeam(unit->getTeam());
+    } else if (team_ == unit->getTeam()) {
+        unitsCount_ = unitsCount_ + count;
+    } else {
+        unitsCount_ = unitsCount_ - count;
+        if (unitsCount_ < 0) {
+            unitsCount_ = -unitsCount_;
+            this->changeToTeam(unit->getTeam());
+        }
     }
+
+    alreadyApplied_ = false;
     this->updateUnitsLabel();
 }
 
