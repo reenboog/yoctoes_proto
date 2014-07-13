@@ -82,12 +82,12 @@ void GameLayer::createBoard() {
             } else {
                 Tower *tower;
                 if (testMap_[i][j] == 2) {  //neutral
-                    tower = Tower::createWithType(Constants::TowerType::type0);
+                    tower = Tower::createWithType(Constants::TeamType::neutral);
                 } else if (testMap_[i][j] == 3) {   //me
-                    tower = Tower::createWithType(Constants::TowerType::type1);
+                    tower = Tower::createWithType(Constants::TeamType::red);
                     playerTeam_ = tower->getTeam();
                 } else if (testMap_[i][j] == 4) {   //enemy
-                    tower = Tower::createWithType(Constants::TowerType::type2);
+                    tower = Tower::createWithType(Constants::TeamType::blue);
                 }
 
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});

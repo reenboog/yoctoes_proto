@@ -7,9 +7,9 @@ using namespace cocos2d;
 
 const int UNITS_LIMIT = 30;
 
-Tower *Tower::createWithType(Constants::TowerType type) {
+Tower *Tower::createWithType(Constants::TeamType team) {
     Tower *tower = new Tower();
-    if (tower->initWithType(type)) {
+    if (tower->initWithType(team)) {
         tower->autorelease();
     } else {
         CC_SAFE_DELETE(tower);
@@ -20,16 +20,9 @@ Tower *Tower::createWithType(Constants::TowerType type) {
 Tower::~Tower() {
 }
 
-bool Tower::initWithType(Constants::TowerType type) {
-    std::string filename = "neutral.png"; //todo: add default value
-    if (type == Constants::TowerType::type1) {
-        filename = "tower.png";
-        team_ = Constants::TeamType::red;
-    } else if (type == Constants::TowerType::type2) {
-        filename = "enemy_tower.png";
-        team_ = Constants::TeamType::blue;
-    }
-
+bool Tower::initWithType(Constants::TeamType team) {
+    team_ = team;
+    string filename = this->determineFilename();
     if (!Sprite::initWithFile(filename))
         return false;
 
@@ -39,22 +32,20 @@ bool Tower::initWithType(Constants::TowerType type) {
     unitsLabel_->setPosition(32.0f, 32.0f); //fixme
     this->addChild(unitsLabel_);
 
-    generateUnitTime_ = Constants::TowerType::type0 == type ? 0 : randInRangef(2.0f, 3.0f);
-
-    towerType_ = type;
+    generateUnitTime_ = Constants::TeamType::neutral == team_ ? 0 : randInRangef(2.0f, 3.0f);
 
     return true;
 }
 
 void Tower::update(float dt) {
-    if (Constants::TowerType::type0 != towerType_) {
+    if (Constants::TeamType::neutral != team_) {
         if (unitsCount_ < UNITS_LIMIT) {
             if (timeAfterLastUnit_ <= generateUnitTime_) {
                 timeAfterLastUnit_ += dt;
             } else {
                 timeAfterLastUnit_ = 0;
                 unitsCount_ = unitsCount_ + 1;
-                this->updadeUnitsLabel();
+                this->updateUnitsLabel();
             }
         }
     }
@@ -82,18 +73,43 @@ void Tower::applyUnit(Unit *unit) {
     unit->stopAllActions();
     unit->removeFromParentAndCleanup(true);
 
-    int sign = team_ != unit->getTeam() ? -1 : 1;
-    unitsCount_ = MAX(unitsCount_ + sign * count, 0);
-    this->updadeUnitsLabel();
+    unitsCount_ = unitsCount_ + count;
+    if (team_ == Constants::TeamType::neutral) {
+        this->changeToTeam(unit->getTeam());
+    } else if (unitsCount_ < 0) {
+        unitsCount_ = -unitsCount_;
+        this->changeToTeam(unit->getTeam());
+    }
+    this->updateUnitsLabel();
 }
 
-void Tower::updadeUnitsLabel() {
+void Tower::updateUnitsLabel() {
     unitsLabel_->setString(stringWithFormat("%d", unitsCount_));
 }
 
 int Tower::takeHalfUnits() {    //todo: refactor me!
     int takingCount = unitsCount_ / 2;
     unitsCount_ = unitsCount_ - takingCount;
-    this->updadeUnitsLabel();
+    this->updateUnitsLabel();
     return takingCount;
+}
+
+std::string Tower::determineFilename() {
+    string filename = "neutral.png"; //todo: add default value
+    if (team_ == Constants::TeamType::red) {
+        filename = "tower.png";
+    } else if (team_ == Constants::TeamType::blue) {
+        filename = "enemy_tower.png";
+    }
+    return filename;
+}
+
+void Tower::changeToTeam(Constants::TeamType newTeam) {
+    //tower already has params - according to this we need to change image
+
+    team_ = newTeam;
+    string filename = this->determineFilename();
+    Sprite *newSprite = Sprite::create(filename);
+    this->setSpriteFrame(newSprite->getSpriteFrame());
+    generateUnitTime_ = randInRangef(2.0f, 3.0f);
 }

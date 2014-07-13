@@ -9,7 +9,7 @@ class Unit;
 
 class Tower : public cocos2d::Sprite {
 public:
-    static Tower *createWithType(Constants::TowerType type);
+    static Tower *createWithType(Constants::TeamType team);
     ~Tower();
 
     void update(float dt);
@@ -17,22 +17,21 @@ public:
     char getID() const;
     void setID(char id);
     const Constants::TeamType &getTeam() const;
-    int getUnitsCount() const;
-    bool isSelected() const;
     void setSelected(bool selected);
 
     void applyUnit(Unit *unit);
     void checkForApplying(Unit *unit);
     int takeHalfUnits();
+    void changeToTeam(Constants::TeamType newTeam);
 
 private:
-    bool initWithType(Constants::TowerType type);
-    void updadeUnitsLabel();
+    bool initWithType(Constants::TeamType team);
+    void updateUnitsLabel();
+    std::string determineFilename();
 
     int unitsCount_;
     char id_;
     Constants::TeamType team_;
-    Constants::TowerType towerType_;
     float generateUnitTime_;
     float timeAfterLastUnit_;
     bool selected_;
@@ -51,14 +50,6 @@ inline void Tower::setID(char id) {
 
 inline const Constants::TeamType &Tower::getTeam() const {
     return team_;
-}
-
-inline int Tower::getUnitsCount() const {
-    return unitsCount_;
-}
-
-inline bool Tower::isSelected() const {
-    return selected_;
 }
 
 inline void Tower::setSelected(bool selected) {

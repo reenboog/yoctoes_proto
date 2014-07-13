@@ -9,13 +9,6 @@ namespace Constants {
         tower = 2,
     };
 
-    enum class TowerType : int {
-        type0 = 0,
-        type1,
-        type2,
-
-    };
-
     enum class TowerElement : int {
         none = 0,
         water,
