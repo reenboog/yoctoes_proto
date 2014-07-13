@@ -44,6 +44,7 @@ private:
     void sendUnitsFromTowersToTower(std::vector<Tower *>source, Tower *destination);
 
     Tower *towerWithID(char id);
+    bool isTowerSelected(Tower *tower);
 };
 
 #endif // __GAME_LAYER_H__

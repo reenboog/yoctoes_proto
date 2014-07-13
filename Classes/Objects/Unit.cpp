@@ -58,7 +58,7 @@ void Unit::startTrek() {
         int size = currentPoints.size();
         vector<FiniteTimeAction *> actions;
         for (int i = 0; i < size; ++i) {
-            MoveTo *moveTo = MoveTo::create(speed_, currentPoints.at(i));
+            MoveTo *moveTo = MoveTo::create(speed_, currentPoints.at((unsigned long) i));
             actions.push_back(moveTo);
         }
 
