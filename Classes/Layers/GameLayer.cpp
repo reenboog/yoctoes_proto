@@ -250,16 +250,56 @@ bool GameLayer::contains(vector<Tower *> &towers, Tower *tower) {
     return false;
 }
 
-vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {
+void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *destination) {
     towersCopy_ = towers_;
-    distanceFromStartForTower_[source] = 0; //todo: change to destination
+    distanceFromStartForTower_[destination] = 0; //find way from destination to all source towers
 
-    this->dijkstra(source->getTeam());
+    this->dijkstra(source.at(0)->getTeam());    //find way for units with team of first tower
+
+    int size = source.size();
+    for (int i = 0; i < size; ++i) {
+        Tower *currentSource = source.at(i);
+
+        vector<Road *> route = this->routeFromTowerToTower(currentSource, destination);
+
+        int unitsForSend = 0;
+        Unit *unit = Unit::create();
+        unit->setPosition(currentSource->getPosition());
+        if (route.at(0)->getTowerOne() != currentSource) {
+            unit->setRoute(route, true);
+            unitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
+            unit->setTeam(route.at(0)->getTowerTwo()->getTeam());
+        } else {
+            unit->setRoute(route);
+            unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
+            unit->setTeam(route.at(0)->getTowerOne()->getTeam());
+        }
+        unit->setCount(unitsForSend);
+        this->addChild(unit, 20);
+        unit->startTrek();
+
+        route.clear();
+    }
+
+    previousForTower_.clear();
+    for (map<Tower *, int>::iterator it = distanceFromStartForTower_.begin(); it != distanceFromStartForTower_.end(); ++it) {
+        distanceFromStartForTower_[it->first] = INT_MAX;
+    }
+    destination->setSelected(false);
+    int selectedSize = selectedTowers_.size();
+    for (int i = 0; i < selectedSize; ++i) {
+        selectedTowers_.at(i)->setSelected(false);
+    }
+    selectedTowers_.clear();
+
+}
+
+vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {
 
     vector<char> pathTowers;
     vector<Road *> route;
 
-    Tower *previous = destination;  //todo: change to source
+    Tower *previous = source;   //going back from source to destination
     while (previous) {
         pathTowers.push_back(previous->getID());
         previous = previousForTower_[previous];
@@ -276,11 +316,6 @@ vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destinatio
                 route.push_back(currentRoad);
             }
         }
-    }
-
-    previousForTower_.clear();
-    for (map<Tower *, int>::iterator it = distanceFromStartForTower_.begin(); it != distanceFromStartForTower_.end(); ++it) {
-        distanceFromStartForTower_[it->first] = INT_MAX;
     }
 
     return route;
@@ -318,27 +353,10 @@ void GameLayer::onTouchMoved(Touch *touch, Event *event) {
 
 void GameLayer::onTouchEnded(Touch *touch, Event *event) {
     int size = selectedTowers_.size();
-    return;
     if (size > 1) {
-//        vector<Road *> route = this->routeFromTowerToTower(dst_, src_);
-//
-//        int unitsForSend = 0;
-//        Unit *unit = Unit::create();
-//        unit->setPosition(src_->getPosition());
-//        if (route.at(0)->getTowerOne() != src_) {  //fixme
-//            unit->setRoute(route, true);
-//            unitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
-//            unit->setTeam(route.at(0)->getTowerTwo()->getTeam());
-//        } else {
-//            unit->setRoute(route);
-//            unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
-//            unit->setTeam(route.at(0)->getTowerOne()->getTeam());
-//        }
-//        unit->setCount(unitsForSend);
-//        this->addChild(unit, 20);
-//        unit->startTrek();
-//
-//        route.clear();
+        Tower *destination = selectedTowers_.at(size - 1);
+        selectedTowers_.pop_back();
+        this->sendUnitsFromTowersToTower(selectedTowers_, destination);
     }
 }
 
