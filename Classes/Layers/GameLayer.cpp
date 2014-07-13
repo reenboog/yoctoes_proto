@@ -353,7 +353,21 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
 }
 
 void GameLayer::onTouchMoved(Touch *touch, Event *event) {
-    //
+    cocos2d::Point locationInWorld = this->convertToWorldSpace(touch->getLocation());
+    for (vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
+        Tower *currentTower = *it;
+        cocos2d::Point position = currentTower->getPosition();
+        cocos2d::Size size = currentTower->getContentSize();
+        cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
+        if (rect.containsPoint(locationInWorld)) {
+            if (this->isTowerSelected(currentTower)) {
+                return;
+            } else {
+                currentTower->setSelected(true);
+                selectedTowers_.push_back(currentTower);
+            }
+        }
+    }
 }
 
 void GameLayer::onTouchEnded(Touch *touch, Event *event) {
