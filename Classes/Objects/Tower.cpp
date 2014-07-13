@@ -56,6 +56,17 @@ void Tower::update(float dt) {
             this->updadeUnitsLabel();
         }
     }
+    if (selected_) {
+        if (!selectionAnimated_) {
+            selectionAnimated_ = true;
+            selection_ = Sprite::create("select.png");
+            selection_->setAnchorPoint({0.0f, 0.0f});
+            this->addChild(selection_);
+        }
+    } else {
+        selectionAnimated_ = false;
+        this->removeChild(selection_, true);
+    }
 }
 
 void Tower::checkForApplying(Unit *unit) {

@@ -2,6 +2,7 @@
 #define __GAME_LAYER_H__
 
 #include "cocos2d.h"
+#include "Constants.h"
 
 class Road;
 class Tower;
@@ -24,18 +25,16 @@ private:
     std::vector<Road *> roads_;
     std::vector<Tower *> towers_;
     std::vector<Tower *> towersCopy_;
+    std::vector<Tower *> selectedTowers_;
     std::map<Tower *, Tower *> previousForTower_;
     std::map<Tower *, int> distanceFromStartForTower_;
-
-    Tower *src_;
-    Tower *dst_;
 
     virtual bool init();
     void createBoard();
     void createRoadsManually();
     void update(float dt);
 
-    void dijkstra();
+    void dijkstra(Constants::TeamType teamSrc);
     Tower *extractSmallest(std::vector<Tower *> &towers);
     std::vector<Tower *> *adjacentRemainingTowers(Tower *tower);
     int distance(Tower *towerOne, Tower *towerTwo);

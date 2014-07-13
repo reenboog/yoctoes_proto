@@ -18,6 +18,8 @@ public:
     void setID(char id);
     const Constants::TeamType &getTeam() const;
     int getUnitsCount() const;
+    bool isSelected() const;
+    void setSelected(bool selected);
 
     void applyUnit(Unit *unit);
     void checkForApplying(Unit *unit);
@@ -27,13 +29,16 @@ private:
     bool initWithType(Constants::TowerType type);
     void updadeUnitsLabel();
 
+    int unitsCount_;
     char id_;
     Constants::TeamType team_;
     Constants::TowerType towerType_;
     float generateUnitTime_;
     float timeAfterLastUnit_;
+    bool selected_;
+    bool selectionAnimated_;
     cocos2d::Label *unitsLabel_;
-    int unitsCount_;
+    cocos2d::Sprite *selection_;
 };
 
 inline char Tower::getID() const {
@@ -50,6 +55,14 @@ inline const Constants::TeamType &Tower::getTeam() const {
 
 inline int Tower::getUnitsCount() const {
     return unitsCount_;
+}
+
+inline bool Tower::isSelected() const {
+    return selected_;
+}
+
+inline void Tower::setSelected(bool selected) {
+    selected_ = selected;
 }
 
 #endif //__TOWER_H_

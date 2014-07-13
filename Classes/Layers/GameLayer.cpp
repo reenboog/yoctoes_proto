@@ -50,9 +50,6 @@ bool GameLayer::init() {
     this->createBoard();
     this->createRoadsManually();
 
-    src_ = NULL;
-    dst_ = NULL;
-
     this->scheduleUpdate();
 
     return true;
@@ -175,8 +172,8 @@ void GameLayer::createRoadsManually() {
     roads_.push_back(road);
 }
 
-void GameLayer::dijkstra() {
-    Constants::TeamType team = Constants::TeamType::red;    //fixme
+void GameLayer::dijkstra(Constants::TeamType teamSrc) {
+    Constants::TeamType team = teamSrc;
     while (towersCopy_.size() > 0) {
         Tower *smallest = extractSmallest(towersCopy_);
         vector<Tower *> *adjacentTowers = adjacentRemainingTowers(smallest);
@@ -257,7 +254,7 @@ vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destinatio
     towersCopy_ = towers_;
     distanceFromStartForTower_[source] = 0; //todo: change to destination
 
-    this->dijkstra();
+    this->dijkstra(source->getTeam());
 
     vector<char> pathTowers;
     vector<Road *> route;
@@ -299,45 +296,50 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
-            if (src_ == NULL) {
-                src_ = currentTower;
-            } else {
-                dst_ = currentTower;
-            }
+            currentTower->setSelected(true);
+            selectedTowers_.push_back(currentTower);
             return true;
         }
+    }
+
+    // if tap outside the tower - unselect all
+    int size = selectedTowers_.size();
+    for (int i = size - 1; i >= 0; --i) {
+        selectedTowers_.at(i)->setSelected(false);
+        selectedTowers_.pop_back();
     }
 
     return false;
 }
 
-void GameLayer::onTouchEnded(Touch *touch, Event *event) {
-    if (src_ && dst_) {
-        vector<Road *> route = this->routeFromTowerToTower(dst_, src_);
-
-        int unitsForSend = 0;
-        Unit *unit = Unit::create();
-        unit->setPosition(src_->getPosition());
-        if (route.at(0)->getTowerOne() != src_) {  //fixme
-            unit->setRoute(route, true);
-            unitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
-            unit->setTeam(route.at(0)->getTowerTwo()->getTeam());
-        } else {
-            unit->setRoute(route);
-            unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
-            unit->setTeam(route.at(0)->getTowerOne()->getTeam());
-        }
-        unit->setCount(unitsForSend);
-        this->addChild(unit, 20);
-        unit->startTrek();
-
-        src_ = NULL;
-        dst_ = NULL;
-        route.clear();
-    }
+void GameLayer::onTouchMoved(Touch *touch, Event *event) {
+    //
 }
 
-void GameLayer::onTouchMoved(Touch *touch, Event *event) {
+void GameLayer::onTouchEnded(Touch *touch, Event *event) {
+    int size = selectedTowers_.size();
+    return;
+    if (size > 1) {
+//        vector<Road *> route = this->routeFromTowerToTower(dst_, src_);
+//
+//        int unitsForSend = 0;
+//        Unit *unit = Unit::create();
+//        unit->setPosition(src_->getPosition());
+//        if (route.at(0)->getTowerOne() != src_) {  //fixme
+//            unit->setRoute(route, true);
+//            unitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
+//            unit->setTeam(route.at(0)->getTowerTwo()->getTeam());
+//        } else {
+//            unit->setRoute(route);
+//            unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
+//            unit->setTeam(route.at(0)->getTowerOne()->getTeam());
+//        }
+//        unit->setCount(unitsForSend);
+//        this->addChild(unit, 20);
+//        unit->startTrek();
+//
+//        route.clear();
+    }
 }
 
 void GameLayer::onTouchCancelled(Touch *touch, Event *event) {
