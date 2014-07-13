@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
+#include "Tower.h"
 
 class Road;
 class Tower;
@@ -39,7 +40,7 @@ private:
     std::vector<Tower *> *adjacentRemainingTowers(Tower *tower);
     int distance(Tower *towerOne, Tower *towerTwo);
     bool contains(std::vector<Tower *> &towers, Tower *tower);
-    std::vector<Road *> routeFromTowerToTower(Tower * source, Tower *destination);
+    std::vector<Road *> routeFromTower(Tower *source);
     void sendUnitsFromTowersToTower(std::vector<Tower *>source, Tower *destination);
 
     Tower *towerWithID(char id);

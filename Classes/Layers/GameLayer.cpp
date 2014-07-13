@@ -58,7 +58,7 @@ bool GameLayer::init() {
 void GameLayer::update(float dt) {
     int size = towers_.size();
     for (int i = 0; i < size; ++i) {
-        towers_.at(i)->update(dt);
+        towers_.at((unsigned long) i)->update(dt);
     }
 }
 
@@ -180,7 +180,7 @@ void GameLayer::dijkstra(Constants::TeamType teamSrc) {
 
         const int size = adjacentTowers->size();
         for (int i = 0; i < size; ++i) {
-            Tower *adjacent = adjacentTowers->at(i);
+            Tower *adjacent = adjacentTowers->at((unsigned long) i);
             int distance = this->distance(smallest, adjacent) + distanceFromStartForTower_[smallest];
             if (distance < distanceFromStartForTower_[adjacent]) {
                 if (team != adjacent->getTeam() && adjacent->getTeam() != Constants::TeamType::neutral) {
@@ -200,7 +200,7 @@ Tower *GameLayer::extractSmallest(vector<Tower *> &towers) {
     int smallestPosition = 0;
     Tower *smallest = towers.at(0);
     for (int i = 1; i < size; ++i) {
-        Tower *current = towers.at(i);
+        Tower *current = towers.at((unsigned long) i);
         if (distanceFromStartForTower_[current] < distanceFromStartForTower_[smallest]) {
             smallest = current;
             smallestPosition = i;
@@ -215,7 +215,7 @@ vector<Tower *> *GameLayer::adjacentRemainingTowers(Tower *tower) {
 
     const int size = roads_.size();
     for (int i = 0; i < size; ++i) {
-        Road *road = roads_.at(i);
+        Road *road = roads_.at((unsigned long) i);
         Tower *adjacent = NULL;
         if (road->getTowerOne() == tower) {
             adjacent = road->getTowerTwo();
@@ -232,7 +232,7 @@ vector<Tower *> *GameLayer::adjacentRemainingTowers(Tower *tower) {
 int GameLayer::distance(Tower *towerOne, Tower *towerTwo) {
     const int size = roads_.size();
     for (int i = 0; i < size; ++i) {
-        Road *road = roads_.at(i);
+        Road *road = roads_.at((unsigned long) i);
         if (road->connects(towerOne, towerTwo)) {
             return road->getDistance();
         }
@@ -243,7 +243,7 @@ int GameLayer::distance(Tower *towerOne, Tower *towerTwo) {
 bool GameLayer::contains(vector<Tower *> &towers, Tower *tower) {
     const int size = towers.size();
     for (int i = 0; i < size; ++i) {
-        if (tower == towers.at(i)) {
+        if (tower == towers.at((unsigned long) i)) {
             return true;
         }
     }
@@ -258,9 +258,9 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
 
     int size = source.size();
     for (int i = 0; i < size; ++i) {
-        Tower *currentSource = source.at(i);
+        Tower *currentSource = source.at((unsigned long) i);
 
-        vector<Road *> route = this->routeFromTowerToTower(currentSource, destination);
+        vector<Road *> route = this->routeFromTower(currentSource);
 
         int unitsForSend = 0;
         Unit *unit = Unit::create();
@@ -288,13 +288,13 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
     destination->setSelected(false);
     int selectedSize = selectedTowers_.size();
     for (int i = 0; i < selectedSize; ++i) {
-        selectedTowers_.at(i)->setSelected(false);
+        selectedTowers_.at((unsigned long) i)->setSelected(false);
     }
     selectedTowers_.clear();
 
 }
 
-vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destination) {
+vector<Road *> GameLayer::routeFromTower(Tower *source) {
 
     vector<char> pathTowers;
     vector<Road *> route;
@@ -307,8 +307,8 @@ vector<Road *> GameLayer::routeFromTowerToTower(Tower *source, Tower *destinatio
 
     int size = pathTowers.size();
     for (int i = 0; i < size - 1; ++i) {
-        char first = pathTowers.at(i);
-        char second = pathTowers.at(i + 1);
+        char first = pathTowers.at((unsigned long) i);
+        char second = pathTowers.at((unsigned long) (i + 1));
         for (vector<Road *>::iterator it = roads_.begin(); it != roads_.end(); ++it) {
             Road *currentRoad = *it;
             if ((currentRoad->getTowerOne()->getID() == first && currentRoad->getTowerTwo()->getID() == second) ||
