@@ -21,7 +21,7 @@ Tower::~Tower() {
 }
 
 bool Tower::initWithType(Constants::TowerType type) {
-    std::string filename = "tower.png"; //todo: add default value
+    std::string filename = "neutral.png"; //todo: add default value
     if (type == Constants::TowerType::type1) {
         filename = "tower.png";
         team_ = Constants::TeamType::red;
@@ -47,13 +47,15 @@ bool Tower::initWithType(Constants::TowerType type) {
 }
 
 void Tower::update(float dt) {
-    if (unitsCount_ < UNITS_LIMIT) {
-        if (timeAfterLastUnit_ <= generateUnitTime_) {
-            timeAfterLastUnit_ += dt;
-        } else {
-            timeAfterLastUnit_ = 0;
-            unitsCount_ = unitsCount_ + 1;
-            this->updadeUnitsLabel();
+    if (Constants::TowerType::type0 != towerType_) {
+        if (unitsCount_ < UNITS_LIMIT) {
+            if (timeAfterLastUnit_ <= generateUnitTime_) {
+                timeAfterLastUnit_ += dt;
+            } else {
+                timeAfterLastUnit_ = 0;
+                unitsCount_ = unitsCount_ + 1;
+                this->updadeUnitsLabel();
+            }
         }
     }
     if (selected_) {

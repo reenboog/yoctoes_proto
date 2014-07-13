@@ -13,7 +13,7 @@ const int testMap_[n][n] = {
         {0, 0, 0, 1, 2, 1, 1, 0, 0},/*{_, _, _, _, b, _, _, _, _}, 2 */
         {0, 0, 0, 1, 0, 0, 1, 1, 1},/*{_, _, _, _, _, _, _, _, _}, 3 */
         {0, 0, 0, 1, 0, 0, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _}, 4 */
-        {0, 2, 1, 2, 1, 1, 2, 1, 2},/*{_, a, _, c, _, _, e, _, f}, 5 */
+        {0, 3, 1, 2, 1, 1, 2, 1, 4},/*{_, a, _, c, _, _, e, _, f}, 5 */
         {0, 1, 0, 1, 0, 0, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _}, 6 */
         {0, 1, 1, 2, 1, 2, 1, 1, 1},/*{_, _, _, d, _, g, _, _, _}, 7 */
         {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _}, 8 */
@@ -79,14 +79,17 @@ void GameLayer::createBoard() {
                 road->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
                 this->addChild(road);
 
-            } else if (testMap_[i][j] == 2) {
-
+            } else {
                 Tower *tower;
-                if (i == 5 && j == 6) {
-                    tower = Tower::createWithType(Constants::TowerType::type2);
-                } else {
+                if (testMap_[i][j] == 2) {  //neutral
+                    tower = Tower::createWithType(Constants::TowerType::type0);
+                } else if (testMap_[i][j] == 3) {   //me
                     tower = Tower::createWithType(Constants::TowerType::type1);
+                    playerTeam_ = tower->getTeam();
+                } else if (testMap_[i][j] == 4) {   //enemy
+                    tower = Tower::createWithType(Constants::TowerType::type2);
                 }
+
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
                 this->addChild(tower, 10);
 
@@ -331,6 +334,9 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
+            if (currentTower->getTeam() != playerTeam_ && selectedTowers_.size() == 0) {
+                return false;
+            }
             if (this->isTowerSelected(currentTower)) {
                 currentTower->setSelected(false);
                 selectedTowers_.erase(std::remove(selectedTowers_.begin(), selectedTowers_.end(), currentTower), selectedTowers_.end());

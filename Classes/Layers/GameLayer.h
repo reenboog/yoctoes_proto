@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
-#include "Tower.h"
 
 class Road;
 class Tower;
@@ -29,6 +28,7 @@ private:
     std::vector<Tower *> selectedTowers_;
     std::map<Tower *, Tower *> previousForTower_;
     std::map<Tower *, int> distanceFromStartForTower_;
+    Constants::TeamType playerTeam_;
 
     virtual bool init();
     void createBoard();
