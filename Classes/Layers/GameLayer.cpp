@@ -266,16 +266,14 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
         vector<Road *> route = this->routeFromTower(currentSource);
 
         int unitsForSend = 0;
-        Unit *unit = Unit::create();
+        Unit *unit = Unit::create(currentSource->getTeam());
         unit->setPosition(currentSource->getPosition());
         if (route.at(0)->getTowerOne() != currentSource) {
             unit->setRoute(route, true);
             unitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
-            unit->setTeam(route.at(0)->getTowerTwo()->getTeam());
         } else {
             unit->setRoute(route);
             unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
-            unit->setTeam(route.at(0)->getTowerOne()->getTeam());
         }
         unit->setCount(unitsForSend);
         this->addChild(unit, 20);

@@ -6,9 +6,9 @@
 
 class Road;
 
-class Unit : public cocos2d::Sprite {
+class Unit : public cocos2d::Node {
 public:
-    static Unit *create();
+    static Unit *create(Constants::TeamType team);
     ~Unit();
 
     void startTrek();
@@ -19,14 +19,16 @@ public:
     void setTeam(Constants::TeamType const &team);
 
 private:
-    bool init();
+    bool init(Constants::TeamType team);
     cocos2d::Sequence *addActionsToSequence(std::vector<cocos2d::FiniteTimeAction *> actions, cocos2d::Sequence *sequence);
+    std::string determineFilename();
 
     float speed_;
     Constants::TeamType team_;
     std::vector<Road *> route_;
     bool needSwapFirst_;
     int count_;
+    cocos2d::Sprite *unitBody_;
 };
 
 inline void Unit::setRoute(std::vector<Road *> route, bool needSwapFirst) {

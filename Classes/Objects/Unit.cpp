@@ -5,9 +5,9 @@
 using namespace std;
 using namespace cocos2d;
 
-Unit *Unit::create() {
+Unit *Unit::create(Constants::TeamType team) {
     Unit *unit = new Unit();
-    if (unit->init()) {
+    if (unit->init(team)) {
         unit->autorelease();
     } else {
         CC_SAFE_DELETE(unit);
@@ -18,9 +18,14 @@ Unit *Unit::create() {
 Unit::~Unit() {
 }
 
-bool Unit::init() {
-    if (!Sprite::initWithFile("unit.png"))
+bool Unit::init(Constants::TeamType team) {
+    if (!Node::init())
         return false;
+
+    team_ = team;
+
+    unitBody_ = Sprite::create(this->determineFilename());
+    this->addChild(unitBody_);
 
     speed_ = 1.0f;  //seconds from one tile to another
 
@@ -92,4 +97,15 @@ Sequence *Unit::addActionsToSequence(vector<FiniteTimeAction *> actions, Sequenc
     }
 
     return sequence;
+}
+
+std::string Unit::determineFilename() {
+    string filename = "unit.png"; //todo: add default value
+    if (team_ == Constants::TeamType::red) {
+        filename = "unit.png";
+    } else if (team_ == Constants::TeamType::blue) {
+        filename = "enemy.png";
+    }
+    return filename;
+
 }
