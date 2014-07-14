@@ -430,9 +430,9 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
-//            if (currentTower->getTeam() != playerTeam_ && selectedTowers_.size() == 0) {
-//                return false;
-//            }
+            if (currentTower->getTeam() != playerTeam_ && selectedTowers_.size() == 0) {
+                return false;
+            }
             if (this->isTowerSelected(currentTower)) {
                 currentTower->setSelected(false);
                 selectedTowers_.erase(std::remove(selectedTowers_.begin(), selectedTowers_.end(), currentTower), selectedTowers_.end());
@@ -447,7 +447,7 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
     // if tap outside the tower - unselect all
     int size = selectedTowers_.size();
     for (int i = size - 1; i >= 0; --i) {
-        selectedTowers_.at(i)->setSelected(false);
+        selectedTowers_.at((unsigned long) i)->setSelected(false);
         selectedTowers_.pop_back();
     }
 
@@ -464,10 +464,15 @@ void GameLayer::onTouchMoved(Touch *touch, Event *event) {
         if (rect.containsPoint(locationInWorld)) {
             if (this->isTowerSelected(currentTower)) {
                 return;
-            } else {
-                currentTower->setSelected(true);
-                selectedTowers_.push_back(currentTower);
+            } else if (selectedTowers_.size() > 1) {
+                Tower *lastSelected = selectedTowers_.back();
+                if (lastSelected->getTeam() != playerTeam_) {
+                    lastSelected->setSelected(false);
+                    selectedTowers_.pop_back();
+                }
             }
+            currentTower->setSelected(true);
+            selectedTowers_.push_back(currentTower);
         }
     }
 }
