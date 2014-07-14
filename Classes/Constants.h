@@ -3,32 +3,18 @@
 
 namespace Constants {
 
-    enum class TileType : int {
-        nothing = 0,
-        road = 1,
-        tower = 2,
-    };
-
-    enum class TowerElement : int {
-        none = 0,
-        water,
-        fire,
-        air,
-        earth,
-    };
-
-    enum class RoadType : int {
-        flat = 0,
-        leftAngle,
-        rightAngle,
-    };
-
-    enum class TeamType : int {
-        neutral = 0,
+    enum class TeamColor : int {
+        unfilled = 0,
         red,
         blue,
         green,
         yellow,
+    };
+
+    enum class TeamGroup : int {
+        neutral = 0,
+        alfa,
+        omega,
     };
 
 };

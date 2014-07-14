@@ -9,29 +9,32 @@ class Unit;
 
 class Tower : public cocos2d::Sprite {
 public:
-    static Tower *createWithType(Constants::TeamType team);
+    static Tower *createWithType(Constants::TeamColor color);
     ~Tower();
 
     void update(float dt);
 
     char getID() const;
     void setID(char id);
-    const Constants::TeamType &getTeam() const;
+    const Constants::TeamColor &getTeamColor() const;
     void setSelected(bool selected);
+    Constants::TeamGroup const &getTeamGroup() const;
+    void setTeamGroup(Constants::TeamGroup const &group);
 
     void applyUnit(Unit *unit);
     void checkForApplying(Unit *unit);
     int takeHalfUnits();
-    void changeToTeam(Constants::TeamType newTeam);
+    void changeToTeam(Constants::TeamColor TeamColor);
 
 private:
-    bool initWithType(Constants::TeamType team);
+    bool initWithType(Constants::TeamColor color);
     void updateUnitsLabel();
     std::string determineFilename();
 
     int unitsCount_;
     char id_;
-    Constants::TeamType team_;
+    Constants::TeamColor color_;
+    Constants::TeamGroup group_;
     float generateUnitTime_;
     float timeAfterLastUnit_;
     bool selected_;
@@ -49,12 +52,20 @@ inline void Tower::setID(char id) {
     id_ = id;
 }
 
-inline const Constants::TeamType &Tower::getTeam() const {
-    return team_;
+inline const Constants::TeamColor &Tower::getTeamColor() const {
+    return color_;
 }
 
 inline void Tower::setSelected(bool selected) {
     selected_ = selected;
+}
+
+inline Constants::TeamGroup const &Tower::getTeamGroup() const {
+    return group_;
+}
+
+inline void Tower::setTeamGroup(Constants::TeamGroup const &group) {
+    group_ = group;
 }
 
 #endif //__TOWER_H_

@@ -28,14 +28,15 @@ private:
     std::vector<Tower *> selectedTowers_;
     std::map<Tower *, Tower *> previousForTower_;
     std::map<Tower *, int> distanceFromStartForTower_;
-    Constants::TeamType playerTeam_;
+    Constants::TeamColor playerColor_;
+    Constants::TeamGroup playerGroup_;
 
     virtual bool init();
     void createBoard();
     void createRoadsManually();
     void update(float dt);
 
-    void dijkstra(Constants::TeamType teamSrc);
+    void dijkstra(Constants::TeamColor teamSrc);
     Tower *extractSmallest(std::vector<Tower *> &towers);
     std::vector<Tower *> *adjacentRemainingTowers(Tower *tower);
     int distance(Tower *towerOne, Tower *towerTwo);
@@ -45,6 +46,7 @@ private:
 
     Tower *towerWithID(char id);
     bool isTowerSelected(Tower *tower);
+    Constants::TeamGroup groupForColor(Constants::TeamColor color);
 };
 
 #endif // __GAME_LAYER_H__

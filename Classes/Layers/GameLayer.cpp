@@ -47,6 +47,8 @@ bool GameLayer::init() {
     listener->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+    playerGroup_ = Constants::TeamGroup::alfa;
+
     this->createBoard();
     this->createRoadsManually();
 
@@ -81,17 +83,17 @@ void GameLayer::createBoard() {
 
             } else {
                 Tower *tower = nullptr;
-                if (testMap_[i][j] == 2) {  //neutral
-                    tower = Tower::createWithType(Constants::TeamType::neutral);
+                if (testMap_[i][j] == 2) {  //unfilled
+                    tower = Tower::createWithType(Constants::TeamColor::unfilled);
                 } else if (testMap_[i][j] == 3) {
-                    tower = Tower::createWithType(Constants::TeamType::blue);
-                    playerTeam_ = tower->getTeam();
+                    tower = Tower::createWithType(Constants::TeamColor::blue);
+                    playerColor_ = tower->getTeamColor();
                 } else if (testMap_[i][j] == 4) {
-                    tower = Tower::createWithType(Constants::TeamType::red);
+                    tower = Tower::createWithType(Constants::TeamColor::red);
                 } else if (testMap_[i][j] == 5) {
-                    tower = Tower::createWithType(Constants::TeamType::yellow);
+                    tower = Tower::createWithType(Constants::TeamColor::yellow);
                 } else if (testMap_[i][j] == 6) {
-                    tower = Tower::createWithType(Constants::TeamType::green);
+                    tower = Tower::createWithType(Constants::TeamColor::green);
                 }
 
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
@@ -273,8 +275,8 @@ void GameLayer::createRoadsManually() {
     roads_.push_back(road);
 }
 
-void GameLayer::dijkstra(Constants::TeamType teamSrc) {
-    Constants::TeamType team = teamSrc;
+void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
+    Constants::TeamColor team = teamSrc;
     while (towersCopy_.size() > 0) {
         Tower *smallest = extractSmallest(towersCopy_);
         vector<Tower *> *adjacentTowers = adjacentRemainingTowers(smallest);
@@ -284,7 +286,7 @@ void GameLayer::dijkstra(Constants::TeamType teamSrc) {
             Tower *adjacent = adjacentTowers->at((unsigned long) i);
             int distance = this->distance(smallest, adjacent) + distanceFromStartForTower_[smallest];
             if (distance < distanceFromStartForTower_[adjacent]) {
-                if (team != adjacent->getTeam() && adjacent->getTeam() != Constants::TeamType::neutral) {
+                if (this->groupForColor(team) != adjacent->getTeamGroup() && adjacent->getTeamGroup() != Constants::TeamGroup::neutral) {
                     distance = distance * 30;   //fixme
                 }
                 distanceFromStartForTower_[adjacent] = distance;
@@ -355,7 +357,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
     towersCopy_ = towers_;
     distanceFromStartForTower_[destination] = 0; //find way from destination to all source towers
 
-    this->dijkstra(source.at(0)->getTeam());    //find way for units with team of first tower
+    this->dijkstra(source.at(0)->getTeamColor());    //find way for units with team of first tower
 
     int size = source.size();
     for (int i = 0; i < size; ++i) {
@@ -364,7 +366,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
         vector<Road *> route = this->routeFromTower(currentSource);
 
         int unitsForSend = 0;
-        Unit *unit = Unit::create(currentSource->getTeam());
+        Unit *unit = Unit::create(currentSource->getTeamColor());
         unit->setPosition(currentSource->getPosition());
         if (route.at(0)->getTowerOne() != currentSource) {
             unit->setRoute(route, true);
@@ -374,6 +376,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
             unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
         }
         unit->setCount(unitsForSend);
+        unit->setTeamGroup(currentSource->getTeamGroup());
         this->addChild(unit, 20);
         unit->startTrek();
 
@@ -430,7 +433,7 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
-            if (currentTower->getTeam() != playerTeam_ && selectedTowers_.size() == 0) {
+            if (currentTower->getTeamColor() != playerColor_ && selectedTowers_.size() == 0) {
                 return false;
             }
             if (this->isTowerSelected(currentTower)) {
@@ -466,7 +469,7 @@ void GameLayer::onTouchMoved(Touch *touch, Event *event) {
                 return;
             } else if (selectedTowers_.size() > 1) {
                 Tower *lastSelected = selectedTowers_.back();
-                if (lastSelected->getTeam() != playerTeam_) {
+                if (lastSelected->getTeamColor() != playerColor_) {
                     lastSelected->setSelected(false);
                     selectedTowers_.pop_back();
                 }
@@ -504,4 +507,14 @@ Tower *GameLayer::towerWithID(char id) {
 
 bool GameLayer::isTowerSelected(Tower *tower) {
     return std::find(selectedTowers_.begin(), selectedTowers_.end(), tower) != selectedTowers_.end();
+}
+
+Constants::TeamGroup GameLayer::groupForColor(Constants::TeamColor color) {
+    if (color == Constants::TeamColor::blue || color == Constants::TeamColor::green)
+        return Constants::TeamGroup::alfa;
+
+    if (color == Constants::TeamColor::red || color == Constants::TeamColor::yellow)
+        return Constants::TeamGroup::omega;
+
+    return Constants::TeamGroup::neutral;
 }

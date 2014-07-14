@@ -8,23 +8,26 @@ class Road;
 
 class Unit : public cocos2d::Node {
 public:
-    static Unit *create(Constants::TeamType team);
+    static Unit *create(Constants::TeamColor team);
     ~Unit();
 
     void startTrek();
     void setRoute(std::vector<Road *> route, bool needSwapFirst = false);
     int getCount() const;
     void setCount(int count);
-    const Constants::TeamType &getTeam() const;
-    void setTeam(Constants::TeamType const &team);
+    const Constants::TeamColor &getTeamColor() const;
+    void setColor(Constants::TeamColor const &color);
+    Constants::TeamGroup const &getTeamGroup() const;
+    void setTeamGroup(Constants::TeamGroup const &group);
 
 private:
-    bool init(Constants::TeamType team);
+    bool init(Constants::TeamColor color);
     cocos2d::Sequence *addActionsToSequence(std::vector<cocos2d::FiniteTimeAction *> actions, cocos2d::Sequence *sequence);
     std::string determineFilename();
 
     float speed_;
-    Constants::TeamType team_;
+    Constants::TeamColor color_;
+    Constants::TeamGroup group_;
     std::vector<Road *> route_;
     bool needSwapFirst_;
     int count_;
@@ -45,12 +48,20 @@ inline void Unit::setCount(int count) {
     count_ = count;
 }
 
-inline const Constants::TeamType &Unit::getTeam() const {
-    return team_;
+inline const Constants::TeamColor &Unit::getTeamColor() const {
+    return color_;
 }
 
-inline void Unit::setTeam(Constants::TeamType const &team) {
-    team_ = team;
+inline void Unit::setColor(Constants::TeamColor const &color) {
+    color_ = color;
+}
+
+inline Constants::TeamGroup const &Unit::getTeamGroup() const {
+    return group_;
+}
+
+inline void Unit::setTeamGroup(Constants::TeamGroup const &group) {
+    group_ = group;
 }
 
 #endif //__UNIT_H_

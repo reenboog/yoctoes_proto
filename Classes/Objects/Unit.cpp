@@ -5,9 +5,9 @@
 using namespace std;
 using namespace cocos2d;
 
-Unit *Unit::create(Constants::TeamType team) {
+Unit *Unit::create(Constants::TeamColor color) {
     Unit *unit = new Unit();
-    if (unit->init(team)) {
+    if (unit->init(color)) {
         unit->autorelease();
     } else {
         CC_SAFE_DELETE(unit);
@@ -18,11 +18,11 @@ Unit *Unit::create(Constants::TeamType team) {
 Unit::~Unit() {
 }
 
-bool Unit::init(Constants::TeamType team) {
+bool Unit::init(Constants::TeamColor color) {
     if (!Node::init())
         return false;
 
-    team_ = team;
+    color_ = color;
 
     unitBody_ = Sprite::create(this->determineFilename());
     this->addChild(unitBody_);
@@ -60,9 +60,9 @@ void Unit::startTrek() {
         }
         currentPoints.push_back(currentTowerDestination->getPosition());
 
-        int size = currentPoints.size();
+        int localSize = currentPoints.size();
         vector<FiniteTimeAction *> actions;
-        for (int i = 0; i < size; ++i) {
+        for (int i = 0; i < localSize; ++i) {
             MoveTo *moveTo = MoveTo::create(speed_, currentPoints.at((unsigned long) i));
             actions.push_back(moveTo);
         }
@@ -101,9 +101,9 @@ Sequence *Unit::addActionsToSequence(vector<FiniteTimeAction *> actions, Sequenc
 
 std::string Unit::determineFilename() {
     string filename = "unit.png"; //todo: add default value
-    if (team_ == Constants::TeamType::red) {
+    if (color_ == Constants::TeamColor::red) {
         filename = "unit.png";
-    } else if (team_ == Constants::TeamType::blue) {
+    } else if (color_ == Constants::TeamColor::blue) {
         filename = "enemy.png";
     }
     return filename;
