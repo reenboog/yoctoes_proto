@@ -8,16 +8,16 @@ using namespace cocos2d;
 
 const int n = 9;
 const int testMap_[n][n] = {
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _}, 0 */
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _}, 1 */
-        {0, 0, 0, 1, 2, 1, 1, 0, 0},/*{_, _, _, _, b, _, _, _, _}, 2 */
-        {0, 0, 0, 1, 0, 0, 1, 1, 1},/*{_, _, _, _, _, _, _, _, _}, 3 */
-        {0, 0, 0, 1, 0, 0, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _}, 4 */
-        {0, 3, 1, 2, 1, 1, 2, 1, 4},/*{_, a, _, c, _, _, e, _, f}, 5 */
-        {0, 1, 0, 1, 0, 0, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _}, 6 */
-        {0, 1, 1, 2, 1, 2, 1, 1, 1},/*{_, _, _, d, _, g, _, _, _}, 7 */
-        {0, 0, 0, 0, 0, 0, 0, 0, 0},/*{_, _, _, _, _, _, _, _, _}, 8 */
-        /*                             0  1  2  3  4  5  6  7  8    */
+        {6, 1, 1, 1, 1, 2, 0, 0, 4},/*{h, _, _, _, _, j, _, _, i, }, 0 */
+        {1, 0, 0, 1, 0, 1, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _, }, 1 */
+        {1, 2, 0, 2, 0, 1, 1, 2, 1},/*{_, m, _, b, _, _, _, k, _, }, 2 */
+        {0, 1, 0, 0, 0, 1, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _, }, 3 */
+        {0, 1, 0, 0, 0, 1, 1, 1, 1},/*{_, _, _, _, _, _, _, _, _, }, 4 */
+        {1, 1, 2, 0, 0, 2, 0, 2, 0},/*{_, _, c, _, _, e, _, f, _, }, 5 */
+        {3, 0, 1, 0, 0, 1, 0, 0, 0},/*{a, _, _, _, _, _, _, _, _, }, 6 */
+        {0, 0, 2, 0, 0, 1, 1, 1, 5},/*{_, _, d, _, _, _, _, _, l, }, 7 */
+        {0, 0, 1, 1, 2, 1, 0, 0, 0},/*{_, _, _, _, g, _, _, _, _, }, 8 */
+        /*                             0  1  2  3  4  5  6  7  8       */
 };
 const float tileWidth = 38.0f;
 
@@ -83,36 +83,58 @@ void GameLayer::createBoard() {
                 Tower *tower = nullptr;
                 if (testMap_[i][j] == 2) {  //neutral
                     tower = Tower::createWithType(Constants::TeamType::neutral);
-                } else if (testMap_[i][j] == 3) {   //me
-                    tower = Tower::createWithType(Constants::TeamType::red);
-                    playerTeam_ = tower->getTeam();
-                } else if (testMap_[i][j] == 4) {   //enemy
+                } else if (testMap_[i][j] == 3) {
                     tower = Tower::createWithType(Constants::TeamType::blue);
+                    playerTeam_ = tower->getTeam();
+                } else if (testMap_[i][j] == 4) {
+                    tower = Tower::createWithType(Constants::TeamType::red);
+                } else if (testMap_[i][j] == 5) {
+                    tower = Tower::createWithType(Constants::TeamType::yellow);
+                } else if (testMap_[i][j] == 6) {
+                    tower = Tower::createWithType(Constants::TeamType::green);
                 }
 
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
                 this->addChild(tower, 10);
 
-                if (i == 5 && j == 1) {
+                if (i == 6 && j == 0) {
                     tower->setID('a');
                 }
-                if (i == 2 && j == 4) {
+                if (i == 2 && j == 3) {
                     tower->setID('b');
                 }
-                if (i == 5 && j == 3) {
+                if (i == 5 && j == 2) {
                     tower->setID('c');
                 }
-                if (i == 7 && j == 3) {
+                if (i == 7 && j == 2) {
                     tower->setID('d');
                 }
-                if (i == 5 && j == 6) {
+                if (i == 5 && j == 5) {
                     tower->setID('e');
                 }
-                if (i == 5 && j == 8) {
+                if (i == 5 && j == 7) {
                     tower->setID('f');
                 }
-                if (i == 7 && j == 5) {
+                if (i == 8 && j == 4) {
                     tower->setID('g');
+                }
+                if (i == 0 && j == 0) {
+                    tower->setID('h');
+                }
+                if (i == 0 && j == 8) {
+                    tower->setID('i');
+                }
+                if (i == 0 && j == 5) {
+                    tower->setID('j');
+                }
+                if (i == 2 && j == 7) {
+                    tower->setID('k');
+                }
+                if (i == 7 && j == 8) {
+                    tower->setID('l');
+                }
+                if (i == 2 && j == 1) {
+                    tower->setID('m');
                 }
 
                 towers_.push_back(tower);
@@ -126,52 +148,128 @@ void GameLayer::createRoadsManually() {
     Road *road;
 
     road = new Road(this->towerWithID('a'), this->towerWithID('c'), 2);
-    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 5)});
-    roads_.push_back(road);
-
-    road = new Road(this->towerWithID('a'), this->towerWithID('d'), 3);
-    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 6)});
-    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 7)});
-    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 7)});
-    roads_.push_back(road);
-
-    road = new Road(this->towerWithID('b'), this->towerWithID('c'), 3);
-    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 2)});
-    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 3)});
-    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 0 + tileWidth / 2, tileWidth * (n - 5)});
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 5)});
     roads_.push_back(road);
 
     road = new Road(this->towerWithID('c'), this->towerWithID('d'), 1);
-    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 6)});
+    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 6)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('b'), this->towerWithID('f'), 6);
+    road = new Road(this->towerWithID('a'), this->towerWithID('m'), 4);
+    road->addRoadPoint({tileWidth * 0 + tileWidth / 2, tileWidth * (n - 5)});
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 5)});
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 3)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('c'), this->towerWithID('m'), 3);
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 5)});
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 3)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('m'), this->towerWithID('h'), 6);
+    road->addRoadPoint({tileWidth * 0 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 0 + tileWidth / 2, tileWidth * (n - 1)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('h'), this->towerWithID('b'), 4);
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 0)});
+    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 0)});
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 0)});
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 1)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('b'), this->towerWithID('j'), 3);
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 1)});
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 0)});
+    road->addRoadPoint({tileWidth * 4 + tileWidth / 2, tileWidth * (n - 0)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('j'), this->towerWithID('k'), 3);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 1)});
     road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 2)});
     road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 2)});
-    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 3)});
-    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 3)});
-    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 3)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('j'), this->towerWithID('e'), 4);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 1)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 4)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('j'), this->towerWithID('f'), 6);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 1)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 4)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('j'), this->towerWithID('i'), 10);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 1)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 4)});
     road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 1)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('c'), this->towerWithID('e'), 2);
-    road->addRoadPoint({tileWidth * 4 + tileWidth / 2, tileWidth * (n - 5)});
-    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 5)});
+    road = new Road(this->towerWithID('i'), this->towerWithID('k'), 2);
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 1)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 2)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('e'), this->towerWithID('f'), 1);
-    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 5)});
+    road = new Road(this->towerWithID('d'), this->towerWithID('g'), 2);
+    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 8)});
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 8)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('d'), this->towerWithID('g'), 1);
-    road->addRoadPoint({tileWidth * 4 + tileWidth / 2, tileWidth * (n - 7)});
+    road = new Road(this->towerWithID('g'), this->towerWithID('e'), 3);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 8)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 6)});
     roads_.push_back(road);
 
-    road = new Road(this->towerWithID('g'), this->towerWithID('f'), 4);
+    road = new Road(this->towerWithID('g'), this->towerWithID('l'), 4);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 8)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 7)});
     road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 7)});
     road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 7)});
-    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 7)});
-    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 6)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('l'), this->towerWithID('e'), 4);
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 7)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 6)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('e'), this->towerWithID('f'), 3);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 4)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('e'), this->towerWithID('k'), 4);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 2)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('k'), this->towerWithID('f'), 4);
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 4)});
     roads_.push_back(road);
 }
 

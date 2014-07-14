@@ -29,6 +29,7 @@ private:
     bool needSwapFirst_;
     int count_;
     cocos2d::Sprite *unitBody_;
+    cocos2d::Sprite *shadow_;
 };
 
 inline void Unit::setRoute(std::vector<Road *> route, bool needSwapFirst) {

@@ -105,12 +105,24 @@ int Tower::takeHalfUnits() {    //todo: refactor me!
 }
 
 std::string Tower::determineFilename() {
-    string filename = "neutral.png"; //todo: add default value
-    if (team_ == Constants::TeamType::red) {
-        filename = "tower.png";
-    } else if (team_ == Constants::TeamType::blue) {
-        filename = "enemy_tower.png";
+    string filename;
+    switch (team_) {
+        case Constants::TeamType::blue:
+            filename = "blue_tower.png";
+            break;
+        case Constants::TeamType::red:
+            filename = "red_tower.png";
+            break;
+        case Constants::TeamType::green:
+            filename = "green_tower.png";
+            break;
+        case Constants::TeamType::yellow:
+            filename = "yellow_tower.png";
+            break;
+        default:
+            filename = "neutral_tower.png";
     }
+
     return filename;
 }
 

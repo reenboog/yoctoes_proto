@@ -27,6 +27,8 @@ namespace Constants {
         neutral = 0,
         red,
         blue,
+        green,
+        yellow,
     };
 
 };
