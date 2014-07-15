@@ -479,9 +479,9 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
-//            if (currentTower->getTeamColor() != playerColor_ && selectedTowers_.size() == 0) {
-//                return false;
-//            }
+            if (currentTower->getTeamColor() != playerColor_ && selectedTowers_.size() == 0) {
+                return false;
+            }
             if (this->isTowerSelected(currentTower)) {
                 currentTower->setSelected(false);
                 selectedTowers_.erase(std::remove(selectedTowers_.begin(), selectedTowers_.end(), currentTower), selectedTowers_.end());
