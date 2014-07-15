@@ -36,9 +36,14 @@ bool Unit::init(Constants::TeamColor color) {
     return true;
 }
 
-void Unit::startTrek() {
+void Unit::startTrek(float delayTime) {
     int size = route_.size();
     Sequence *resultAction = nullptr;
+
+    DelayTime *delayAction = DelayTime::create(delayTime);
+    vector<FiniteTimeAction *> delay;
+    delay.push_back(delayAction);
+    resultAction = addActionsToSequence(delay, resultAction);
 
     Tower *currentTowerDestination = nullptr;
     for (int i = 0; i < size; ++i) {

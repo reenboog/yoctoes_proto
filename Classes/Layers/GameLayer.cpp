@@ -383,20 +383,31 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
 
         vector<Road *> route = this->routeFromTower(currentSource);
 
-        int unitsForSend = 0;
-        Unit *unit = Unit::create(currentSource->getTeamColor());
-        unit->setPosition(currentSource->getPosition());
+        int allUnitsForSend = 0;
+        bool needSwap = false;
         if (route.at(0)->getTowerOne() != currentSource) {
-            unit->setRoute(route, true);
-            unitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
+            needSwap = true;
+            allUnitsForSend = route.at(0)->getTowerTwo()->takeHalfUnits();
         } else {
-            unit->setRoute(route);
-            unitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
+            allUnitsForSend = route.at(0)->getTowerOne()->takeHalfUnits();
         }
-        unit->setCount(unitsForSend);
-        unit->setTeamGroup(currentSource->getTeamGroup());
-        this->addChild(unit, 20);
-        unit->startTrek();
+
+        float delayTime = 0.0f;
+        int unitsForSend = allUnitsForSend > 10 ? 10 : allUnitsForSend;
+        while (unitsForSend > 0) {
+
+            Unit *unit = Unit::create(currentSource->getTeamColor());
+            unit->setPosition(currentSource->getPosition());
+            needSwap ? unit->setRoute(route, true) : unit->setRoute(route);
+            unit->setCount(unitsForSend);
+            unit->setTeamGroup(currentSource->getTeamGroup());
+            this->addChild(unit, 20);
+            unit->startTrek(delayTime);
+
+            allUnitsForSend = allUnitsForSend - unitsForSend;
+            unitsForSend = allUnitsForSend > 10 ? 10 : allUnitsForSend;
+            delayTime = delayTime + 0.3f;
+        }
 
         route.clear();
     }

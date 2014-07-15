@@ -12,7 +12,7 @@ public:
     static Unit *create(Constants::TeamColor team);
     ~Unit();
 
-    void startTrek();
+    void startTrek(float delayTime);
     void setRoute(std::vector<Road *> route, bool needSwapFirst = false);
     int getCount() const;
     void setCount(int count);
