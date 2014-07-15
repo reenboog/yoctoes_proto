@@ -273,6 +273,24 @@ void GameLayer::createRoadsManually() {
     road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 4)});
     road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 4)});
     roads_.push_back(road);
+
+    road = new Road(this->towerWithID('f'), this->towerWithID('i'), 5);
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 1)});
+    roads_.push_back(road);
+
+    road = new Road(this->towerWithID('e'), this->towerWithID('i'), 7);
+    road->addRoadPoint({tileWidth * 5 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 6 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 7 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 4)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 3)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 2)});
+    road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 1)});
+    roads_.push_back(road);
 }
 
 void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
@@ -433,9 +451,9 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
         cocos2d::Size size = currentTower->getContentSize();
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
-            if (currentTower->getTeamColor() != playerColor_ && selectedTowers_.size() == 0) {
-                return false;
-            }
+//            if (currentTower->getTeamColor() != playerColor_ && selectedTowers_.size() == 0) {
+//                return false;
+//            }
             if (this->isTowerSelected(currentTower)) {
                 currentTower->setSelected(false);
                 selectedTowers_.erase(std::remove(selectedTowers_.begin(), selectedTowers_.end(), currentTower), selectedTowers_.end());

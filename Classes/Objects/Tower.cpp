@@ -32,6 +32,8 @@ bool Tower::initWithType(Constants::TeamColor color) {
     unitsLabel_->setPosition(32.0f, 32.0f); //fixme
     this->addChild(unitsLabel_);
 
+    lastAppliedUnit_ = nullptr;
+
     generateUnitTime_ = Constants::TeamColor::unfilled == color_ ? 0 : randInRangef(2.0f, 3.0f);
 
     return true;
@@ -64,6 +66,7 @@ void Tower::update(float dt) {
 
 void Tower::checkForApplying(Unit *unit) {
     if (group_ != unit->getTeamGroup()) {
+        unit->stopAllActions();
         this->applyUnit(unit);
     }
 }
@@ -72,9 +75,11 @@ void Tower::applyUnit(Unit *unit) {
     int count = unit->getCount();
     unit->stopAllActions();
     unit->removeFromParentAndCleanup(true);
-    if (alreadyApplied_)
+    if (lastAppliedUnit_ != unit) {
+        lastAppliedUnit_ = unit;
+    } else {
         return;
-    alreadyApplied_ = true;
+    }
 
     if (color_ == Constants::TeamColor::unfilled) {
         unitsCount_ = unitsCount_ + count;
@@ -89,7 +94,6 @@ void Tower::applyUnit(Unit *unit) {
         }
     }
 
-    alreadyApplied_ = false;
     this->updateUnitsLabel();
 }
 
