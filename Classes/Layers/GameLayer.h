@@ -37,7 +37,7 @@ private:
     void update(float dt);
 
     void dijkstra(Constants::TeamColor teamSrc);
-    Tower *extractSmallest(std::vector<Tower *> &towers);
+    Tower *extractSmallest(std::vector<Tower *> &towers, bool remove = true);
     std::vector<Tower *> *adjacentRemainingTowers(Tower *tower);
     int distance(Tower *towerOne, Tower *towerTwo);
     bool contains(std::vector<Tower *> &towers, Tower *tower);

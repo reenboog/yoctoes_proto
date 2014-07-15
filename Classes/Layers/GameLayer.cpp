@@ -295,6 +295,7 @@ void GameLayer::createRoadsManually() {
 
 void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
     Constants::TeamColor team = teamSrc;
+    Tower *destination = extractSmallest(towersCopy_, false);
     while (towersCopy_.size() > 0) {
         Tower *smallest = extractSmallest(towersCopy_);
         vector<Tower *> *adjacentTowers = adjacentRemainingTowers(smallest);
@@ -304,8 +305,12 @@ void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
             Tower *adjacent = adjacentTowers->at((unsigned long) i);
             int distance = this->distance(smallest, adjacent) + distanceFromStartForTower_[smallest];
             if (distance < distanceFromStartForTower_[adjacent]) {
-                if (this->groupForColor(team) != adjacent->getTeamGroup() && adjacent->getTeamGroup() != Constants::TeamGroup::neutral) {
-                    distance = distance * 30;   //fixme
+                if (this->groupForColor(team) != adjacent->getTeamGroup() || adjacent->getTeamGroup() == Constants::TeamGroup::neutral) {
+                    if (smallest == destination) {
+                        distance = distance + SHRT_MAX / 2;
+                    } else {
+                        distance = distance + SHRT_MAX;
+                    }
                 }
                 distanceFromStartForTower_[adjacent] = distance;
                 previousForTower_[adjacent] = smallest;
@@ -315,7 +320,7 @@ void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
     }
 }
 
-Tower *GameLayer::extractSmallest(vector<Tower *> &towers) {
+Tower *GameLayer::extractSmallest(vector<Tower *> &towers, bool remove) {
     int size = towers.size();
     if (size == 0) return NULL;
     int smallestPosition = 0;
@@ -327,7 +332,9 @@ Tower *GameLayer::extractSmallest(vector<Tower *> &towers) {
             smallestPosition = i;
         }
     }
-    towers.erase(towers.begin() + smallestPosition);
+    if (remove)
+        towers.erase(towers.begin() + smallestPosition);
+
     return smallest;
 }
 
@@ -383,6 +390,10 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
 
         vector<Road *> route = this->routeFromTower(currentSource);
 
+        if (route.size() == 0) {
+            continue;
+        }
+
         int allUnitsForSend = 0;
         bool needSwap = false;
         if (route.at(0)->getTowerOne() != currentSource) {
@@ -429,11 +440,17 @@ vector<Road *> GameLayer::routeFromTower(Tower *source) {
 
     vector<char> pathTowers;
     vector<Road *> route;
+    long int weight = 0;
 
     Tower *previous = source;   //going back from source to destination
     while (previous) {
+        weight = weight + distanceFromStartForTower_[previous];
         pathTowers.push_back(previous->getID());
         previous = previousForTower_[previous];
+    }
+
+    if (weight > SHRT_MAX) {
+        return route;
     }
 
     int size = pathTowers.size();
