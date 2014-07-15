@@ -27,7 +27,11 @@ bool Unit::init(Constants::TeamColor color) {
     unitBody_ = Sprite::create(this->determineFilename());
     this->addChild(unitBody_);
 
-    speed_ = 1.0f;  //seconds from one tile to another
+    countLabel_ = Label::createWithTTF("0", "Chapaza.ttf", 13);
+    countLabel_->setColor(Color3B::RED);
+    this->addChild(countLabel_);
+
+    speed_ = 0.5f;  //seconds from one tile to another
 
     return true;
 }
@@ -102,9 +106,9 @@ Sequence *Unit::addActionsToSequence(vector<FiniteTimeAction *> actions, Sequenc
 std::string Unit::determineFilename() {
     string filename = "unit.png"; //todo: add default value
     if (color_ == Constants::TeamColor::red) {
-        filename = "unit.png";
-    } else if (color_ == Constants::TeamColor::blue) {
         filename = "enemy.png";
+    } else if (color_ == Constants::TeamColor::blue) {
+        filename = "unit.png";
     }
     return filename;
 

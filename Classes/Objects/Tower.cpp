@@ -26,7 +26,9 @@ bool Tower::initWithType(Constants::TeamColor color) {
     if (!Sprite::initWithFile(filename))
         return false;
 
-    unitsLabel_ = Label::createWithTTF("0", "Chapaza.ttf", 13);
+    unitsCount_ = 1;
+
+    unitsLabel_ = Label::createWithTTF("1", "Chapaza.ttf", 13);
     unitsLabel_->setAnchorPoint({1.0f, 1.0f});
     unitsLabel_->setColor(Color3B::BLACK);
     unitsLabel_->setPosition(32.0f, 32.0f); //fixme

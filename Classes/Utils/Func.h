@@ -8,7 +8,7 @@ static inline float randInRangef(float low, float high) {
     return (((float) rand() / ARC4RANDOM_MAX) * (high - low)) + low;
 }
 
-std::string stringWithFormat(const char *fmt, ...) {    //todo:: ЛЕША, ПОСМОТРИ НА МЕНЯ!
+static inline std::string stringWithFormat(const char *fmt, ...) {
     char buf[1024];
     sprintf(buf, "");
 

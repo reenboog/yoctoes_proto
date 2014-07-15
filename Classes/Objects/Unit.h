@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
+#include "Func.h"
 
 class Road;
 
@@ -33,6 +34,7 @@ private:
     int count_;
     cocos2d::Sprite *unitBody_;
     cocos2d::Sprite *shadow_;
+    cocos2d::Label *countLabel_;
 };
 
 inline void Unit::setRoute(std::vector<Road *> route, bool needSwapFirst) {
@@ -46,6 +48,7 @@ inline int Unit::getCount() const {
 
 inline void Unit::setCount(int count) {
     count_ = count;
+    countLabel_->setString(stringWithFormat("%d", count));
 }
 
 inline const Constants::TeamColor &Unit::getTeamColor() const {
