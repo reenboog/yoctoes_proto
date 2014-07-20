@@ -1,6 +1,5 @@
 #include "Tower.h"
 #include "Unit.h"
-#include "Func.h"
 
 using namespace std;
 using namespace cocos2d;

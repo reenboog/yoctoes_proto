@@ -42,6 +42,7 @@ private:
     cocos2d::Label *unitsLabel_;
     cocos2d::Sprite *selection_;
     Unit *lastAppliedUnit_;
+
 };
 
 inline char Tower::getID() const {

@@ -1,9 +1,9 @@
 #include "AppDelegate.h"
-#include "GameLayer.h"
 #include "GameConfig.h"
 #include "Localized.h"
 
 #include "SimpleAudioEngine.h"
+#import "GameState.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -36,11 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
 //    Localized::load();
 
-    // create a scene. it's an autorelease object
-    auto scene = GameLayer::scene();
-
-    // run
-    director->runWithScene(scene);
+    GameState::sharedInstance()->startGameLayer();
 
     return true;
 }

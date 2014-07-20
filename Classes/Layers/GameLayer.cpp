@@ -2,6 +2,7 @@
 #include "Tower.h"
 #include "Road.h"
 #include "Unit.h"
+#include "HUDLayer.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -20,6 +21,7 @@ const int testMap_[n][n] = {
         /*                             0  1  2  3  4  5  6  7  8       */
 };
 const float tileWidth = 38.0f;
+const int UNITS_IN_ONE_GROUP = 5;
 
 GameLayer::~GameLayer() {
 }
@@ -30,6 +32,9 @@ Scene *GameLayer::scene() {
     GameLayer *layer = GameLayer::create();
 
     scene->addChild(layer);
+
+    HUDLayer *hud = HUDLayer::create();
+    scene->addChild(hud, 50);
 
     return scene;
 }
@@ -404,7 +409,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
         }
 
         float delayTime = 0.0f;
-        int unitsForSend = allUnitsForSend > 10 ? 10 : allUnitsForSend;
+        int unitsForSend = allUnitsForSend > UNITS_IN_ONE_GROUP ? UNITS_IN_ONE_GROUP : allUnitsForSend;
         while (unitsForSend > 0) {
 
             Unit *unit = Unit::create(currentSource->getTeamColor());
@@ -416,7 +421,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
             unit->startTrek(delayTime);
 
             allUnitsForSend = allUnitsForSend - unitsForSend;
-            unitsForSend = allUnitsForSend > 10 ? 10 : allUnitsForSend;
+            unitsForSend = allUnitsForSend > UNITS_IN_ONE_GROUP ? UNITS_IN_ONE_GROUP : allUnitsForSend;
             delayTime = delayTime + 0.3f;
         }
 
