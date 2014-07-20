@@ -3,11 +3,11 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
+#include "Tower.h"
 
 class Road;
-class Tower;
 
-class GameLayer : public cocos2d::Layer {
+class GameLayer : public cocos2d::Layer, WinLoseProtocol {
 public:
     static cocos2d::Scene *scene();
 
@@ -20,6 +20,9 @@ public:
     void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
+
+    virtual void checkWin();
+    virtual void checkLose();
 
 private:
     std::vector<Road *> roads_;

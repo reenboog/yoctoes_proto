@@ -6,6 +6,9 @@ using namespace cocos2d;
 
 const int UNITS_LIMIT = 30;
 
+WinLoseProtocol::~WinLoseProtocol() {
+}
+
 Tower *Tower::createWithType(Constants::TeamColor color) {
     Tower *tower = new Tower();
     if (tower->initWithType(color)) {
@@ -96,6 +99,7 @@ void Tower::applyUnit(Unit *unit) {
     }
 
     this->updateUnitsLabel();
+    this->checkWin();
 }
 
 void Tower::updateUnitsLabel() {
@@ -144,4 +148,10 @@ void Tower::changeToTeam(Constants::TeamColor newTeam) {
     Sprite *newSprite = Sprite::create(filename);
     this->setSpriteFrame(newSprite->getSpriteFrame());
     generateUnitTime_ = randInRangef(2.0f, 3.0f);
+}
+
+void Tower::checkWin() {
+    if (delegate_) {
+        delegate_->checkWin();
+    }
 }

@@ -28,7 +28,7 @@ bool HUDLayer::init() {
             Sprite::create("restart.png"),
             this,
             menu_selector(HUDLayer::restartCallback));
-    restart->setPosition(210, 160);
+    restart->setPosition(210, 160); //FIXME
     
     menu_ = Menu::create(restart, NULL);
     this->addChild(menu_);

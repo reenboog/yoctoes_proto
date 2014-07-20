@@ -1,5 +1,4 @@
 #include "GameLayer.h"
-#include "Tower.h"
 #include "Road.h"
 #include "Unit.h"
 #include "HUDLayer.h"
@@ -44,13 +43,13 @@ bool GameLayer::init() {
         return false;
     }
 
-    auto listener = EventListenerTouchOneByOne::create();
+    auto listener_ = EventListenerTouchOneByOne::create();
 
-    listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan, this);
-    listener->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
-    listener->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
-    listener->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    listener_->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan, this);
+    listener_->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
+    listener_->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
+    listener_->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener_, this);
 
     playerGroup_ = Constants::TeamGroup::alfa;
 
@@ -144,6 +143,7 @@ void GameLayer::createBoard() {
                     tower->setID('m');
                 }
 
+                tower->setDelegate(this);
                 towers_.push_back(tower);
                 distanceFromStartForTower_[tower] = INT_MAX;
             }
@@ -568,4 +568,28 @@ Constants::TeamGroup GameLayer::groupForColor(Constants::TeamColor color) {
         return Constants::TeamGroup::omega;
 
     return Constants::TeamGroup::neutral;
+}
+
+#pragma mark -
+
+void GameLayer::checkWin() {
+    bool win = true;
+    for (std::vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
+        Tower *currentTower = *it;
+        if (currentTower->getTeamGroup() != playerGroup_) {
+            win = false;
+            break;
+        }
+    }
+    if (win) {
+        this->getEventDispatcher()->removeEventListenersForTarget(this, false);
+        Label *winLabel = Label::createWithTTF("YOU WIN", "Chapaza.ttf", 48);
+        winLabel->setColor(Color3B::RED);
+        winLabel->setPosition(SCREEN_CENTER);
+        this->addChild(winLabel, 100);
+    }
+}
+
+void GameLayer::checkLose() {
+    CCLOG("LOSE");
 }

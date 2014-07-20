@@ -7,6 +7,20 @@
 
 class Unit;
 
+//
+// WinLoseProtocol
+//
+class WinLoseProtocol {
+public:
+    virtual void checkWin() = 0;
+    virtual void checkLose() = 0;
+
+    virtual ~WinLoseProtocol() = 0;
+};
+
+//
+// Tower
+//
 class Tower : public cocos2d::Sprite {
 public:
     static Tower *createWithType(Constants::TeamColor color);
@@ -26,10 +40,13 @@ public:
     int takeHalfUnits();
     void changeToTeam(Constants::TeamColor TeamColor);
 
+    CC_SYNTHESIZE(WinLoseProtocol*, delegate_, Delegate)
+
 private:
     bool initWithType(Constants::TeamColor color);
     void updateUnitsLabel();
     std::string determineFilename();
+    void checkWin();
 
     int unitsCount_;
     char id_;
