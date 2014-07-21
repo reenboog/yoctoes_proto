@@ -1,5 +1,6 @@
 #include "Tower.h"
 #include "Unit.h"
+#include "EventsMediator.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -99,7 +100,7 @@ void Tower::applyUnit(Unit *unit) {
     }
 
     this->updateUnitsLabel();
-    this->checkWin();
+//    this->checkWin();
 }
 
 void Tower::updateUnitsLabel() {
@@ -148,10 +149,22 @@ void Tower::changeToTeam(Constants::TeamColor newTeam) {
     Sprite *newSprite = Sprite::create(filename);
     this->setSpriteFrame(newSprite->getSpriteFrame());
     generateUnitTime_ = randInRangef(2.0f, 3.0f);
+
+    //check events after capture
+    if (events_.find(Constants::Events::T_afterCaptureTheTowerWin) != events_.end()) {
+        GameLayerMemFun pFoo = &GameLayer::win;
+        EventsMediator::sharedInstance()->selectorToGameLayer(pFoo);
+    }
 }
 
 void Tower::checkWin() {
     if (delegate_) {
         delegate_->checkWin();
     }
+}
+
+#pragma mark - events
+
+void Tower::addEvent(Constants::Events event) {
+    events_.insert(event);
 }

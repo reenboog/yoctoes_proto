@@ -24,6 +24,8 @@ public:
     virtual void checkWin();
     virtual void checkLose();
 
+    void win();
+
 private:
     std::vector<Road *> roads_;
     std::vector<Tower *> towers_;

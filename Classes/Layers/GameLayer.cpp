@@ -2,6 +2,7 @@
 #include "Road.h"
 #include "Unit.h"
 #include "HUDLayer.h"
+#include "EventsMediator.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -29,8 +30,8 @@ Scene *GameLayer::scene() {
     Scene *scene = Scene::create();
 
     GameLayer *layer = GameLayer::create();
-
     scene->addChild(layer);
+    EventsMediator::sharedInstance()->setGameLayer(layer);
 
     HUDLayer *hud = HUDLayer::create();
     scene->addChild(hud, 50);
@@ -117,6 +118,7 @@ void GameLayer::createBoard() {
                 }
                 if (i == 5 && j == 5) {
                     tower->setID('e');
+                    tower->addEvent(Constants::Events::T_afterCaptureTheTowerWin);
                 }
                 if (i == 5 && j == 7) {
                     tower->setID('f');
@@ -582,14 +584,18 @@ void GameLayer::checkWin() {
         }
     }
     if (win) {
-        this->getEventDispatcher()->removeEventListenersForTarget(this, false);
-        Label *winLabel = Label::createWithTTF("YOU WIN", "Chapaza.ttf", 48);
-        winLabel->setColor(Color3B::RED);
-        winLabel->setPosition(SCREEN_CENTER);
-        this->addChild(winLabel, 100);
+        this->win();
     }
 }
 
 void GameLayer::checkLose() {
     CCLOG("LOSE");
+}
+
+void GameLayer::win() {
+    this->getEventDispatcher()->removeEventListenersForTarget(this, false);
+    Label *winLabel = Label::createWithTTF("YOU WIN", "Chapaza.ttf", 48);
+    winLabel->setColor(Color3B::RED);
+    winLabel->setPosition(SCREEN_CENTER);
+    this->addChild(winLabel, 100);
 }

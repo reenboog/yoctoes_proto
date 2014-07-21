@@ -32,8 +32,9 @@ public:
     void setID(char id);
     const Constants::TeamColor &getTeamColor() const;
     void setSelected(bool selected);
-    Constants::TeamGroup const &getTeamGroup() const;
-    void setTeamGroup(Constants::TeamGroup const &group);
+    const Constants::TeamGroup &getTeamGroup() const;
+//    void setTeamGroup(Constants::TeamGroup const &group);
+    void addEvent(Constants::Events event);
 
     void applyUnit(Unit *unit);
     void checkForApplying(Unit *unit);
@@ -59,6 +60,7 @@ private:
     cocos2d::Label *unitsLabel_;
     cocos2d::Sprite *selection_;
     Unit *lastAppliedUnit_;
+    std::set<Constants::Events> events_;
 
 };
 
@@ -82,8 +84,8 @@ inline Constants::TeamGroup const &Tower::getTeamGroup() const {
     return group_;
 }
 
-inline void Tower::setTeamGroup(Constants::TeamGroup const &group) {
-    group_ = group;
-}
+//inline void Tower::setTeamGroup(Constants::TeamGroup const &group) {
+//    group_ = group;
+//}
 
 #endif //__TOWER_H_
