@@ -34,6 +34,8 @@ public:
     void setSelected(bool selected);
     const Constants::TeamGroup &getTeamGroup() const;
 //    void setTeamGroup(Constants::TeamGroup const &group);
+    float getActionCooldown() const;
+    void setActionCooldown(float actionCooldown);
     void addEvent(Constants::Events event);
 
     void applyUnit(Unit *unit);
@@ -53,7 +55,8 @@ private:
     char id_;
     Constants::TeamColor color_;
     Constants::TeamGroup group_;
-    float generateUnitTime_;
+    float generateUnitCooldown_;
+    float actionCooldown_;
     float timeAfterLastUnit_;
     bool selected_;
     bool selectionAnimated_;
@@ -87,5 +90,13 @@ inline Constants::TeamGroup const &Tower::getTeamGroup() const {
 //inline void Tower::setTeamGroup(Constants::TeamGroup const &group) {
 //    group_ = group;
 //}
+
+inline float Tower::getActionCooldown() const {
+    return actionCooldown_;
+}
+
+inline void Tower::setActionCooldown(float actionCooldown) {
+    actionCooldown_ = actionCooldown;
+}
 
 #endif //__TOWER_H_

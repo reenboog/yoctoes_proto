@@ -39,15 +39,19 @@ bool Tower::initWithType(Constants::TeamColor color) {
 
     lastAppliedUnit_ = nullptr;
 
-    generateUnitTime_ = Constants::TeamColor::unfilled == color_ ? 0 : randInRangef(2.0f, 3.0f);
+    generateUnitCooldown_ = Constants::TeamColor::unfilled == color_ ? 0 : randInRangef(2.0f, 3.0f);
+    if (color_ == Constants::TeamColor::red || color_ == Constants::TeamColor::yellow) {
+        actionCooldown_ = randInRangef(10.0f, 15.0f);    //FIXME: bicycle
+    }
 
     return true;
 }
 
 void Tower::update(float dt) {
+    //unit generation
     if (Constants::TeamColor::unfilled != color_) {
         if (unitsCount_ < UNITS_LIMIT) {
-            if (timeAfterLastUnit_ <= generateUnitTime_) {
+            if (timeAfterLastUnit_ <= generateUnitCooldown_) {
                 timeAfterLastUnit_ += dt;
             } else {
                 timeAfterLastUnit_ = 0;
@@ -56,6 +60,13 @@ void Tower::update(float dt) {
             }
         }
     }
+
+    //npc tower action
+    if (color_ == Constants::TeamColor::red || color_ == Constants::TeamColor::yellow) {
+        actionCooldown_ -= dt;    //FIXME: bicycle
+    }
+
+    //selection action
     if (selected_) {
         if (!selectionAnimated_) {
             selectionAnimated_ = true;
@@ -148,7 +159,7 @@ void Tower::changeToTeam(Constants::TeamColor newTeam) {
     string filename = this->determineFilename();
     Sprite *newSprite = Sprite::create(filename);
     this->setSpriteFrame(newSprite->getSpriteFrame());
-    generateUnitTime_ = randInRangef(2.0f, 3.0f);
+    generateUnitCooldown_ = randInRangef(2.0f, 3.0f);
 
     //check events after capture
     if (events_.find(Constants::Events::T_afterCaptureTheTowerWin) != events_.end()) {

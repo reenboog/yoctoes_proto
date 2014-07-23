@@ -6,6 +6,7 @@
 class Tower;
 class GameLayer;
 
+typedef void (Tower::* TowerMemFun)();
 typedef void (GameLayer::* GameLayerMemFun)();
 
 class EventsMediator {
@@ -14,6 +15,7 @@ public:
 
     void setGameLayer(GameLayer *gameLayer);
     void selectorToGameLayer(GameLayerMemFun foo);
+    void selectorFromTower(Tower *tower, TowerMemFun foo);
 
 private:
     static EventsMediator *sharedInstance_;
@@ -21,8 +23,6 @@ private:
 
     EventsMediator();
     ~EventsMediator();
-
-//    void selectorFromTower(Tower *tower, TowerMemFun foo);
 };
 
 inline void EventsMediator::setGameLayer(GameLayer *gameLayer) {

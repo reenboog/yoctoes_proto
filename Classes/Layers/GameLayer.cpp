@@ -65,7 +65,23 @@ bool GameLayer::init() {
 void GameLayer::update(float dt) {
     int size = towers_.size();
     for (int i = 0; i < size; ++i) {
-        towers_.at((unsigned long) i)->update(dt);
+        Tower *ct = towers_.at((unsigned long) i);
+        ct->update(dt);
+
+        //npc tower actions
+        if (ct->getTeamColor() != Constants::TeamColor::blue) {
+            if (ct->getActionCooldown() < 0) {
+                vector<Tower *> towers = findAvailableTowersFromTower(ct);
+                int sizeT = towers.size();
+                if (sizeT > 0) {
+                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+                    towers.clear();
+                    towers.push_back(ct);
+                    this->sendUnitsFromTowersToTower(towers, dst);
+                }
+                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
+            }
+        }
     }
 }
 
@@ -118,7 +134,7 @@ void GameLayer::createBoard() {
                 }
                 if (i == 5 && j == 5) {
                     tower->setID('e');
-                    tower->addEvent(Constants::Events::T_afterCaptureTheTowerWin);
+//                    tower->addEvent(Constants::Events::T_afterCaptureTheTowerWin);
                 }
                 if (i == 5 && j == 7) {
                     tower->setID('f');
@@ -475,6 +491,21 @@ vector<Road *> GameLayer::routeFromTower(Tower *source) {
 
     return route;
 }
+
+vector<Tower *> GameLayer::findAvailableTowersFromTower(Tower *tower) {
+    vector<Tower *> towers;
+    int size = roads_.size();
+    for (int i = 0; i < size; ++i) {
+        Road *rd = roads_.at((unsigned long) i);
+        if (rd->getTowerOne() == tower) {
+            towers.push_back(rd->getTowerTwo());
+        } else if (rd->getTowerTwo() == tower) {
+            towers.push_back(rd->getTowerOne());
+        }
+    }
+
+    return towers;
+};
 
 #pragma mark - touches
 

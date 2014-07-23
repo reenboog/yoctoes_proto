@@ -8,6 +8,11 @@ static inline float randInRangef(float low, float high) {
     return (((float) rand() / ARC4RANDOM_MAX) * (high - low)) + low;
 }
 
+static inline int randInRangei(int low, int high) {
+    assert(low <= high);
+    return rand() % (high - low + 1) + low;
+}
+
 static inline std::string stringWithFormat(const char *fmt, ...) {
     char buf[1024];
     sprintf(buf, "");

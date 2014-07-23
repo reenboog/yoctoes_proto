@@ -48,6 +48,7 @@ private:
     bool contains(std::vector<Tower *> &towers, Tower *tower);
     std::vector<Road *> routeFromTower(Tower *source);
     void sendUnitsFromTowersToTower(std::vector<Tower *>source, Tower *destination);
+    std::vector<Tower *> findAvailableTowersFromTower(Tower *tower);
 
     Tower *towerWithID(char id);
     bool isTowerSelected(Tower *tower);

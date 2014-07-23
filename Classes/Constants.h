@@ -4,8 +4,6 @@
 #define SCREEN_SIZE Director::getInstance()->getWinSize()
 #define SCREEN_CENTER cocos2d::Point(Director::getInstance()->getWinSize().width / 2, Director::getInstance()->getWinSize().height / 2)
 
-//typedef void (Tower::* TowerMemFun)();
-
 namespace Constants {
 
     enum class TeamColor : int {
