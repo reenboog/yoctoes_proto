@@ -25,6 +25,7 @@ bool Unit::init(Constants::TeamColor color) {
     color_ = color;
 
     unitBody_ = Sprite::create(this->determineFilename());
+    unitBody_->setColor(Color3B::BLUE);
     this->addChild(unitBody_);
 
     countLabel_ = Label::createWithTTF("0", "Chapaza.ttf", 13);

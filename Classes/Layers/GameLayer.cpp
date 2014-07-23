@@ -68,20 +68,59 @@ void GameLayer::update(float dt) {
         Tower *ct = towers_.at((unsigned long) i);
         ct->update(dt);
 
-        //npc tower actions
-        if (ct->getTeamColor() != Constants::TeamColor::blue) {
-            if (ct->getActionCooldown() < 0) {
-                vector<Tower *> towers = findAvailableTowersFromTower(ct);
-                int sizeT = towers.size();
-                if (sizeT > 0) {
-                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-                    towers.clear();
-                    towers.push_back(ct);
-                    this->sendUnitsFromTowersToTower(towers, dst);
-                }
-                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
-            }
+//        //npc tower actions
+//        if (ct->getTeamColor() != Constants::TeamColor::blue) {
+//            if (ct->getActionCooldown() < 0) {
+//                vector<Tower *> towers = findAvailableTowersFromTower(ct);
+//                int sizeT = towers.size();
+//                if (sizeT > 0) {
+//                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+//                    towers.clear();
+//                    towers.push_back(ct);
+//                    this->sendUnitsFromTowersToTower(towers, dst);
+//                }
+//                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
+//            }
+//        }
+    }
+
+    Tower *src = this->towerWithID('h');
+    if (src->getActionCooldown() < 0) {
+        vector<Tower *> towers = findAvailableTowersFromTower(src);
+        int sizeT = towers.size();
+        if (sizeT > 0) {
+            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+            towers.clear();
+            towers.push_back(src);
+            this->sendUnitsFromTowersToTower(towers, dst);
         }
+        src->setActionCooldown(randInRangef(5.0f, 6.0f));
+    }
+
+    src = this->towerWithID('i');
+    if (src->getActionCooldown() < 0) {
+        vector<Tower *> towers = findAvailableTowersFromTower(src);
+        int sizeT = towers.size();
+        if (sizeT > 0) {
+            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+            towers.clear();
+            towers.push_back(src);
+            this->sendUnitsFromTowersToTower(towers, dst);
+        }
+        src->setActionCooldown(randInRangef(5.0f, 6.0f));
+    }
+
+    src = this->towerWithID('l');
+    if (src->getActionCooldown() < 0) {
+        vector<Tower *> towers = findAvailableTowersFromTower(src);
+        int sizeT = towers.size();
+        if (sizeT > 0) {
+            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+            towers.clear();
+            towers.push_back(src);
+            this->sendUnitsFromTowersToTower(towers, dst);
+        }
+        src->setActionCooldown(randInRangef(5.0f, 6.0f));
     }
 }
 
@@ -314,6 +353,13 @@ void GameLayer::createRoadsManually() {
     road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 2)});
     road->addRoadPoint({tileWidth * 8 + tileWidth / 2, tileWidth * (n - 1)});
     roads_.push_back(road);
+
+    road = new Road(this->towerWithID('h'), this->towerWithID('j'), 4);
+    road->addRoadPoint({tileWidth * 1 + tileWidth / 2, tileWidth * (n - 0)});
+    road->addRoadPoint({tileWidth * 2 + tileWidth / 2, tileWidth * (n - 0)});
+    road->addRoadPoint({tileWidth * 3 + tileWidth / 2, tileWidth * (n - 0)});
+    road->addRoadPoint({tileWidth * 4 + tileWidth / 2, tileWidth * (n - 0)});
+    roads_.push_back(road);
 }
 
 void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
@@ -451,11 +497,13 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
         distanceFromStartForTower_[it->first] = INT_MAX;
     }
     destination->setSelected(false);
-    int selectedSize = selectedTowers_.size();
-    for (int i = 0; i < selectedSize; ++i) {
-        selectedTowers_.at((unsigned long) i)->setSelected(false);
+    if (source.at(0)->getTeamColor() == Constants::TeamColor::blue) {
+        int selectedSize = selectedTowers_.size();
+        for (int i = 0; i < selectedSize; ++i) {
+            selectedTowers_.at((unsigned long) i)->setSelected(false);
+        }
+        selectedTowers_.clear();
     }
-    selectedTowers_.clear();
 
 }
 

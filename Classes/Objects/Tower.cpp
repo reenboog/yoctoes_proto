@@ -40,8 +40,8 @@ bool Tower::initWithType(Constants::TeamColor color) {
     lastAppliedUnit_ = nullptr;
 
     generateUnitCooldown_ = Constants::TeamColor::unfilled == color_ ? 0 : randInRangef(2.0f, 3.0f);
-    if (color_ == Constants::TeamColor::red || color_ == Constants::TeamColor::yellow) {
-        actionCooldown_ = randInRangef(10.0f, 15.0f);    //FIXME: bicycle
+    if (color_ != Constants::TeamColor::blue && color_ != Constants::TeamColor::unfilled) {
+        actionCooldown_ = randInRangef(5.0f, 6.0f);    //FIXME: bicycle
     }
 
     return true;
@@ -62,7 +62,7 @@ void Tower::update(float dt) {
     }
 
     //npc tower action
-    if (color_ == Constants::TeamColor::red || color_ == Constants::TeamColor::yellow) {
+    if (color_ != Constants::TeamColor::blue && color_ != Constants::TeamColor::unfilled) {
         actionCooldown_ -= dt;    //FIXME: bicycle
     }
 
@@ -111,7 +111,7 @@ void Tower::applyUnit(Unit *unit) {
     }
 
     this->updateUnitsLabel();
-//    this->checkWin();
+    this->checkWin();
 }
 
 void Tower::updateUnitsLabel() {
