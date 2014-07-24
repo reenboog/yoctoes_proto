@@ -35,6 +35,7 @@ private:
     std::map<Tower *, int> distanceFromStartForTower_;
     Constants::TeamColor playerColor_;
     Constants::TeamGroup playerGroup_;
+    std::vector<Unit *> units_;
 
     virtual bool init();
     void createBoard();
@@ -53,6 +54,9 @@ private:
     Tower *towerWithID(char id);
     bool isTowerSelected(Tower *tower);
     Constants::TeamGroup groupForColor(Constants::TeamColor color);
+    void checkUitsCollision();
+    bool checkCollisionBetweenUnits(Unit *unitOne, Unit *unitTwo);
+    void removeUnits();
 };
 
 #endif // __GAME_LAYER_H__

@@ -20,6 +20,11 @@ public:
     void setColor(Constants::TeamColor const &color);
     Constants::TeamGroup const &getTeamGroup() const;
     void setTeamGroup(Constants::TeamGroup const &group);
+    Unit *getLastCollidedUnit() const;
+    void setLastCollidedUnit(Unit *lastCollidedUnit);
+    cocos2d::Sprite *getUnitBody() const;
+    bool isShouldBeRemoved() const;
+    void setShouldBeRemoved(bool shouldBeRemoved);
 
 private:
     bool init(Constants::TeamColor color);
@@ -35,6 +40,8 @@ private:
     cocos2d::Sprite *unitBody_;
     cocos2d::Sprite *shadow_;
     cocos2d::Label *countLabel_;
+    Unit *lastCollidedUnit_;
+    bool shouldBeRemoved_;
 };
 
 inline void Unit::setRoute(std::vector<Road *> route, bool needSwapFirst) {
@@ -66,5 +73,26 @@ inline Constants::TeamGroup const &Unit::getTeamGroup() const {
 inline void Unit::setTeamGroup(Constants::TeamGroup const &group) {
     group_ = group;
 }
+
+inline Unit *Unit::getLastCollidedUnit() const {
+    return lastCollidedUnit_;
+}
+
+inline void Unit::setLastCollidedUnit(Unit *lastCollidedUnit) {
+    lastCollidedUnit_ = lastCollidedUnit;
+}
+
+inline cocos2d::Sprite *Unit::getUnitBody() const {
+    return unitBody_;
+}
+
+inline bool Unit::isShouldBeRemoved() const {
+    return shouldBeRemoved_;
+}
+
+inline void Unit::setShouldBeRemoved(bool shouldBeRemoved) {
+    shouldBeRemoved_ = shouldBeRemoved;
+}
+
 
 #endif //__UNIT_H_

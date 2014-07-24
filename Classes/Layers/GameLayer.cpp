@@ -68,9 +68,9 @@ void GameLayer::update(float dt) {
         Tower *ct = towers_.at((unsigned long) i);
         ct->update(dt);
 
-            int chanse = randInRangei(0, 2);
-            if (chanse > 0)
-                continue;
+        int chanse = randInRangei(0, 2);
+        if (chanse > 0)
+            continue;
         //npc tower actions
         if (ct->getTeamColor() != Constants::TeamColor::blue) {
             if (ct->getActionCooldown() < 0) {
@@ -81,56 +81,13 @@ void GameLayer::update(float dt) {
                     towers.clear();
                     towers.push_back(ct);
                     this->sendUnitsFromTowersToTower(towers, dst);
-                    printf("from: %c to %c\n", ct->getID(), dst->getID());
                 }
                 ct->setActionCooldown(randInRangef(10.0f, 15.0f));
             }
         }
     }
-
-//    Tower *src = this->towerWithID('h');
-//    if (src->getActionCooldown() < 0) {
-//        vector<Tower *> towers = findAvailableTowersFromTower(src);
-//        int sizeT = towers.size();
-//        if (sizeT > 0) {
-//            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-//            towers.clear();
-//            towers.push_back(src);
-//            this->sendUnitsFromTowersToTower(towers, dst);
-//        }
-//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
-//    }
-
-//    src = this->towerWithID('i');
-//    if (src->getActionCooldown() < 0) {
-//        vector<Tower *> towers = findAvailableTowersFromTower(src);
-//        int sizeT = towers.size();
-//        if (sizeT > 0) {
-//            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-//            towers.clear();
-//            towers.push_back(src);
-//            this->sendUnitsFromTowersToTower(towers, dst);
-//        }
-//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
-//    }
-
-//    Tower *src = this->towerWithID('l');
-//    Tower *dst = this->towerWithID('g');
-//    if (src->getActionCooldown() < 0) {
-//        vector<Tower *> towers;
-//        towers.push_back(src);
-//        this->sendUnitsFromTowersToTower(towers, dst);
-//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
-//    }
-//
-//    src = this->towerWithID('l');
-//    dst = this->towerWithID('e');
-////    if (src->getActionCooldown() < 0) {
-//        vector<Tower *> towers;
-//        towers.push_back(src);
-//        this->sendUnitsFromTowersToTower(towers, dst);
-//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
-////    }
+    this->checkUitsCollision();
+    this->removeUnits();
 }
 
 #pragma mark - board and path
@@ -492,6 +449,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
             unit->setTeamGroup(currentSource->getTeamGroup());
             this->addChild(unit, 20);
             unit->startTrek(delayTime);
+            units_.push_back(unit);
 
             allUnitsForSend = allUnitsForSend - unitsForSend;
             unitsForSend = allUnitsForSend > UNITS_IN_ONE_GROUP ? UNITS_IN_ONE_GROUP : allUnitsForSend;
@@ -686,4 +644,62 @@ void GameLayer::win() {
     winLabel->setColor(Color3B::RED);
     winLabel->setPosition(SCREEN_CENTER);
     this->addChild(winLabel, 100);
+}
+
+void GameLayer::checkUitsCollision() {
+    int size = units_.size();
+    for (int i = 0; i < size; ++i) {
+        for (int j = (i + 1); j < size; ++j) {
+            if (units_.at(i) != units_.at(j)) {
+                if (units_.at(i)->getTeamGroup() != units_.at(j)->getTeamGroup()) {
+                    bool collided = this->checkCollisionBetweenUnits(units_.at(i), units_.at(j));
+                    if (collided) {
+                        int firstUnitCount = units_.at(i)->getCount();
+                        units_.at(i)->setCount(firstUnitCount - units_.at(j)->getCount());
+                        units_.at(j)->setCount(units_.at(j)->getCount() - firstUnitCount);
+                        if (units_.at(i)->getCount() <= 0) {
+                            units_.at(i)->setShouldBeRemoved(true);
+                        }
+                        if (units_.at(j)->getCount() <= 0) {
+                            units_.at(j)->setShouldBeRemoved(true);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool GameLayer::checkCollisionBetweenUnits(Unit *unitOne, Unit *unitTwo) {  //TODO: refactor later with normal art
+    Sprite *unitOneSprite = unitOne->getUnitBody();
+    Sprite *unitTwoSprite = unitTwo->getUnitBody();
+    Rect unitOneRect = Rect(
+            unitOne->getPosition().x - unitOneSprite->getContentSize().width / 4,
+            unitOne->getPosition().y - unitOneSprite->getContentSize().height / 4,
+            unitOneSprite->getContentSize().width / 2,
+            unitOneSprite->getContentSize().height / 2);
+    Rect unitTwoRect = Rect(
+            unitTwo->getPosition().x - unitTwoSprite->getContentSize().width / 4,
+            unitTwo->getPosition().y - unitTwoSprite->getContentSize().height / 4,
+            unitTwoSprite->getContentSize().width / 2,
+            unitTwoSprite->getContentSize().height / 2);
+    if (unitOneRect.intersectsRect(unitTwoRect)) {
+        if (unitOne->getLastCollidedUnit() != unitTwo) {
+            unitOne->setLastCollidedUnit(unitTwo);
+            unitTwo->setLastCollidedUnit(unitOne);
+            return true;
+        }
+    }
+    return false;
+}
+
+void GameLayer::removeUnits() {
+    int size = units_.size();
+    for (int i = size - 1; i >= 0; --i) {
+        Unit *currentUnit = units_.at(i);
+        if (currentUnit->isShouldBeRemoved()) {
+            units_.erase(units_.begin() + i);
+            currentUnit->removeFromParentAndCleanup(true);
+        }
+    }
 }

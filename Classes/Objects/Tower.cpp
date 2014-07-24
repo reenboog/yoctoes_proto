@@ -93,7 +93,7 @@ void Tower::checkForApplying(Unit *unit) {
 void Tower::applyUnit(Unit *unit) {
     int count = unit->getCount();
     unit->stopAllActions();
-    unit->removeFromParentAndCleanup(true);
+    unit->setShouldBeRemoved(true);
     if (lastAppliedUnit_ != unit) {
         lastAppliedUnit_ = unit;
     } else {
