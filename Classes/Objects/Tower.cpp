@@ -42,7 +42,10 @@ bool Tower::initWithType(Constants::TeamColor color) {
     generateUnitCooldown_ = Constants::TeamColor::unfilled == color_ ? 0 : randInRangef(2.0f, 3.0f);
     if (color_ != Constants::TeamColor::blue && color_ != Constants::TeamColor::unfilled) {
         actionCooldown_ = randInRangef(5.0f, 6.0f);    //FIXME: bicycle
+    } else {
+        actionCooldown_ = 1.0f;
     }
+
 
     return true;
 }

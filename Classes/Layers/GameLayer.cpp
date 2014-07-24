@@ -68,60 +68,69 @@ void GameLayer::update(float dt) {
         Tower *ct = towers_.at((unsigned long) i);
         ct->update(dt);
 
-//        //npc tower actions
-//        if (ct->getTeamColor() != Constants::TeamColor::blue) {
-//            if (ct->getActionCooldown() < 0) {
-//                vector<Tower *> towers = findAvailableTowersFromTower(ct);
-//                int sizeT = towers.size();
-//                if (sizeT > 0) {
-//                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-//                    towers.clear();
-//                    towers.push_back(ct);
-//                    this->sendUnitsFromTowersToTower(towers, dst);
-//                }
-//                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
-//            }
+            int chanse = randInRangei(0, 2);
+            if (chanse > 0)
+                continue;
+        //npc tower actions
+        if (ct->getTeamColor() != Constants::TeamColor::blue) {
+            if (ct->getActionCooldown() < 0) {
+                vector<Tower *> towers = findAvailableTowersFromTower(ct);
+                int sizeT = towers.size();
+                if (sizeT > 0) {
+                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+                    towers.clear();
+                    towers.push_back(ct);
+                    this->sendUnitsFromTowersToTower(towers, dst);
+                    printf("from: %c to %c\n", ct->getID(), dst->getID());
+                }
+                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
+            }
+        }
+    }
+
+//    Tower *src = this->towerWithID('h');
+//    if (src->getActionCooldown() < 0) {
+//        vector<Tower *> towers = findAvailableTowersFromTower(src);
+//        int sizeT = towers.size();
+//        if (sizeT > 0) {
+//            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+//            towers.clear();
+//            towers.push_back(src);
+//            this->sendUnitsFromTowersToTower(towers, dst);
 //        }
-    }
+//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
+//    }
 
-    Tower *src = this->towerWithID('h');
-    if (src->getActionCooldown() < 0) {
-        vector<Tower *> towers = findAvailableTowersFromTower(src);
-        int sizeT = towers.size();
-        if (sizeT > 0) {
-            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-            towers.clear();
-            towers.push_back(src);
-            this->sendUnitsFromTowersToTower(towers, dst);
-        }
-        src->setActionCooldown(randInRangef(5.0f, 6.0f));
-    }
+//    src = this->towerWithID('i');
+//    if (src->getActionCooldown() < 0) {
+//        vector<Tower *> towers = findAvailableTowersFromTower(src);
+//        int sizeT = towers.size();
+//        if (sizeT > 0) {
+//            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+//            towers.clear();
+//            towers.push_back(src);
+//            this->sendUnitsFromTowersToTower(towers, dst);
+//        }
+//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
+//    }
 
-    src = this->towerWithID('i');
-    if (src->getActionCooldown() < 0) {
-        vector<Tower *> towers = findAvailableTowersFromTower(src);
-        int sizeT = towers.size();
-        if (sizeT > 0) {
-            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-            towers.clear();
-            towers.push_back(src);
-            this->sendUnitsFromTowersToTower(towers, dst);
-        }
-        src->setActionCooldown(randInRangef(5.0f, 6.0f));
-    }
-
-    src = this->towerWithID('l');
-    if (src->getActionCooldown() < 0) {
-        vector<Tower *> towers = findAvailableTowersFromTower(src);
-        int sizeT = towers.size();
-        if (sizeT > 0) {
-            Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-            towers.clear();
-            towers.push_back(src);
-            this->sendUnitsFromTowersToTower(towers, dst);
-        }
-        src->setActionCooldown(randInRangef(5.0f, 6.0f));
-    }
+//    Tower *src = this->towerWithID('l');
+//    Tower *dst = this->towerWithID('g');
+//    if (src->getActionCooldown() < 0) {
+//        vector<Tower *> towers;
+//        towers.push_back(src);
+//        this->sendUnitsFromTowersToTower(towers, dst);
+//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
+//    }
+//
+//    src = this->towerWithID('l');
+//    dst = this->towerWithID('e');
+////    if (src->getActionCooldown() < 0) {
+//        vector<Tower *> towers;
+//        towers.push_back(src);
+//        this->sendUnitsFromTowersToTower(towers, dst);
+//        src->setActionCooldown(randInRangef(5.0f, 6.0f));
+////    }
 }
 
 #pragma mark - board and path
