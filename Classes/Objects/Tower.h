@@ -37,6 +37,7 @@ public:
     float getActionCooldown() const;
     void setActionCooldown(float actionCooldown);
     void addEvent(Constants::Events event);
+    Constants::NatureTypes const &getNatureType() const;
 
     void applyUnit(Unit *unit);
     void checkForApplying(Unit *unit);
@@ -64,7 +65,7 @@ private:
     cocos2d::Sprite *selection_;
     Unit *lastAppliedUnit_;
     std::set<Constants::Events> events_;
-
+    Constants::NatureTypes natureType_;
 };
 
 inline char Tower::getID() const {
@@ -97,6 +98,10 @@ inline float Tower::getActionCooldown() const {
 
 inline void Tower::setActionCooldown(float actionCooldown) {
     actionCooldown_ = actionCooldown;
+}
+
+inline Constants::NatureTypes const &Tower::getNatureType() const {
+    return natureType_;
 }
 
 #endif //__TOWER_H_

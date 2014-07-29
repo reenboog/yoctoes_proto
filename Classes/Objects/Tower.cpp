@@ -46,6 +46,7 @@ bool Tower::initWithType(Constants::TeamColor color) {
         actionCooldown_ = 1.0f;
     }
 
+    natureType_ = (Constants::NatureTypes) randInRangei(0, 4);
 
     return true;
 }
@@ -104,7 +105,7 @@ void Tower::applyUnit(Unit *unit) {
         unitsCount_ = unitsCount_ + count;
         this->changeToTeam(unit->getTeamColor());
     } else if (group_ == unit->getTeamGroup()) {
-        unitsCount_ = unitsCount_ + count;
+        unitsCount_ = unitsCount_ + count * (int) influenceOfTheFirstToSecond(this->getNatureType(), unit->getNatureType());
     } else {
         unitsCount_ = unitsCount_ - count;
         if (unitsCount_ < 0) {

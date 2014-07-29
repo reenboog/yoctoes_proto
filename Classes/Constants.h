@@ -25,6 +25,14 @@ namespace Constants {
         T_afterCaptureTheTowerLose,
     };
 
+    enum class NatureTypes : int {
+        neutral = 0,
+        fire,
+        water,
+        earth,
+        evil,
+    };
+
 };
 
 #endif // __CONSTANTS_H__

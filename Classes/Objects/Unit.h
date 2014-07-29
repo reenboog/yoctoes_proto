@@ -25,6 +25,8 @@ public:
     cocos2d::Sprite *getUnitBody() const;
     bool isShouldBeRemoved() const;
     void setShouldBeRemoved(bool shouldBeRemoved);
+    Constants::NatureTypes const &getNatureType() const;
+    void setNatureType(Constants::NatureTypes const &natureType);
 
 private:
     bool init(Constants::TeamColor color);
@@ -42,6 +44,7 @@ private:
     cocos2d::Label *countLabel_;
     Unit *lastCollidedUnit_;
     bool shouldBeRemoved_;
+    Constants::NatureTypes natureType_;
 };
 
 inline void Unit::setRoute(std::vector<Road *> route, bool needSwapFirst) {
@@ -94,5 +97,12 @@ inline void Unit::setShouldBeRemoved(bool shouldBeRemoved) {
     shouldBeRemoved_ = shouldBeRemoved;
 }
 
+inline Constants::NatureTypes const &Unit::getNatureType() const {
+    return natureType_;
+}
+
+inline void Unit::setNatureType(Constants::NatureTypes const &natureType) {
+    natureType_ = natureType;
+}
 
 #endif //__UNIT_H_

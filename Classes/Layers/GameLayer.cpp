@@ -44,13 +44,13 @@ bool GameLayer::init() {
         return false;
     }
 
-    auto listener_ = EventListenerTouchOneByOne::create();
+    auto listener = EventListenerTouchOneByOne::create();
 
-    listener_->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan, this);
-    listener_->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
-    listener_->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
-    listener_->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener_, this);
+    listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan, this);
+    listener->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
+    listener->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
     playerGroup_ = Constants::TeamGroup::alfa;
 
@@ -449,6 +449,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
             unit->setTeamGroup(currentSource->getTeamGroup());
             this->addChild(unit, 20);
             unit->startTrek(delayTime);
+            unit->setNatureType(currentSource->getNatureType());
             units_.push_back(unit);
 
             allUnitsForSend = allUnitsForSend - unitsForSend;
@@ -655,8 +656,8 @@ void GameLayer::checkUitsCollision() {
                     bool collided = this->checkCollisionBetweenUnits(units_.at(i), units_.at(j));
                     if (collided) {
                         int firstUnitCount = units_.at(i)->getCount();
-                        units_.at(i)->setCount(firstUnitCount - units_.at(j)->getCount());
-                        units_.at(j)->setCount(units_.at(j)->getCount() - firstUnitCount);
+                        units_.at(i)->setCount(firstUnitCount - units_.at(j)->getCount() * (int) influenceOfTheFirstToSecond(units_.at(j)->getNatureType(), units_.at(i)->getNatureType()));
+                        units_.at(j)->setCount(units_.at(j)->getCount() - firstUnitCount * (int) influenceOfTheFirstToSecond(units_.at(i)->getNatureType(), units_.at(j)->getNatureType()));
                         if (units_.at(i)->getCount() <= 0) {
                             units_.at(i)->setShouldBeRemoved(true);
                         }
