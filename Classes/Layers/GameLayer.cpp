@@ -3,6 +3,7 @@
 #include "Unit.h"
 #include "HUDLayer.h"
 #include "EventsMediator.h"
+#include "TowersManager.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -52,7 +53,7 @@ bool GameLayer::init() {
     listener->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
-    playerGroup_ = Constants::TeamGroup::alfa;
+    playerGroup_ = TeamGroup::alfa;
 
     this->createBoard();
     this->createRoadsManually();
@@ -72,7 +73,7 @@ void GameLayer::update(float dt) {
         if (chanse > 0)
             continue;
         //npc tower actions
-        if (ct->getTeamColor() != Constants::TeamColor::blue) {
+        if (ct->getTeamColor() != TeamColor::blue) {
             if (ct->getActionCooldown() < 0) {
                 vector<Tower *> towers = findAvailableTowersFromTower(ct);
                 int sizeT = towers.size();
@@ -110,16 +111,16 @@ void GameLayer::createBoard() {
             } else {
                 Tower *tower = nullptr;
                 if (testMap_[i][j] == 2) {  //unfilled
-                    tower = Tower::createWithType(Constants::TeamColor::unfilled);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::unfilled, NatureType::neutral , 1);
                 } else if (testMap_[i][j] == 3) {
-                    tower = Tower::createWithType(Constants::TeamColor::blue);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::blue, NatureType::neutral , 1);
                     playerColor_ = tower->getTeamColor();
                 } else if (testMap_[i][j] == 4) {
-                    tower = Tower::createWithType(Constants::TeamColor::red);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::red, NatureType::neutral , 1);
                 } else if (testMap_[i][j] == 5) {
-                    tower = Tower::createWithType(Constants::TeamColor::yellow);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::yellow, NatureType::neutral , 1);
                 } else if (testMap_[i][j] == 6) {
-                    tower = Tower::createWithType(Constants::TeamColor::green);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::green, NatureType::neutral , 1);
                 }
 
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
@@ -139,7 +140,6 @@ void GameLayer::createBoard() {
                 }
                 if (i == 5 && j == 5) {
                     tower->setID('e');
-//                    tower->addEvent(Constants::Events::T_afterCaptureTheTowerWin);
                 }
                 if (i == 5 && j == 7) {
                     tower->setID('f');
@@ -167,6 +167,7 @@ void GameLayer::createBoard() {
                 }
 
                 tower->setDelegate(this);
+                tower->setUpdateDelegate(TowersManager::sharedInstance());
                 towers_.push_back(tower);
                 distanceFromStartForTower_[tower] = INT_MAX;
             }
@@ -328,8 +329,8 @@ void GameLayer::createRoadsManually() {
     roads_.push_back(road);
 }
 
-void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
-    Constants::TeamColor team = teamSrc;
+void GameLayer::dijkstra(TeamColor teamSrc) {
+    TeamColor team = teamSrc;
     Tower *destination = extractSmallest(towersCopy_, false);
     while (towersCopy_.size() > 0) {
         Tower *smallest = extractSmallest(towersCopy_);
@@ -340,7 +341,7 @@ void GameLayer::dijkstra(Constants::TeamColor teamSrc) {
             Tower *adjacent = adjacentTowers->at((unsigned long) i);
             int distance = this->distance(smallest, adjacent) + distanceFromStartForTower_[smallest];
             if (distance < distanceFromStartForTower_[adjacent]) {
-                if (this->groupForColor(team) != adjacent->getTeamGroup() || adjacent->getTeamGroup() == Constants::TeamGroup::neutral) {
+                if (this->groupForColor(team) != adjacent->getTeamGroup() || adjacent->getTeamGroup() == TeamGroup::neutral) {
                     if (smallest == destination) {
                         distance = distance + SHRT_MAX / 2;
                     } else {
@@ -465,7 +466,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
         distanceFromStartForTower_[it->first] = INT_MAX;
     }
     destination->setSelected(false);
-    if (source.at(0)->getTeamColor() == Constants::TeamColor::blue) {
+    if (source.at(0)->getTeamColor() == TeamColor::blue) {
         int selectedSize = selectedTowers_.size();
         for (int i = 0; i < selectedSize; ++i) {
             selectedTowers_.at((unsigned long) i)->setSelected(false);
@@ -530,7 +531,7 @@ bool GameLayer::onTouchBegan(Touch *touch, Event *event) {
     for (vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
         Tower *currentTower = *it;
         cocos2d::Point position = currentTower->getPosition();
-        cocos2d::Size size = currentTower->getContentSize();
+        cocos2d::Size size = cocos2d::Size(32.0f, 32.0f);   //FIXME:
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
             if (currentTower->getTeamColor() != playerColor_ && selectedTowers_.size() == 0) {
@@ -562,7 +563,7 @@ void GameLayer::onTouchMoved(Touch *touch, Event *event) {
     for (vector<Tower *>::iterator it = towers_.begin(); it != towers_.end(); ++it) {
         Tower *currentTower = *it;
         cocos2d::Point position = currentTower->getPosition();
-        cocos2d::Size size = currentTower->getContentSize();
+        cocos2d::Size size = cocos2d::Size(32.0f, 32.0f);   //FIXME:
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
             if (this->isTowerSelected(currentTower)) {
@@ -609,14 +610,14 @@ bool GameLayer::isTowerSelected(Tower *tower) {
     return std::find(selectedTowers_.begin(), selectedTowers_.end(), tower) != selectedTowers_.end();
 }
 
-Constants::TeamGroup GameLayer::groupForColor(Constants::TeamColor color) {
-    if (color == Constants::TeamColor::blue || color == Constants::TeamColor::green)
-        return Constants::TeamGroup::alfa;
+TeamGroup GameLayer::groupForColor(TeamColor color) {
+    if (color == TeamColor::blue || color == TeamColor::green)
+        return TeamGroup::alfa;
 
-    if (color == Constants::TeamColor::red || color == Constants::TeamColor::yellow)
-        return Constants::TeamGroup::omega;
+    if (color == TeamColor::red || color == TeamColor::yellow)
+        return TeamGroup::omega;
 
-    return Constants::TeamGroup::neutral;
+    return TeamGroup::neutral;
 }
 
 #pragma mark -

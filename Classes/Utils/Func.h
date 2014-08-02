@@ -33,7 +33,7 @@ static inline std::string stringWithFormat(const char *fmt, ...) {
     return buf;
 }
 
-static inline float influenceOfTheFirstToSecond(Constants::NatureTypes firstType, Constants::NatureTypes secondType) {
+static inline float influenceOfTheFirstToSecond(NatureType firstType, NatureType secondType) {
     return natureInfluence[(int)firstType][(int)secondType];
 }
 

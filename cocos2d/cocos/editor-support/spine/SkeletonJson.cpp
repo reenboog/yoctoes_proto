@@ -474,7 +474,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 		}
 	}
 
-	/* Events. */
+	/* Event. */
 	events = Json_getItem(root, "events");
 	if (events) {
 		Json *eventMap;

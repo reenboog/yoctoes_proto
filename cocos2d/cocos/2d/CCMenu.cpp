@@ -227,7 +227,7 @@ void Menu::removeChild(Node* child, bool cleanup)
     Node::removeChild(child, cleanup);
 }
 
-//Menu - Events
+//Menu - Event
 
 bool Menu::onTouchBegan(Touch* touch, Event* event)
 {

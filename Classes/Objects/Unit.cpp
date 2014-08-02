@@ -5,7 +5,7 @@
 using namespace std;
 using namespace cocos2d;
 
-Unit *Unit::create(Constants::TeamColor color) {
+Unit *Unit::create(TeamColor color) {
     Unit *unit = new Unit();
     if (unit->init(color)) {
         unit->autorelease();
@@ -18,7 +18,7 @@ Unit *Unit::create(Constants::TeamColor color) {
 Unit::~Unit() {
 }
 
-bool Unit::init(Constants::TeamColor color) {
+bool Unit::init(TeamColor color) {
     if (!Node::init())
         return false;
 
@@ -111,13 +111,13 @@ Sequence *Unit::addActionsToSequence(vector<FiniteTimeAction *> actions, Sequenc
 
 std::string Unit::determineFilename() {
     string filename = "red_unit.png"; //todo: add default value
-    if (color_ == Constants::TeamColor::red) {
+    if (color_ == TeamColor::red) {
         filename = "red_unit.png";
-    } else if (color_ == Constants::TeamColor::blue) {
+    } else if (color_ == TeamColor::blue) {
         filename = "blue_unit.png";
-    } else if (color_ == Constants::TeamColor::green) {
+    } else if (color_ == TeamColor::green) {
         filename = "green_unit.png";
-    } else if (color_ == Constants::TeamColor::yellow) {
+    } else if (color_ == TeamColor::yellow) {
         filename = "yellow_unit.png";
     }
     return filename;

@@ -9,33 +9,33 @@ class Road;
 
 class Unit : public cocos2d::Node {
 public:
-    static Unit *create(Constants::TeamColor team);
+    static Unit *create(TeamColor team);
     ~Unit();
 
     void startTrek(float delayTime);
     void setRoute(std::vector<Road *> route, bool needSwapFirst = false);
     int getCount() const;
     void setCount(int count);
-    const Constants::TeamColor &getTeamColor() const;
-    void setColor(Constants::TeamColor const &color);
-    Constants::TeamGroup const &getTeamGroup() const;
-    void setTeamGroup(Constants::TeamGroup const &group);
+    const TeamColor &getTeamColor() const;
+    void setColor(TeamColor const &color);
+    TeamGroup const &getTeamGroup() const;
+    void setTeamGroup(TeamGroup const &group);
     Unit *getLastCollidedUnit() const;
     void setLastCollidedUnit(Unit *lastCollidedUnit);
     cocos2d::Sprite *getUnitBody() const;
     bool isShouldBeRemoved() const;
     void setShouldBeRemoved(bool shouldBeRemoved);
-    Constants::NatureTypes const &getNatureType() const;
-    void setNatureType(Constants::NatureTypes const &natureType);
+    NatureType const &getNatureType() const;
+    void setNatureType(NatureType const &natureType);
 
 private:
-    bool init(Constants::TeamColor color);
+    bool init(TeamColor color);
     cocos2d::Sequence *addActionsToSequence(std::vector<cocos2d::FiniteTimeAction *> actions, cocos2d::Sequence *sequence);
     std::string determineFilename();
 
     float speed_;
-    Constants::TeamColor color_;
-    Constants::TeamGroup group_;
+    TeamColor color_;
+    TeamGroup group_;
     std::vector<Road *> route_;
     bool needSwapFirst_;
     int count_;
@@ -44,7 +44,7 @@ private:
     cocos2d::Label *countLabel_;
     Unit *lastCollidedUnit_;
     bool shouldBeRemoved_;
-    Constants::NatureTypes natureType_;
+    NatureType natureType_;
 };
 
 inline void Unit::setRoute(std::vector<Road *> route, bool needSwapFirst) {
@@ -61,19 +61,19 @@ inline void Unit::setCount(int count) {
     countLabel_->setString(stringWithFormat("%d", count));
 }
 
-inline const Constants::TeamColor &Unit::getTeamColor() const {
+inline const TeamColor &Unit::getTeamColor() const {
     return color_;
 }
 
-inline void Unit::setColor(Constants::TeamColor const &color) {
+inline void Unit::setColor(TeamColor const &color) {
     color_ = color;
 }
 
-inline Constants::TeamGroup const &Unit::getTeamGroup() const {
+inline TeamGroup const &Unit::getTeamGroup() const {
     return group_;
 }
 
-inline void Unit::setTeamGroup(Constants::TeamGroup const &group) {
+inline void Unit::setTeamGroup(TeamGroup const &group) {
     group_ = group;
 }
 
@@ -97,11 +97,11 @@ inline void Unit::setShouldBeRemoved(bool shouldBeRemoved) {
     shouldBeRemoved_ = shouldBeRemoved;
 }
 
-inline Constants::NatureTypes const &Unit::getNatureType() const {
+inline NatureType const &Unit::getNatureType() const {
     return natureType_;
 }
 
-inline void Unit::setNatureType(Constants::NatureTypes const &natureType) {
+inline void Unit::setNatureType(NatureType const &natureType) {
     natureType_ = natureType;
 }
 
