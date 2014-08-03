@@ -13,6 +13,7 @@
 		1A40503D7E9FACC0473C845E /* GameConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055B07618956E0914B2C2 /* GameConfig.cpp */; };
 		1A40505BBFACF13D0694AA59 /* WeakTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */; };
 		1A405086AB032D97E8AC8BA4 /* Localized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054DABE5EA18E8C853ECB /* Localized.cpp */; };
+		1A40511C3BFF9A60F1A546CD /* StrongTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405AB45957A8FDF385289C /* StrongTowerView.cpp */; };
 		1A40515F97EE6C886B00D36F /* TowerViewNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */; };
 		1A4051B48F94A5FF48B87716 /* GameConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055B07618956E0914B2C2 /* GameConfig.cpp */; };
 		1A4051E6C20F587F391AC1D7 /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051C952D31D0ED6806853 /* Shared.cpp */; };
@@ -40,6 +41,8 @@
 		1A405D6D775BF65F3C73C154 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A405D9153E08D535EA56AB8 /* HUDLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531E67042F701EB3930D /* HUDLayer.cpp */; };
 		1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
+		1A405EB7B545512B4760C36E /* StrongTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405AB45957A8FDF385289C /* StrongTowerView.cpp */; };
+		1A405EC3C1AD10834AA4BD6B /* StrongTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405AB45957A8FDF385289C /* StrongTowerView.cpp */; };
 		1A405F24F6C3DF928018D520 /* HUDLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531E67042F701EB3930D /* HUDLayer.cpp */; };
 		1A405F3368717ED1BF24125C /* GameConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055B07618956E0914B2C2 /* GameConfig.cpp */; };
 		1A405F77D68B934E3592125D /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */; };
@@ -322,12 +325,14 @@
 /* Begin PBXFileReference section */
 		1A40507A6493314470702567 /* GameState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameState.cpp; sourceTree = "<group>"; };
 		1A4051C952D31D0ED6806853 /* Shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shared.cpp; sourceTree = "<group>"; };
+		1A4052D60BB0E75648558D68 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
 		1A40531E67042F701EB3930D /* HUDLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HUDLayer.cpp; sourceTree = "<group>"; };
 		1A4053F28F986F04A3A3540F /* Road.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Road.h; sourceTree = "<group>"; };
 		1A405447275CA8AC1614609C /* EventsMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsMediator.h; sourceTree = "<group>"; };
 		1A4054BDB9B5C7E48A583277 /* HUDLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDLayer.h; sourceTree = "<group>"; };
 		1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerViewNode.cpp; sourceTree = "<group>"; };
 		1A4054DABE5EA18E8C853ECB /* Localized.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Localized.cpp; sourceTree = "<group>"; };
+		1A405561802F62AA50F47DFC /* StrongTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrongTowerView.h; sourceTree = "<group>"; };
 		1A40556F8EC15E1705474576 /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		1A4055B07618956E0914B2C2 /* GameConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameConfig.cpp; sourceTree = "<group>"; };
 		1A4055D28ECB86E8B3DA9396 /* Road.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Road.cpp; sourceTree = "<group>"; };
@@ -339,10 +344,12 @@
 		1A40597BE68C66E964F1DBF1 /* TowersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowersManager.h; sourceTree = "<group>"; };
 		1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeakTowerView.cpp; sourceTree = "<group>"; };
 		1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tower.cpp; sourceTree = "<group>"; };
+		1A405AB45957A8FDF385289C /* StrongTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrongTowerView.cpp; sourceTree = "<group>"; };
 		1A405B335BF14ACD80C81A94 /* TowerViewNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerViewNode.h; sourceTree = "<group>"; };
 		1A405B37B0FAE378ABC7791C /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
 		1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLayer.cpp; sourceTree = "<group>"; };
 		1A405C674B9504D9754A9DDB /* EventsMediator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventsMediator.cpp; sourceTree = "<group>"; };
+		1A405D49D1F59CFD2C5B5F61 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		1A405DBAD107896ABBFC0157 /* WeakTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakTowerView.h; sourceTree = "<group>"; };
 		1A405DEB601BD2E88410FFCF /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		1A405F06154A1EA1A6828C06 /* Localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Localized.h; sourceTree = "<group>"; };
@@ -387,7 +394,6 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
-		B8077FCB1956C69000B4CF08 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Classes/Constants.h; sourceTree = "<group>"; };
 		B8077FD21956C69000B4CF08 /* rapidjson */ = {isa = PBXFileReference; lastKnownFileType = folder; name = rapidjson; path = ../Classes/rapidjson; sourceTree = "<group>"; };
 		B8077FDF1956C6CF00B4CF08 /* Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Res; path = ../Res; sourceTree = "<group>"; };
 		B8077FE61956C7A900B4CF08 /* unit_tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = unit_tests; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -507,7 +513,6 @@
 				B8077FEF1956C7DE00B4CF08 /* tests */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
-				B8077FCB1956C69000B4CF08 /* Constants.h */,
 				B8077FD21956C69000B4CF08 /* rapidjson */,
 				1A405F94B99924ED88A74C91 /* Layers */,
 				1A405A3A074CAC91819791C4 /* Objects */,
@@ -542,6 +547,8 @@
 				1A40556F8EC15E1705474576 /* Shared.h */,
 				1A4051C952D31D0ED6806853 /* Shared.cpp */,
 				1A4057BBCD132DB92855D8FB /* Func.h */,
+				1A405D49D1F59CFD2C5B5F61 /* Constants.h */,
+				1A4052D60BB0E75648558D68 /* Types.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -553,6 +560,8 @@
 				1A405DBAD107896ABBFC0157 /* WeakTowerView.h */,
 				1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */,
 				1A405B335BF14ACD80C81A94 /* TowerViewNode.h */,
+				1A405AB45957A8FDF385289C /* StrongTowerView.cpp */,
+				1A405561802F62AA50F47DFC /* StrongTowerView.h */,
 			);
 			path = RenderObjects;
 			sourceTree = "<group>";
@@ -998,6 +1007,7 @@
 				1A40505BBFACF13D0694AA59 /* WeakTowerView.cpp in Sources */,
 				1A405860381057F47CBBB09F /* TowersManager.cpp in Sources */,
 				1A405FC03EB4F8651F529EC3 /* TowerViewNode.cpp in Sources */,
+				1A40511C3BFF9A60F1A546CD /* StrongTowerView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,6 +1030,7 @@
 				1A405821F2C168600CA9E444 /* WeakTowerView.cpp in Sources */,
 				1A40501D3113DBC6F1A50A60 /* TowersManager.cpp in Sources */,
 				1A40515F97EE6C886B00D36F /* TowerViewNode.cpp in Sources */,
+				1A405EC3C1AD10834AA4BD6B /* StrongTowerView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,6 +1062,7 @@
 				1A4058F17E4CF800494FB15A /* WeakTowerView.cpp in Sources */,
 				1A405826AE4032CDD4CD0461 /* TowersManager.cpp in Sources */,
 				1A40558FD68590C638E5DB02 /* TowerViewNode.cpp in Sources */,
+				1A405EB7B545512B4760C36E /* StrongTowerView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

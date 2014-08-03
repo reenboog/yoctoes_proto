@@ -1,12 +1,12 @@
-#ifndef __WEAK_TOWER_VIEW_H_
-#define __WEAK_TOWER_VIEW_H_
+#ifndef __STRONG_TOWER_VIEW_H_
+#define __STRONG_TOWER_VIEW_H_
 
 #include "TowerViewNode.h"
 
-class WeakTowerView : public TowerViewNode {
+class StrongTowerView  : public TowerViewNode {
 public:
-    static WeakTowerView *create();
-    ~WeakTowerView();
+    static StrongTowerView *create();
+    ~StrongTowerView();
 
     cocos2d::Label *getUnitsLabel() const;
 
@@ -23,8 +23,8 @@ private:
     cocos2d::Label *unitsLabel_;
 };
 
-inline cocos2d::Label *WeakTowerView::getUnitsLabel() const {
+inline cocos2d::Label *StrongTowerView::getUnitsLabel() const {
     return unitsLabel_;
 }
 
-#endif //__WEAK_TOWER_VIEW_H_
+#endif //__STRONG_TOWER_VIEW_H_

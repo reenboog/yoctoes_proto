@@ -12,6 +12,7 @@ public:
     Tower *createTowerWithParams(TeamColor, NatureType, int);
 
     virtual void changeTeam(Tower *tower, TeamColor color);
+    virtual void upgradeTower(Tower *tower);
 private:
     static TowersManager *sharedInstance_;
 

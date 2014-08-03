@@ -24,7 +24,8 @@ bool HUDLayer::init() {
         return false;
     }
 
-    MenuItemSprite *restart = MenuItemSprite::create(Sprite::create("restart.png"),
+    MenuItemSprite *restart = MenuItemSprite::create(
+            Sprite::create("restart.png"),
             Sprite::create("restart.png"),
             this,
             menu_selector(HUDLayer::restartCallback));

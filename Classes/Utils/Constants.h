@@ -1,6 +1,8 @@
 #ifndef __CONSTANTS_H__
 #define __CONSTANTS_H__
 
+#import "Types.h"
+
 #define SCREEN_SIZE Director::getInstance()->getWinSize()
 #define SCREEN_CENTER cocos2d::Point(Director::getInstance()->getWinSize().width / 2, Director::getInstance()->getWinSize().height / 2)
 
@@ -30,5 +32,9 @@ enum class NatureType : int {
     earth,
     evil,
 };
+
+const TowerParams weakTowerParams = {30, 1};
+const TowerParams strongTowerParams = {50, 1.5f};
+
 
 #endif // __CONSTANTS_H__

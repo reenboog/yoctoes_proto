@@ -1,9 +1,9 @@
-#include "WeakTowerView.h"
+#include "StrongTowerView.h"
 
 using namespace cocos2d;
 
-WeakTowerView *WeakTowerView::create() {
-    WeakTowerView *tower = new WeakTowerView();
+StrongTowerView *StrongTowerView::create() {
+    StrongTowerView *tower = new StrongTowerView();
     if (tower->init()) {
         tower->autorelease();
     } else {
@@ -12,14 +12,14 @@ WeakTowerView *WeakTowerView::create() {
     return tower;
 }
 
-WeakTowerView::~WeakTowerView() {
+StrongTowerView::~StrongTowerView() {
 }
 
-bool WeakTowerView::init() {
+bool StrongTowerView::init() {
     if (!TowerViewNode::init())
         return false;
 
-    body_ = Sprite::create("weak_tower.png");
+    body_ = Sprite::create("strong_tower.png");
     this->addChild(body_);
 
     unitsLabel_ = Label::createWithTTF("1", "Chapaza.ttf", 13);
@@ -32,23 +32,23 @@ bool WeakTowerView::init() {
     return true;
 }
 
-void WeakTowerView::applyColor(Color3B color) {
+void StrongTowerView::applyColor(Color3B color) {
     body_->setColor(color);
 }
 
-void WeakTowerView::selectTower() {
+void StrongTowerView::selectTower() {
     selection_ = Sprite::create("select.png");
     this->addChild(selection_);
 }
 
-void WeakTowerView::unselectTower() {
+void StrongTowerView::unselectTower() {
     this->removeChild(selection_, true);
 }
 
-void WeakTowerView::showUpgdare() {
+void StrongTowerView::showUpgdare() {
     //
 }
 
-void WeakTowerView::hideUpgrade() {
+void StrongTowerView::hideUpgrade() {
     //
 }

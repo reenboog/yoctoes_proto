@@ -11,6 +11,8 @@ public:
     virtual void selectTower();
     virtual void unselectTower();
     virtual void applyColor(cocos2d::Color3B);
+    virtual void showUpgdare();
+    virtual void hideUpgrade();
 };
 
 #endif //__TOWER_VIEW_NODE_H_

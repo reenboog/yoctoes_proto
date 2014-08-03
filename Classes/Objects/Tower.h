@@ -1,8 +1,7 @@
 #ifndef __TOWER_H_
 #define __TOWER_H_
 
-#include "CCLabel.h"
-#include "CCSprite.h"
+#include "cocos2d.h"
 #include "Constants.h"
 #include "TowerViewNode.h"
 
@@ -26,7 +25,7 @@ public:
 //
 class UpdateProtocol {
 public:
-//    virtual void updateTower(Tower *) = 0;
+    virtual void upgradeTower(Tower *) = 0;
     virtual void changeTeam(Tower *, TeamColor) = 0;
 };
 
@@ -53,6 +52,9 @@ public:
     TowerViewNode *getTowerView() const;
     void setTowerView(TowerViewNode *towerView);
     void setGenerateUnitCooldown(float generateUnitCooldown);
+    int getCurrentLevel() const;
+    void setCurrentLevel(int currentLevel);
+    void setParams(TowerParams const &params);
 
     void applyUnit(Unit *unit);
     void checkForApplying(Unit *unit);
@@ -67,6 +69,7 @@ private:
     void updateUnitsLabel();
     void checkWin();
     void changeTeam(Tower *, TeamColor);
+    void upgradeTower(Ref* pSender);
 
     int unitsCount_;
     char id_;
@@ -80,6 +83,13 @@ private:
     Unit *lastAppliedUnit_;
     NatureType natureType_;
     TowerViewNode *towerView_;
+    int currentLevel_;
+
+    bool readyForUpdate_;
+    bool updateButtonShown_;
+    cocos2d::Menu *upgradeMenu_;
+    TowerParams params_;
+    int unitsLimit_;
 };
 
 inline char Tower::getID() const {
@@ -132,6 +142,19 @@ inline void Tower::setTowerView(TowerViewNode *towerView) {
 
 inline void Tower::setGenerateUnitCooldown(float generateUnitCooldown) {
     generateUnitCooldown_ = generateUnitCooldown;
+}
+
+inline int Tower::getCurrentLevel() const {
+    return currentLevel_;
+}
+
+inline void Tower::setCurrentLevel(int currentLevel) {
+    currentLevel_ = currentLevel;
+}
+
+inline void Tower::setParams(TowerParams const &params) {
+    params_ = params;
+    unitsLimit_ = params.unitCap;
 }
 
 #endif //__TOWER_H_

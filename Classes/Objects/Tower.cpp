@@ -6,7 +6,7 @@
 using namespace std;
 using namespace cocos2d;
 
-const int UNITS_LIMIT = 30;
+const int LEVEL_CUP = 2;
 
 WinLoseProtocol::~WinLoseProtocol() {
 }
@@ -30,6 +30,10 @@ bool Tower::initWithType(TeamColor color) {
         return false;
 
     unitsCount_ = 1;
+    currentLevel_ = 1;
+    readyForUpdate_ = false;
+    updateButtonShown_ = false;
+    unitsLimit_ = 0;
 
     lastAppliedUnit_ = nullptr;
 
@@ -48,13 +52,18 @@ bool Tower::initWithType(TeamColor color) {
 void Tower::update(float dt) {
     //unit generation
     if (TeamColor::unfilled != color_) {
-        if (unitsCount_ < UNITS_LIMIT) {
+        if (unitsCount_ < unitsLimit_ * currentLevel_) {
+            readyForUpdate_ = false;
             if (timeAfterLastUnit_ <= generateUnitCooldown_) {
                 timeAfterLastUnit_ += dt;
             } else {
                 timeAfterLastUnit_ = 0;
                 unitsCount_ = unitsCount_ + 1;
                 this->updateUnitsLabel();
+            }
+        } else {
+            if (currentLevel_ < LEVEL_CUP) {
+                readyForUpdate_ = true;
             }
         }
     }
@@ -73,6 +82,28 @@ void Tower::update(float dt) {
     } else {
         selectionAnimated_ = false;
         towerView_->unselectTower();
+    }
+
+    if (readyForUpdate_) {
+        if (color_ == TeamColor::blue) {
+            if (!updateButtonShown_) {
+                updateButtonShown_ = true;
+
+                MenuItemSprite *upgrade = MenuItemSprite::create(
+                        Sprite::create("upgrade_n.png"),
+                        Sprite::create("upgrade_s.png"),
+                        this,
+                        menu_selector(Tower::upgradeTower));
+                upgrade->setPosition(33, 15); //FIXME
+                upgrade->setScale(3.0f);
+                upgradeMenu_ = cocos2d::Menu::create(upgrade, NULL);
+                upgradeMenu_->setPosition(0, 0); //FIXME
+                this->addChild(upgradeMenu_, 120);
+            }
+        }
+    } else {
+        updateButtonShown_ = false;
+        this->removeChild(upgradeMenu_, true);
     }
 }
 
@@ -133,30 +164,17 @@ void Tower::changeTeam(Tower *tower, TeamColor color) {
     }
 }
 
-//void Tower::changeTeam(this, TeamColor newTeam) {
-//    //tower already has params - according to this we need to change image
-//
-//    color_ = newTeam;
-//    string filename = this->determineFilename();
-//    Sprite *newSprite = Sprite::create(filename);
-//    this->setSpriteFrame(newSprite->getSpriteFrame());
-//    generateUnitCooldown_ = randInRangef(2.0f, 3.0f);
-//
-//    //check events after capture
-//    if (events_.find(Event::T_afterCaptureTheTowerWin) != events_.end()) {
-//        GameLayerMemFun pFoo = &GameLayer::win;
-//        EventsMediator::sharedInstance()->selectorToGameLayer(pFoo);
-//    }
-//}
+void Tower::upgradeTower(Ref* pSender) {
+    if (updateDelegate_) {
+        updateButtonShown_ = false;
+        this->removeChild(upgradeMenu_, true);
+        unitsCount_ = unitsCount_ / 2;
+        updateDelegate_->upgradeTower(this);
+    }
+}
 
 void Tower::checkWin() {
     if (delegate_) {
         delegate_->checkWin();
     }
 }
-
-#pragma mark - events
-
-//void Tower::addEvent(Event event) {
-//    events_.insert(event);
-//}
