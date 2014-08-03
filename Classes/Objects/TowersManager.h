@@ -18,6 +18,9 @@ private:
 
     TowersManager();
     ~TowersManager();
+
+    cocos2d::Color3B colorForTeam(TeamColor);
+    TeamGroup groupForTeam(TeamColor);
 };
 
 #endif //__TOWERS_MANAGER_H_

@@ -4,6 +4,7 @@
 #include "Func.h"
 
 using namespace std;
+using namespace cocos2d;
 
 TowersManager *TowersManager::sharedInstance_ = nullptr;
 
@@ -27,27 +28,8 @@ Tower *TowersManager::createTowerWithParams(TeamColor color, NatureType type, in
     Tower *tower = Tower::createWithType(color);
     tower->updateTowerView(WeakTowerView::create());
     tower->setParams(weakTowerParams);
-    switch (color) {
-        case TeamColor::blue:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(39, 113, 200));
-            tower->setGroup(TeamGroup::alfa);
-            break;
-        case TeamColor::red:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(205, 26, 69));
-            tower->setGroup(TeamGroup::omega);
-            break;
-        case TeamColor::yellow:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(244, 242, 46));
-            tower->setGroup(TeamGroup::omega);
-            break;
-        case TeamColor::green:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(46, 197, 21));
-            tower->setGroup(TeamGroup::alfa);
-            break;
-        default:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(217, 151, 228));
-            tower->setGroup(TeamGroup::neutral);
-    }
+    tower->getTowerView()->applyColor(this->colorForTeam(color));
+    tower->setGroup(this->groupForTeam(color));
 
     return tower;
 }
@@ -57,47 +39,58 @@ Tower *TowersManager::createTowerWithParams(TeamColor color, NatureType type, in
 void TowersManager::changeTeam(Tower *tower, TeamColor color) {
     tower->setTeamColor(color);
     tower->updateTowerView(WeakTowerView::create());
-    switch (color) {
-        case TeamColor::blue:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(39, 113, 200));
-            tower->setGroup(TeamGroup::alfa);
-            break;
-        case TeamColor::red:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(205, 26, 69));
-            tower->setGroup(TeamGroup::omega);
-            break;
-        case TeamColor::yellow:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(244, 242, 46));
-            tower->setGroup(TeamGroup::omega);
-            break;
-        case TeamColor::green:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(46, 197, 21));
-            tower->setGroup(TeamGroup::alfa);
-            break;
-        default:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(217, 151, 228));
-            tower->setGroup(TeamGroup::neutral);
-    }
+    tower->getTowerView()->applyColor(this->colorForTeam(color));
+    tower->setGroup(this->groupForTeam(color));
     tower->setGenerateUnitCooldown(randInRangef(2.0f, 3.0f));
 }
 
 void TowersManager::upgradeTower(Tower *tower) {
     tower->updateTowerView(StrongTowerView::create());
     tower->setParams(strongTowerParams);
-    switch (tower->getTeamColor()) {
+    tower->getTowerView()->applyColor(this->colorForTeam(tower->getTeamColor()));
+}
+
+
+Color3B TowersManager::colorForTeam(TeamColor color) {
+    Color3B newColor;
+    switch (color) {
         case TeamColor::blue:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(39, 113, 200));
+            newColor = Color3B(39, 113, 200);
             break;
         case TeamColor::red:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(205, 26, 69));
+            newColor = Color3B(205, 26, 69);
             break;
         case TeamColor::yellow:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(244, 242, 46));
+            newColor = Color3B(244, 242, 46);
             break;
         case TeamColor::green:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(46, 197, 21));
+            newColor = Color3B(46, 197, 21);
             break;
         default:
-            tower->getTowerView()->applyColor(cocos2d::Color3B(217, 151, 228));
+            newColor = Color3B(217, 151, 228);
     }
+
+    return newColor;
+}
+
+TeamGroup TowersManager::groupForTeam(TeamColor color) {
+    TeamGroup teamGroup;
+    switch (color) {
+        case TeamColor::blue:
+            teamGroup = TeamGroup::alfa;
+            break;
+        case TeamColor::red:
+            teamGroup = TeamGroup::omega;
+            break;
+        case TeamColor::yellow:
+            teamGroup = TeamGroup::omega;
+            break;
+        case TeamColor::green:
+            teamGroup = TeamGroup::alfa;
+            break;
+        default:
+            teamGroup = TeamGroup::neutral;
+    }
+
+    return teamGroup;
 }
