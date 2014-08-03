@@ -48,6 +48,7 @@ void TowersManager::upgradeTower(Tower *tower) {
     tower->updateTowerView(StrongTowerView::create());
     tower->setParams(strongTowerParams);
     tower->getTowerView()->applyColor(this->colorForTeam(tower->getTeamColor()));
+    tower->updateUnitsLabel();
 }
 
 

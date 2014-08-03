@@ -60,13 +60,13 @@ public:
     void checkForApplying(Unit *unit);
     int takeHalfUnits();
     void updateTowerView(TowerViewNode *newView);
+    void updateUnitsLabel();
 
     CC_SYNTHESIZE(WinLoseProtocol*, delegate_, Delegate)
     CC_SYNTHESIZE(UpdateProtocol*, updateDelegate_, UpdateDelegate);
 
 private:
     bool initWithType(TeamColor color);
-    void updateUnitsLabel();
     void checkWin();
     void changeTeam(Tower *, TeamColor);
     void upgradeTower(Ref* pSender);
