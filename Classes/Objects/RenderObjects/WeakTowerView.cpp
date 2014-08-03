@@ -1,9 +1,9 @@
-#include "GreenTowerView.h"
+#include "WeakTowerView.h"
 
 using namespace cocos2d;
 
-GreenTowerView *GreenTowerView::create() {
-    GreenTowerView *tower = new GreenTowerView();
+WeakTowerView *WeakTowerView::create() {
+    WeakTowerView *tower = new WeakTowerView();
     if (tower->init()) {
         tower->autorelease();
     } else {
@@ -12,14 +12,14 @@ GreenTowerView *GreenTowerView::create() {
     return tower;
 }
 
-GreenTowerView::~GreenTowerView() {
+WeakTowerView::~WeakTowerView() {
 }
 
-bool GreenTowerView::init() {
+bool WeakTowerView::init() {
     if (!TowerViewNode::init())
         return false;
 
-    body_ = Sprite::create("green_tower.png");
+    body_ = Sprite::create("weak_tower.png");
     this->addChild(body_);
 
     unitsLabel_ = Label::createWithTTF("1", "Chapaza.ttf", 13);
@@ -28,15 +28,19 @@ bool GreenTowerView::init() {
     unitsLabel_->setPosition(16.0f, 16.0f); //fixme
     this->addChild(unitsLabel_);
 
+
     return true;
 }
 
-void GreenTowerView::selectTower() {
+void WeakTowerView::applyColor(Color3B color) {
+    body_->setColor(color);
+}
+
+void WeakTowerView::selectTower() {
     selection_ = Sprite::create("select.png");
     this->addChild(selection_);
 }
 
-void GreenTowerView::unselectTower() {
+void WeakTowerView::unselectTower() {
     this->removeChild(selection_, true);
 }
-

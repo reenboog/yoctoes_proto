@@ -11,46 +11,34 @@
 		1A40501FF4ABDC355EB3E008 /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */; };
 		1A40502DC5316FB826C1F321 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A40503D7E9FACC0473C845E /* GameConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055B07618956E0914B2C2 /* GameConfig.cpp */; };
-		1A40505BBFACF13D0694AA59 /* BlueTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* BlueTowerView.cpp */; };
+		1A40505BBFACF13D0694AA59 /* WeakTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */; };
 		1A405086AB032D97E8AC8BA4 /* Localized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054DABE5EA18E8C853ECB /* Localized.cpp */; };
 		1A40515F97EE6C886B00D36F /* TowerViewNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */; };
-		1A405160FCB95701568FA37F /* YellowTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CA215F012839E5D5E /* YellowTowerView.cpp */; };
 		1A4051B48F94A5FF48B87716 /* GameConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055B07618956E0914B2C2 /* GameConfig.cpp */; };
 		1A4051E6C20F587F391AC1D7 /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051C952D31D0ED6806853 /* Shared.cpp */; };
-		1A405261E92A620B9B33C137 /* GreenTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531D68DD34636E0EC8D8 /* GreenTowerView.cpp */; };
 		1A4052893B4E9BB5BA10F18B /* EventsMediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405C674B9504D9754A9DDB /* EventsMediator.cpp */; };
-		1A4052AA6281DC6B6367CAA9 /* RedTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405BC968B423B81801855C /* RedTowerView.cpp */; };
 		1A4052EBDFDB898B382BA791 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
 		1A405389B962433FBEF7F80E /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
-		1A40543B165D5C7F4B43E449 /* RedTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405BC968B423B81801855C /* RedTowerView.cpp */; };
-		1A40544D6DB52B6D10173B84 /* NeutralTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405696F31301E23DE4A195 /* NeutralTowerView.cpp */; };
-		1A40546FED2FD70EB1FEF81A /* YellowTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CA215F012839E5D5E /* YellowTowerView.cpp */; };
 		1A40547648753366D1C00227 /* GameState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40507A6493314470702567 /* GameState.cpp */; };
-		1A4054A0F4C4E5853A3C9377 /* GreenTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531D68DD34636E0EC8D8 /* GreenTowerView.cpp */; };
 		1A40558FD68590C638E5DB02 /* TowerViewNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */; };
-		1A4055E036434F52D262F5F8 /* YellowTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CA215F012839E5D5E /* YellowTowerView.cpp */; };
 		1A405641B61C5FF57EDA8111 /* GameState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40507A6493314470702567 /* GameState.cpp */; };
 		1A40579D895B31B7C73012DA /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051C952D31D0ED6806853 /* Shared.cpp */; };
 		1A4057F5777C794DDE01CA80 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
-		1A405821F2C168600CA9E444 /* BlueTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* BlueTowerView.cpp */; };
+		1A405821F2C168600CA9E444 /* WeakTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */; };
 		1A405826AE4032CDD4CD0461 /* TowersManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405825D7A6B1299F6C8EE7 /* TowersManager.cpp */; };
 		1A405860381057F47CBBB09F /* TowersManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405825D7A6B1299F6C8EE7 /* TowersManager.cpp */; };
 		1A4058C7AD7F4D377BFE39FE /* Localized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054DABE5EA18E8C853ECB /* Localized.cpp */; };
-		1A4058F17E4CF800494FB15A /* BlueTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* BlueTowerView.cpp */; };
+		1A4058F17E4CF800494FB15A /* WeakTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */; };
 		1A4059361D194D8053636631 /* HUDLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531E67042F701EB3930D /* HUDLayer.cpp */; };
-		1A4059603057D7009D5A26E9 /* NeutralTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405696F31301E23DE4A195 /* NeutralTowerView.cpp */; };
 		1A4059AABCC2132A2B1A918D /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */; };
 		1A405A088CA7A6102B915A16 /* EventsMediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405C674B9504D9754A9DDB /* EventsMediator.cpp */; };
 		1A405A855323F1A144A4BCAD /* Localized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054DABE5EA18E8C853ECB /* Localized.cpp */; };
 		1A405B1B7B1117DF07B57FC9 /* GameState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40507A6493314470702567 /* GameState.cpp */; };
-		1A405B35F6E9926402143A40 /* GreenTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531D68DD34636E0EC8D8 /* GreenTowerView.cpp */; };
 		1A405CA478B3234E6A70BAE8 /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051C952D31D0ED6806853 /* Shared.cpp */; };
 		1A405CCD25A09CF5CF4E10B6 /* EventsMediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405C674B9504D9754A9DDB /* EventsMediator.cpp */; };
-		1A405D0806E2979936DC88C3 /* RedTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405BC968B423B81801855C /* RedTowerView.cpp */; };
 		1A405D664ED9BE312D607B00 /* Tower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */; };
 		1A405D6D775BF65F3C73C154 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A405D9153E08D535EA56AB8 /* HUDLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531E67042F701EB3930D /* HUDLayer.cpp */; };
-		1A405DC2E79F2D580941970F /* NeutralTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405696F31301E23DE4A195 /* NeutralTowerView.cpp */; };
 		1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
 		1A405F24F6C3DF928018D520 /* HUDLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531E67042F701EB3930D /* HUDLayer.cpp */; };
 		1A405F3368717ED1BF24125C /* GameConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055B07618956E0914B2C2 /* GameConfig.cpp */; };
@@ -334,36 +322,28 @@
 /* Begin PBXFileReference section */
 		1A40507A6493314470702567 /* GameState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameState.cpp; sourceTree = "<group>"; };
 		1A4051C952D31D0ED6806853 /* Shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shared.cpp; sourceTree = "<group>"; };
-		1A40531D68DD34636E0EC8D8 /* GreenTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GreenTowerView.cpp; sourceTree = "<group>"; };
 		1A40531E67042F701EB3930D /* HUDLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HUDLayer.cpp; sourceTree = "<group>"; };
-		1A4053D630ADC71736FC295D /* GreenTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenTowerView.h; sourceTree = "<group>"; };
 		1A4053F28F986F04A3A3540F /* Road.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Road.h; sourceTree = "<group>"; };
 		1A405447275CA8AC1614609C /* EventsMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsMediator.h; sourceTree = "<group>"; };
 		1A4054BDB9B5C7E48A583277 /* HUDLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDLayer.h; sourceTree = "<group>"; };
 		1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowerViewNode.cpp; sourceTree = "<group>"; };
 		1A4054DABE5EA18E8C853ECB /* Localized.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Localized.cpp; sourceTree = "<group>"; };
 		1A40556F8EC15E1705474576 /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
-		1A40559CB5774622FB3593BE /* YellowTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YellowTowerView.h; sourceTree = "<group>"; };
 		1A4055B07618956E0914B2C2 /* GameConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameConfig.cpp; sourceTree = "<group>"; };
 		1A4055D28ECB86E8B3DA9396 /* Road.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Road.cpp; sourceTree = "<group>"; };
 		1A405626206FAB81D3B13F24 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
-		1A405696F31301E23DE4A195 /* NeutralTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NeutralTowerView.cpp; sourceTree = "<group>"; };
 		1A4056D2A541FFD74B12985B /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
-		1A40575BA6F6147D5466F85D /* NeutralTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeutralTowerView.h; sourceTree = "<group>"; };
 		1A4057BBCD132DB92855D8FB /* Func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Func.h; sourceTree = "<group>"; };
 		1A405825D7A6B1299F6C8EE7 /* TowersManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TowersManager.cpp; sourceTree = "<group>"; };
 		1A40584B00A71B11BE162BA9 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		1A40597BE68C66E964F1DBF1 /* TowersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowersManager.h; sourceTree = "<group>"; };
-		1A405A223A9ABD8F6B053539 /* BlueTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlueTowerView.cpp; sourceTree = "<group>"; };
-		1A405A9CA215F012839E5D5E /* YellowTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YellowTowerView.cpp; sourceTree = "<group>"; };
+		1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeakTowerView.cpp; sourceTree = "<group>"; };
 		1A405A9CF771BFBE6C9E0EAD /* Tower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tower.cpp; sourceTree = "<group>"; };
 		1A405B335BF14ACD80C81A94 /* TowerViewNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerViewNode.h; sourceTree = "<group>"; };
 		1A405B37B0FAE378ABC7791C /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
-		1A405BC968B423B81801855C /* RedTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedTowerView.cpp; sourceTree = "<group>"; };
-		1A405C407CBF387916E5336C /* RedTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedTowerView.h; sourceTree = "<group>"; };
 		1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLayer.cpp; sourceTree = "<group>"; };
 		1A405C674B9504D9754A9DDB /* EventsMediator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventsMediator.cpp; sourceTree = "<group>"; };
-		1A405DBAD107896ABBFC0157 /* BlueTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueTowerView.h; sourceTree = "<group>"; };
+		1A405DBAD107896ABBFC0157 /* WeakTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakTowerView.h; sourceTree = "<group>"; };
 		1A405DEB601BD2E88410FFCF /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		1A405F06154A1EA1A6828C06 /* Localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Localized.h; sourceTree = "<group>"; };
 		1A405FC2F4020791D817F64C /* Tower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tower.h; sourceTree = "<group>"; };
@@ -569,16 +549,8 @@
 		1A40570CB496E564CEB4509D /* RenderObjects */ = {
 			isa = PBXGroup;
 			children = (
-				1A405A223A9ABD8F6B053539 /* BlueTowerView.cpp */,
-				1A405DBAD107896ABBFC0157 /* BlueTowerView.h */,
-				1A4053D630ADC71736FC295D /* GreenTowerView.h */,
-				1A40531D68DD34636E0EC8D8 /* GreenTowerView.cpp */,
-				1A405C407CBF387916E5336C /* RedTowerView.h */,
-				1A405BC968B423B81801855C /* RedTowerView.cpp */,
-				1A40559CB5774622FB3593BE /* YellowTowerView.h */,
-				1A405A9CA215F012839E5D5E /* YellowTowerView.cpp */,
-				1A405696F31301E23DE4A195 /* NeutralTowerView.cpp */,
-				1A40575BA6F6147D5466F85D /* NeutralTowerView.h */,
+				1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */,
+				1A405DBAD107896ABBFC0157 /* WeakTowerView.h */,
 				1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */,
 				1A405B335BF14ACD80C81A94 /* TowerViewNode.h */,
 			);
@@ -1023,12 +995,8 @@
 				1A405D9153E08D535EA56AB8 /* HUDLayer.cpp in Sources */,
 				1A405CCD25A09CF5CF4E10B6 /* EventsMediator.cpp in Sources */,
 				1A405B1B7B1117DF07B57FC9 /* GameState.cpp in Sources */,
-				1A40505BBFACF13D0694AA59 /* BlueTowerView.cpp in Sources */,
+				1A40505BBFACF13D0694AA59 /* WeakTowerView.cpp in Sources */,
 				1A405860381057F47CBBB09F /* TowersManager.cpp in Sources */,
-				1A4054A0F4C4E5853A3C9377 /* GreenTowerView.cpp in Sources */,
-				1A40543B165D5C7F4B43E449 /* RedTowerView.cpp in Sources */,
-				1A4055E036434F52D262F5F8 /* YellowTowerView.cpp in Sources */,
-				1A40544D6DB52B6D10173B84 /* NeutralTowerView.cpp in Sources */,
 				1A405FC03EB4F8651F529EC3 /* TowerViewNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1049,12 +1017,8 @@
 				1A4059361D194D8053636631 /* HUDLayer.cpp in Sources */,
 				1A4052893B4E9BB5BA10F18B /* EventsMediator.cpp in Sources */,
 				1A40547648753366D1C00227 /* GameState.cpp in Sources */,
-				1A405821F2C168600CA9E444 /* BlueTowerView.cpp in Sources */,
+				1A405821F2C168600CA9E444 /* WeakTowerView.cpp in Sources */,
 				1A40501D3113DBC6F1A50A60 /* TowersManager.cpp in Sources */,
-				1A405261E92A620B9B33C137 /* GreenTowerView.cpp in Sources */,
-				1A405D0806E2979936DC88C3 /* RedTowerView.cpp in Sources */,
-				1A40546FED2FD70EB1FEF81A /* YellowTowerView.cpp in Sources */,
-				1A4059603057D7009D5A26E9 /* NeutralTowerView.cpp in Sources */,
 				1A40515F97EE6C886B00D36F /* TowerViewNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1084,12 +1048,8 @@
 				1A405F24F6C3DF928018D520 /* HUDLayer.cpp in Sources */,
 				1A405A088CA7A6102B915A16 /* EventsMediator.cpp in Sources */,
 				1A405641B61C5FF57EDA8111 /* GameState.cpp in Sources */,
-				1A4058F17E4CF800494FB15A /* BlueTowerView.cpp in Sources */,
+				1A4058F17E4CF800494FB15A /* WeakTowerView.cpp in Sources */,
 				1A405826AE4032CDD4CD0461 /* TowersManager.cpp in Sources */,
-				1A405B35F6E9926402143A40 /* GreenTowerView.cpp in Sources */,
-				1A4052AA6281DC6B6367CAA9 /* RedTowerView.cpp in Sources */,
-				1A405160FCB95701568FA37F /* YellowTowerView.cpp in Sources */,
-				1A405DC2E79F2D580941970F /* NeutralTowerView.cpp in Sources */,
 				1A40558FD68590C638E5DB02 /* TowerViewNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,6 +10,7 @@ public:
     virtual cocos2d::Label *getUnitsLabel() const;
     virtual void selectTower();
     virtual void unselectTower();
+    virtual void applyColor(cocos2d::Color3B);
 };
 
 #endif //__TOWER_VIEW_NODE_H_

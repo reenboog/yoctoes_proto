@@ -13,3 +13,6 @@ void TowerViewNode::selectTower() {
 
 void TowerViewNode::unselectTower() {
 }
+
+void TowerViewNode::applyColor(cocos2d::Color3B color3B) {
+}

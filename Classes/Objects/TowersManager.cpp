@@ -1,9 +1,9 @@
 #include "TowersManager.h"
-#include "BlueTowerView.h"
-#include "RedTowerView.h"
-#include "YellowTowerView.h"
-#include "GreenTowerView.h"
-#include "NeutralTowerView.h"
+#include "WeakTowerView.h"
+//#include "RedTowerView.h"
+//#include "YellowTowerView.h"
+//#include "GreenTowerView.h"
+//#include "NeutralTowerView.h"
 #include "Func.h"
 
 using namespace std;
@@ -28,25 +28,26 @@ TowersManager::~TowersManager() {
 
 Tower *TowersManager::createTowerWithParams(TeamColor color, NatureType type, int level) {
     Tower *tower = Tower::createWithType(color);
+    tower->updateTowerView(WeakTowerView::create());
     switch (color) {
         case TeamColor::blue:
-            tower->updateTowerView(BlueTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(39, 113, 200));
             tower->setGroup(TeamGroup::alfa);
             break;
         case TeamColor::red:
-            tower->updateTowerView(RedTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(205, 26, 69));
             tower->setGroup(TeamGroup::omega);
             break;
         case TeamColor::yellow:
-            tower->updateTowerView(YellowTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(244, 242, 46));
             tower->setGroup(TeamGroup::omega);
             break;
         case TeamColor::green:
-            tower->updateTowerView(GreenTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(46, 197, 21));
             tower->setGroup(TeamGroup::alfa);
             break;
         default:
-            tower->updateTowerView(NeutralTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(217, 151, 228));
             tower->setGroup(TeamGroup::neutral);
     }
 
@@ -57,47 +58,27 @@ Tower *TowersManager::createTowerWithParams(TeamColor color, NatureType type, in
 
 void TowersManager::changeTeam(Tower *tower, TeamColor color) {
     tower->setTeamColor(color);
+    tower->updateTowerView(WeakTowerView::create());
     switch (color) {
         case TeamColor::blue:
-            tower->updateTowerView(BlueTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(39, 113, 200));
             tower->setGroup(TeamGroup::alfa);
             break;
         case TeamColor::red:
-            tower->updateTowerView(RedTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(205, 26, 69));
             tower->setGroup(TeamGroup::omega);
             break;
         case TeamColor::yellow:
-            tower->updateTowerView(YellowTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(244, 242, 46));
             tower->setGroup(TeamGroup::omega);
             break;
         case TeamColor::green:
-            tower->updateTowerView(GreenTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(46, 197, 21));
             tower->setGroup(TeamGroup::alfa);
             break;
         default:
-            tower->updateTowerView(NeutralTowerView::create());
+            tower->getTowerView()->applyColor(cocos2d::Color3B(217, 151, 228));
             tower->setGroup(TeamGroup::neutral);
     }
     tower->setGenerateUnitCooldown(randInRangef(2.0f, 3.0f));
-}
-
-TowerViewNode *TowersManager::getTowerViewNode(TeamColor color) {
-    TowerViewNode *towerViewNode = nullptr;
-    switch (color) {
-        case TeamColor::blue:
-            towerViewNode = BlueTowerView::create();
-            break;
-        case TeamColor::red:
-            towerViewNode = RedTowerView::create();
-            break;
-        case TeamColor::yellow:
-            towerViewNode = YellowTowerView::create();
-            break;
-        case TeamColor::green:
-            towerViewNode = GreenTowerView::create();
-            break;
-        default:
-            towerViewNode = NeutralTowerView::create();
-    }
-    return towerViewNode;
 }

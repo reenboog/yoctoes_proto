@@ -17,8 +17,6 @@ private:
 
     TowersManager();
     ~TowersManager();
-
-    TowerViewNode *getTowerViewNode(TeamColor);
 };
 
 #endif //__TOWERS_MANAGER_H_
