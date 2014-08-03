@@ -32,7 +32,7 @@ bool Unit::init(TeamColor color) {
     countLabel_->setColor(Color3B::BLACK);
     this->addChild(countLabel_);
 
-    speed_ = 0.5f;  //seconds from one tile to another
+//    speed_ = 0.0f;  //seconds from one tile to another
 
     return true;
 }

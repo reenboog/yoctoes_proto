@@ -27,6 +27,7 @@ public:
     void setShouldBeRemoved(bool shouldBeRemoved);
     NatureType const &getNatureType() const;
     void setNatureType(NatureType const &natureType);
+    void setSpeed(float speed);
 
 private:
     bool init(TeamColor color);
@@ -103,6 +104,10 @@ inline NatureType const &Unit::getNatureType() const {
 
 inline void Unit::setNatureType(NatureType const &natureType) {
     natureType_ = natureType;
+}
+
+inline void Unit::setSpeed(float speed) {
+    speed_ = speed;
 }
 
 #endif //__UNIT_H_

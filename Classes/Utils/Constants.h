@@ -33,8 +33,8 @@ enum class NatureType : int {
     evil,
 };
 
-const TowerParams weakTowerParams = {30, 1};
-const TowerParams strongTowerParams = {50, 1.5f};
+const TowerParams weakTowerParams = {15, 1.0f};
+const TowerParams strongTowerParams = {30, 0.5f};
 
 
 #endif // __CONSTANTS_H__

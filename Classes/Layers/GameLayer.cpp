@@ -449,8 +449,9 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
             unit->setCount(unitsForSend);
             unit->setTeamGroup(currentSource->getTeamGroup());
             this->addChild(unit, 20);
-            unit->startTrek(delayTime);
+            unit->setSpeed(currentSource->getUnitsSpeed());
             unit->setNatureType(currentSource->getNatureType());
+            unit->startTrek(delayTime);
             units_.push_back(unit);
 
             allUnitsForSend = allUnitsForSend - unitsForSend;

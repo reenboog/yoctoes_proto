@@ -54,6 +54,7 @@ public:
     void setGenerateUnitCooldown(float generateUnitCooldown);
     int getCurrentLevel() const;
     void setCurrentLevel(int currentLevel);
+    float getUnitsSpeed() const;
     void setParams(TowerParams const &params);
 
     void applyUnit(Unit *unit);
@@ -90,6 +91,7 @@ private:
     cocos2d::Menu *upgradeMenu_;
     TowerParams params_;
     int unitsLimit_;
+    float unitsSpeed_;
 };
 
 inline char Tower::getID() const {
@@ -152,9 +154,14 @@ inline void Tower::setCurrentLevel(int currentLevel) {
     currentLevel_ = currentLevel;
 }
 
+inline float Tower::getUnitsSpeed() const {
+    return unitsSpeed_;
+}
+
 inline void Tower::setParams(TowerParams const &params) {
     params_ = params;
     unitsLimit_ = params.unitCap;
+    unitsSpeed_ = params.unitSpeed;
 }
 
 #endif //__TOWER_H_
