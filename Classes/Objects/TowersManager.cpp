@@ -2,6 +2,7 @@
 #include "WeakTowerView.h"
 #include "StrongTowerView.h"
 #include "Func.h"
+#include "PowerTowerView.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -24,9 +25,14 @@ TowersManager::~TowersManager() {
 
 #pragma mark - creations
 
-Tower *TowersManager::createTowerWithParams(TeamColor color, NatureType type, int level) {
+Tower *TowersManager::createTowerWithParams(TowerType towerType, TeamColor color, NatureType type, int level) {
     Tower *tower = Tower::createWithType(color);
-    tower->updateTowerView(WeakTowerView::create());
+    tower->setTowerType(towerType);
+    if (towerType == TowerType::combat) {
+        tower->updateTowerView(WeakTowerView::create());
+    } else {
+        tower->updateTowerView(PowerTowerView::create());
+    }
     tower->setParams(weakTowerParams);
     tower->getTowerView()->applyColor(this->colorForTeam(color));
     tower->setGroup(this->groupForTeam(color));
@@ -38,7 +44,11 @@ Tower *TowersManager::createTowerWithParams(TeamColor color, NatureType type, in
 
 void TowersManager::changeTeam(Tower *tower, TeamColor color) {
     tower->setTeamColor(color);
-    tower->updateTowerView(WeakTowerView::create());
+    if (tower->getTowerType() == TowerType::combat) {
+        tower->updateTowerView(WeakTowerView::create());
+    } else {
+        tower->updateTowerView(PowerTowerView::create());
+    }
     tower->getTowerView()->applyColor(this->colorForTeam(color));
     tower->setGroup(this->groupForTeam(color));
     tower->setGenerateUnitCooldown(randInRangef(2.0f, 3.0f));
@@ -94,4 +104,41 @@ TeamGroup TowersManager::groupForTeam(TeamColor color) {
     }
 
     return teamGroup;
+}
+
+#pragma mark - powerups
+
+void TowersManager::addPoweredTower(Tower *src, Tower *dst) {
+    this->checkPowerTower(src);
+    poweredTowers_.push_back(make_pair(src, dst));
+}
+
+void TowersManager::removeEffectSrc(Tower *tower) {
+    int size = poweredTowers_.size();
+    for (int i = 0; i < size; ++i) {
+        if (poweredTowers_.at((unsigned long) i).first == tower) {
+            //
+        }
+    }
+}
+
+void TowersManager::removeEffectDst(Tower *tower) {
+    int size = poweredTowers_.size();
+    for (int i = 0; i < size; ++i) {
+        if (poweredTowers_.at((unsigned long) i).second == tower) {
+            //
+        }
+    }
+}
+
+void TowersManager::checkPowerTower(Tower *tower) {
+    int size = poweredTowers_.size();
+    for (int i = 0; i < size; ++i) {
+        if (poweredTowers_.at(i).first == tower) {
+            Tower *dst = poweredTowers_.at((unsigned long) i).second;
+            dst->setPower(dst->getPower() - 1);
+            poweredTowers_.erase(poweredTowers_.begin() + i);   //delete current power tower
+            break;
+        }
+    }
 }

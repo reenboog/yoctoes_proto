@@ -34,10 +34,11 @@ bool Tower::initWithType(TeamColor color) {
     readyForUpdate_ = false;
     updateButtonShown_ = false;
     unitsLimit_ = 0;
+    power_ = 1;
 
     lastAppliedUnit_ = nullptr;
 
-    generateUnitCooldown_ = TeamColor::unfilled == color_ ? 0 : randInRangef(2.0f, 3.0f);
+    generateUnitCooldown_ = TeamColor::unfilled == color_ ? 0 : randInRangef(1.0f, 1.0f);
     if (color_ != TeamColor::blue && color_ != TeamColor::unfilled) {
         actionCooldown_ = randInRangef(5.0f, 6.0f);    //FIXME: bicycle
     } else {
@@ -51,9 +52,9 @@ bool Tower::initWithType(TeamColor color) {
 
 void Tower::update(float dt) {
     //unit generation
+    readyForUpdate_ = false;
     if (TeamColor::unfilled != color_) {
-        if (unitsCount_ < unitsLimit_ * currentLevel_) {
-            readyForUpdate_ = false;
+        if (unitsCount_ < unitsLimit_ * power_) {
             if (timeAfterLastUnit_ <= generateUnitCooldown_) {
                 timeAfterLastUnit_ += dt;
             } else {
@@ -61,10 +62,9 @@ void Tower::update(float dt) {
                 unitsCount_ = unitsCount_ + 1;
                 this->updateUnitsLabel();
             }
-        } else {
-            if (currentLevel_ < LEVEL_CUP) {
-                readyForUpdate_ = true;
-            }
+        }
+        if (currentLevel_ < LEVEL_CUP && towerType_ == TowerType::combat) {
+            readyForUpdate_ = unitsCount_ >= unitsLimit_ * currentLevel_;
         }
     }
 
@@ -164,8 +164,9 @@ void Tower::changeTeam(Tower *tower, TeamColor color) {
     }
 }
 
-void Tower::upgradeTower(Ref* pSender) {
+void Tower::upgradeTower(Ref *pSender) {
     if (updateDelegate_) {
+        currentLevel_ = currentLevel_ + 1;
         updateButtonShown_ = false;
         this->removeChild(upgradeMenu_, true);
         unitsCount_ = unitsCount_ / 2;

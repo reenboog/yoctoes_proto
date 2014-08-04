@@ -56,6 +56,10 @@ public:
     void setCurrentLevel(int currentLevel);
     float getUnitsSpeed() const;
     void setParams(TowerParams const &params);
+    TowerType const &getTowerType() const;
+    void setTowerType(TowerType const &towerType);
+    int getPower() const;
+    void setPower(int power);
 
     void applyUnit(Unit *unit);
     void checkForApplying(Unit *unit);
@@ -76,6 +80,8 @@ private:
     char id_;
     TeamColor color_;
     TeamGroup group_;
+    TowerType towerType_;
+    int currentLevel_;
     float generateUnitCooldown_;
     float actionCooldown_;
     float timeAfterLastUnit_;
@@ -84,7 +90,6 @@ private:
     Unit *lastAppliedUnit_;
     NatureType natureType_;
     TowerViewNode *towerView_;
-    int currentLevel_;
 
     bool readyForUpdate_;
     bool updateButtonShown_;
@@ -92,6 +97,7 @@ private:
     TowerParams params_;
     int unitsLimit_;
     float unitsSpeed_;
+    int power_;
 };
 
 inline char Tower::getID() const {
@@ -162,6 +168,22 @@ inline void Tower::setParams(TowerParams const &params) {
     params_ = params;
     unitsLimit_ = params.unitCap;
     unitsSpeed_ = params.unitSpeed;
+}
+
+inline TowerType const &Tower::getTowerType() const {
+    return towerType_;
+}
+
+inline void Tower::setTowerType(TowerType const &towerType) {
+    towerType_ = towerType;
+}
+
+inline int Tower::getPower() const {
+    return power_;
+}
+
+inline void Tower::setPower(int power) {
+    power_ = power;
 }
 
 #endif //__TOWER_H_

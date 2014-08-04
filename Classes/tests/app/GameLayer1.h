@@ -3,17 +3,17 @@
 
 #include "cocos2d.h"
 
-class GameLayer : public cocos2d::Layer {
+class GameLayer1 : public cocos2d::Layer {
 public:
-    virtual ~GameLayer();
+    virtual ~GameLayer1();
 
     static cocos2d::Scene *scene();
 
     virtual bool init();
 
-    GameLayer();
+    GameLayer1();
 
-    CREATE_FUNC(GameLayer);
+    CREATE_FUNC(GameLayer1);
 private:
     cocos2d::Sprite *back_;
 };

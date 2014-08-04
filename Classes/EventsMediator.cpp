@@ -17,10 +17,10 @@ EventsMediator::EventsMediator() {
 EventsMediator::~EventsMediator() {
 }
 
-void EventsMediator::selectorFromTower(Tower *tower, TowerMemFun foo) {
-    (tower->*foo)();
-}
-
-void EventsMediator::selectorToGameLayer(GameLayerMemFun foo) {
-    (gameLayer_->*foo)();
-}
+//void EventsMediator::selectorFromTower(Tower *tower, TowerMemFun foo) {
+//    (tower->*foo)();
+//}
+//
+//void EventsMediator::selectorToGameLayer(GameLayerMemFun foo) {
+//    (gameLayer_->*foo)();
+//}

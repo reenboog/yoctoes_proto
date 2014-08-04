@@ -6,6 +6,12 @@
 #define SCREEN_SIZE Director::getInstance()->getWinSize()
 #define SCREEN_CENTER cocos2d::Point(Director::getInstance()->getWinSize().width / 2, Director::getInstance()->getWinSize().height / 2)
 
+enum class TowerType : int {
+    basis = 0,
+    combat,
+    power,
+};
+
 enum class TeamColor : int {
     unfilled = 0,
     red,

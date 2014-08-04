@@ -12,6 +12,7 @@
 		1A40502DC5316FB826C1F321 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A40503D7E9FACC0473C845E /* GameConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055B07618956E0914B2C2 /* GameConfig.cpp */; };
 		1A40505BBFACF13D0694AA59 /* WeakTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */; };
+		1A405069A33C2622F4ED6F21 /* PowerTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405E15758E884AD94D77EE /* PowerTowerView.cpp */; };
 		1A405086AB032D97E8AC8BA4 /* Localized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054DABE5EA18E8C853ECB /* Localized.cpp */; };
 		1A40511C3BFF9A60F1A546CD /* StrongTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405AB45957A8FDF385289C /* StrongTowerView.cpp */; };
 		1A40515F97EE6C886B00D36F /* TowerViewNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */; };
@@ -23,6 +24,7 @@
 		1A40547648753366D1C00227 /* GameState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40507A6493314470702567 /* GameState.cpp */; };
 		1A40558FD68590C638E5DB02 /* TowerViewNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4054C6B6B35A170A7ED5A1 /* TowerViewNode.cpp */; };
 		1A405641B61C5FF57EDA8111 /* GameState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40507A6493314470702567 /* GameState.cpp */; };
+		1A405654A57AA15EF7F3FBF8 /* PowerTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405E15758E884AD94D77EE /* PowerTowerView.cpp */; };
 		1A40579D895B31B7C73012DA /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4051C952D31D0ED6806853 /* Shared.cpp */; };
 		1A4057F5777C794DDE01CA80 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A405821F2C168600CA9E444 /* WeakTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405A223A9ABD8F6B053539 /* WeakTowerView.cpp */; };
@@ -41,6 +43,7 @@
 		1A405D6D775BF65F3C73C154 /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4055D28ECB86E8B3DA9396 /* Road.cpp */; };
 		1A405D9153E08D535EA56AB8 /* HUDLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531E67042F701EB3930D /* HUDLayer.cpp */; };
 		1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40584B00A71B11BE162BA9 /* Unit.cpp */; };
+		1A405E1D9E7E30D2821D687C /* PowerTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405E15758E884AD94D77EE /* PowerTowerView.cpp */; };
 		1A405EB7B545512B4760C36E /* StrongTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405AB45957A8FDF385289C /* StrongTowerView.cpp */; };
 		1A405EC3C1AD10834AA4BD6B /* StrongTowerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A405AB45957A8FDF385289C /* StrongTowerView.cpp */; };
 		1A405F24F6C3DF928018D520 /* HUDLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40531E67042F701EB3930D /* HUDLayer.cpp */; };
@@ -122,7 +125,7 @@
 		B82FAFBC1956C9E000498F94 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		B82FAFBD1956C9E000498F94 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		B82FAFBE1956C9E000498F94 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
-		B82FAFC61956CA9900498F94 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B82FAFC41956CA9900498F94 /* GameLayer.cpp */; };
+		B82FAFC61956CA9900498F94 /* GameLayer1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B82FAFC41956CA9900498F94 /* GameLayer1.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -347,11 +350,13 @@
 		1A405AB45957A8FDF385289C /* StrongTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrongTowerView.cpp; sourceTree = "<group>"; };
 		1A405B335BF14ACD80C81A94 /* TowerViewNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowerViewNode.h; sourceTree = "<group>"; };
 		1A405B37B0FAE378ABC7791C /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
+		1A405B89398612F1CA493C0E /* PowerTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerTowerView.h; sourceTree = "<group>"; };
 		1A405C411FD92CD96C3EE4C7 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLayer.cpp; sourceTree = "<group>"; };
 		1A405C674B9504D9754A9DDB /* EventsMediator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventsMediator.cpp; sourceTree = "<group>"; };
 		1A405D49D1F59CFD2C5B5F61 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		1A405DBAD107896ABBFC0157 /* WeakTowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakTowerView.h; sourceTree = "<group>"; };
 		1A405DEB601BD2E88410FFCF /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
+		1A405E15758E884AD94D77EE /* PowerTowerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PowerTowerView.cpp; sourceTree = "<group>"; };
 		1A405F06154A1EA1A6828C06 /* Localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Localized.h; sourceTree = "<group>"; };
 		1A405FC2F4020791D817F64C /* Tower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tower.h; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
@@ -401,8 +406,8 @@
 		B8077FF31956C7F800B4CF08 /* gtest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gtest.cc; path = ../Classes/tests/gtest/gtest.cc; sourceTree = "<group>"; };
 		B8077FF41956C7F800B4CF08 /* gtest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gtest.h; path = ../Classes/tests/gtest/gtest.h; sourceTree = "<group>"; };
 		B82FAFC21956C9E000498F94 /* app_tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = app_tests.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B82FAFC41956CA9900498F94 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLayer.cpp; path = ../Classes/tests/app/GameLayer.cpp; sourceTree = "<group>"; };
-		B82FAFC51956CA9900498F94 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer.h; path = ../Classes/tests/app/GameLayer.h; sourceTree = "<group>"; };
+		B82FAFC41956CA9900498F94 /* GameLayer1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLayer1.cpp; path = tests/app/GameLayer1.cpp; sourceTree = "<group>"; };
+		B82FAFC51956CA9900498F94 /* GameLayer1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer1.h; path = tests/app/GameLayer1.h; sourceTree = "<group>"; };
 		B8C629E01956D122004B8719 /* app_tests_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = app_tests_Info.plist; sourceTree = SOURCE_ROOT; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -562,6 +567,8 @@
 				1A405B335BF14ACD80C81A94 /* TowerViewNode.h */,
 				1A405AB45957A8FDF385289C /* StrongTowerView.cpp */,
 				1A405561802F62AA50F47DFC /* StrongTowerView.h */,
+				1A405E15758E884AD94D77EE /* PowerTowerView.cpp */,
+				1A405B89398612F1CA493C0E /* PowerTowerView.h */,
 			);
 			path = RenderObjects;
 			sourceTree = "<group>";
@@ -731,8 +738,8 @@
 			isa = PBXGroup;
 			children = (
 				B8C629E01956D122004B8719 /* app_tests_Info.plist */,
-				B82FAFC41956CA9900498F94 /* GameLayer.cpp */,
-				B82FAFC51956CA9900498F94 /* GameLayer.h */,
+				B82FAFC41956CA9900498F94 /* GameLayer1.cpp */,
+				B82FAFC51956CA9900498F94 /* GameLayer1.h */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -1008,6 +1015,7 @@
 				1A405860381057F47CBBB09F /* TowersManager.cpp in Sources */,
 				1A405FC03EB4F8651F529EC3 /* TowerViewNode.cpp in Sources */,
 				1A40511C3BFF9A60F1A546CD /* StrongTowerView.cpp in Sources */,
+				1A405069A33C2622F4ED6F21 /* PowerTowerView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,6 +1039,7 @@
 				1A40501D3113DBC6F1A50A60 /* TowersManager.cpp in Sources */,
 				1A40515F97EE6C886B00D36F /* TowerViewNode.cpp in Sources */,
 				1A405EC3C1AD10834AA4BD6B /* StrongTowerView.cpp in Sources */,
+				1A405E1D9E7E30D2821D687C /* PowerTowerView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1049,7 +1058,7 @@
 			files = (
 				B82FAFAC1956C9E000498F94 /* AppDelegate.cpp in Sources */,
 				B82FAFAD1956C9E000498F94 /* main.cpp in Sources */,
-				B82FAFC61956CA9900498F94 /* GameLayer.cpp in Sources */,
+				B82FAFC61956CA9900498F94 /* GameLayer1.cpp in Sources */,
 				1A40501FF4ABDC355EB3E008 /* Tower.cpp in Sources */,
 				1A405E1445A46BD6DC6B0CC9 /* Unit.cpp in Sources */,
 				1A4057F5777C794DDE01CA80 /* Road.cpp in Sources */,
@@ -1063,6 +1072,7 @@
 				1A405826AE4032CDD4CD0461 /* TowersManager.cpp in Sources */,
 				1A40558FD68590C638E5DB02 /* TowerViewNode.cpp in Sources */,
 				1A405EB7B545512B4760C36E /* StrongTowerView.cpp in Sources */,
+				1A405654A57AA15EF7F3FBF8 /* PowerTowerView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

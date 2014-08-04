@@ -50,6 +50,7 @@ private:
     std::vector<Road *> routeFromTower(Tower *source);
     void sendUnitsFromTowersToTower(std::vector<Tower *>source, Tower *destination);
     std::vector<Tower *> findAvailableTowersFromTower(Tower *tower);
+    void applyPowerUp(Tower *, Tower *);
 
     Tower *towerWithID(char id);
     bool isTowerSelected(Tower *tower);

@@ -15,7 +15,7 @@ const int testMap_[n][n] = {
         {1, 2, 0, 2, 0, 1, 1, 2, 1},/*{_, m, _, b, _, _, _, k, _, }, 2 */
         {0, 1, 0, 0, 0, 1, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _, }, 3 */
         {0, 1, 0, 0, 0, 1, 1, 1, 1},/*{_, _, _, _, _, _, _, _, _, }, 4 */
-        {1, 1, 2, 0, 0, 2, 0, 2, 0},/*{_, _, c, _, _, e, _, f, _, }, 5 */
+        {1, 1, 7, 0, 0, 2, 0, 2, 0},/*{_, _, c, _, _, e, _, f, _, }, 5 */
         {3, 0, 1, 0, 0, 1, 0, 0, 0},/*{a, _, _, _, _, _, _, _, _, }, 6 */
         {0, 0, 2, 0, 0, 1, 1, 1, 5},/*{_, _, d, _, _, _, _, _, l, }, 7 */
         {0, 0, 1, 1, 2, 1, 0, 0, 0},/*{_, _, _, _, g, _, _, _, _, }, 8 */
@@ -32,7 +32,6 @@ Scene *GameLayer::scene() {
 
     GameLayer *layer = GameLayer::create();
     scene->addChild(layer);
-    EventsMediator::sharedInstance()->setGameLayer(layer);
 
     HUDLayer *hud = HUDLayer::create();
     scene->addChild(hud, 50);
@@ -69,23 +68,23 @@ void GameLayer::update(float dt) {
         Tower *ct = towers_.at((unsigned long) i);
         ct->update(dt);
 
-        int chanse = randInRangei(0, 2);
-        if (chanse > 0)
-            continue;
-        //npc tower actions
-        if (ct->getTeamColor() != TeamColor::blue) {
-            if (ct->getActionCooldown() < 0) {
-                vector<Tower *> towers = findAvailableTowersFromTower(ct);
-                int sizeT = towers.size();
-                if (sizeT > 0) {
-                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-                    towers.clear();
-                    towers.push_back(ct);
-                    this->sendUnitsFromTowersToTower(towers, dst);
-                }
-                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
-            }
-        }
+//        int chanse = randInRangei(0, 2);
+//        if (chanse > 0)
+//            continue;
+//        //npc tower actions
+//        if (ct->getTeamColor() != TeamColor::blue) {
+//            if (ct->getActionCooldown() < 0) {
+//                vector<Tower *> towers = findAvailableTowersFromTower(ct);
+//                int sizeT = towers.size();
+//                if (sizeT > 0) {
+//                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+//                    towers.clear();
+//                    towers.push_back(ct);
+//                    this->sendUnitsFromTowersToTower(towers, dst);
+//                }
+//                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
+//            }
+//        }
     }
     this->checkUitsCollision();
     this->removeUnits();
@@ -111,16 +110,18 @@ void GameLayer::createBoard() {
             } else {
                 Tower *tower = nullptr;
                 if (testMap_[i][j] == 2) {  //unfilled
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::unfilled, NatureType::neutral , 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::unfilled, NatureType::neutral, 1);
                 } else if (testMap_[i][j] == 3) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::blue, NatureType::neutral , 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::blue, NatureType::neutral, 1);
                     playerColor_ = tower->getTeamColor();
                 } else if (testMap_[i][j] == 4) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::red, NatureType::neutral , 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::red, NatureType::neutral, 1);
                 } else if (testMap_[i][j] == 5) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::yellow, NatureType::neutral , 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::yellow, NatureType::neutral, 1);
                 } else if (testMap_[i][j] == 6) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TeamColor::green, NatureType::neutral , 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::green, NatureType::neutral, 1);
+                } else if (testMap_[i][j] == 7) {
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::power, TeamColor::unfilled, NatureType::neutral, 1);
                 }
 
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
@@ -424,6 +425,11 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
     for (int i = 0; i < size; ++i) {
         Tower *currentSource = source.at((unsigned long) i);
 
+        if (currentSource->getTowerType() == TowerType::power) {
+            this->applyPowerUp(currentSource, destination);
+            continue;
+        }
+
         vector<Road *> route = this->routeFromTower(currentSource);
 
         if (route.size() == 0) {
@@ -475,6 +481,12 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
         selectedTowers_.clear();
     }
 
+}
+
+void GameLayer::applyPowerUp(Tower *src, Tower *dst) {
+    TowersManager::sharedInstance()->addPoweredTower(src, dst);
+    dst->setPower(dst->getPower() + 1);
+    //TODO: can start animation
 }
 
 vector<Road *> GameLayer::routeFromTower(Tower *source) {
@@ -567,6 +579,7 @@ void GameLayer::onTouchMoved(Touch *touch, Event *event) {
         cocos2d::Size size = cocos2d::Size(32.0f, 32.0f);   //FIXME:
         cocos2d::Rect rect = cocos2d::Rect(position.x - size.width / 2, position.y - size.height / 2, size.width, size.height);
         if (rect.containsPoint(locationInWorld)) {
+
             if (this->isTowerSelected(currentTower)) {
                 return;
             } else if (selectedTowers_.size() > 1) {
@@ -576,6 +589,7 @@ void GameLayer::onTouchMoved(Touch *touch, Event *event) {
                     selectedTowers_.pop_back();
                 }
             }
+
             currentTower->setSelected(true);
             selectedTowers_.push_back(currentTower);
         }
