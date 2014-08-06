@@ -46,7 +46,9 @@ void TowersManager::changeTeam(Tower *tower, TeamColor color) {
     tower->setTeamColor(color);
     if (tower->getTowerType() == TowerType::combat) {
         tower->updateTowerView(WeakTowerView::create());
+        this->removeEffectDst(tower);
     } else {
+        this->removeEffectSrc(tower);
         tower->updateTowerView(PowerTowerView::create());
     }
     tower->getTowerView()->applyColor(this->colorForTeam(color));
@@ -113,20 +115,25 @@ void TowersManager::addPoweredTower(Tower *src, Tower *dst) {
     poweredTowers_.push_back(make_pair(src, dst));
 }
 
-void TowersManager::removeEffectSrc(Tower *tower) {
+void TowersManager::removeEffectSrc(Tower *tower) { // power tower captured
     int size = poweredTowers_.size();
     for (int i = 0; i < size; ++i) {
         if (poweredTowers_.at((unsigned long) i).first == tower) {
-            //
+            Tower *dst = poweredTowers_.at((unsigned long) i).second;
+            dst->setPower(dst->getPower() - 1);
+            poweredTowers_.erase(poweredTowers_.begin() + i);   //delete current power tower
+            break;
         }
     }
 }
 
-void TowersManager::removeEffectDst(Tower *tower) {
+void TowersManager::removeEffectDst(Tower *tower) { // subservient tower captured
     int size = poweredTowers_.size();
-    for (int i = 0; i < size; ++i) {
+    for (int i = size - 1; i >= 0; --i) {
         if (poweredTowers_.at((unsigned long) i).second == tower) {
-            //
+            Tower *src = poweredTowers_.at((unsigned long) i).first;
+            src->setPower(1);
+            poweredTowers_.erase(poweredTowers_.begin() + i);
         }
     }
 }
@@ -134,7 +141,7 @@ void TowersManager::removeEffectDst(Tower *tower) {
 void TowersManager::checkPowerTower(Tower *tower) {
     int size = poweredTowers_.size();
     for (int i = 0; i < size; ++i) {
-        if (poweredTowers_.at(i).first == tower) {
+        if (poweredTowers_.at((unsigned long) i).first == tower) {
             Tower *dst = poweredTowers_.at((unsigned long) i).second;
             dst->setPower(dst->getPower() - 1);
             poweredTowers_.erase(poweredTowers_.begin() + i);   //delete current power tower

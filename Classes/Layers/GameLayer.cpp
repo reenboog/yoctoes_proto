@@ -68,23 +68,23 @@ void GameLayer::update(float dt) {
         Tower *ct = towers_.at((unsigned long) i);
         ct->update(dt);
 
-//        int chanse = randInRangei(0, 2);
-//        if (chanse > 0)
-//            continue;
-//        //npc tower actions
-//        if (ct->getTeamColor() != TeamColor::blue) {
-//            if (ct->getActionCooldown() < 0) {
-//                vector<Tower *> towers = findAvailableTowersFromTower(ct);
-//                int sizeT = towers.size();
-//                if (sizeT > 0) {
-//                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-//                    towers.clear();
-//                    towers.push_back(ct);
-//                    this->sendUnitsFromTowersToTower(towers, dst);
-//                }
-//                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
-//            }
-//        }
+        int chanse = randInRangei(0, 2);
+        if (chanse > 0)
+            continue;
+        //npc tower actions
+        if (ct->getTeamColor() != TeamColor::blue) {
+            if (ct->getActionCooldown() < 0) {
+                vector<Tower *> towers = findAvailableTowersFromTower(ct);
+                int sizeT = towers.size();
+                if (sizeT > 0) {
+                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+                    towers.clear();
+                    towers.push_back(ct);
+                    this->sendUnitsFromTowersToTower(towers, dst);
+                }
+                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
+            }
+        }
     }
     this->checkUitsCollision();
     this->removeUnits();
