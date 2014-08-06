@@ -426,8 +426,12 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
         Tower *currentSource = source.at((unsigned long) i);
 
         if (currentSource->getTowerType() == TowerType::power) {
-            this->applyPowerUp(currentSource, destination);
-            continue;
+            if (currentSource->getTeamGroup() == destination->getTeamGroup()) {
+                this->applyPowerUp(currentSource, destination);
+                continue;
+            } else {
+                continue;
+            }
         }
 
         vector<Road *> route = this->routeFromTower(currentSource);
