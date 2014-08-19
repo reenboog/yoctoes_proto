@@ -1,6 +1,8 @@
 #ifndef __FUNC_H__
 #define __FUNC_H__
 
+#include "Constants.h"
+
 #define ARC4RANDOM_MAX 0x100000000
 
 const float natureInfluence[5][5] = {
@@ -35,6 +37,17 @@ static inline std::string stringWithFormat(const char *fmt, ...) {
 
 static inline float influenceOfTheFirstToSecond(NatureType firstType, NatureType secondType) {
     return natureInfluence[(int)firstType][(int)secondType];
+}
+
+static inline cocos2d::RenderTexture *renderTextureFromNode(cocos2d::Node *node) {
+//    cocos2d::RenderTexture *renderTexture = cocos2d::RenderTexture::create((int) node->getContentSize().width, (int) node->getContentSize().height);
+    cocos2d::RenderTexture *renderTexture = cocos2d::RenderTexture::create((int) 64, (int) 64);
+
+    renderTexture->beginWithClear(1.0f, 1.0f, 1.0f, 1.0f);
+    node->visit();
+    renderTexture->end();
+
+    return renderTexture;
 }
 
 #endif // __FUNC_H__

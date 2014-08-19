@@ -6,6 +6,7 @@
 class StrongTowerView  : public TowerViewNode {
 public:
     static StrongTowerView *create();
+    static cocos2d::Sprite *getRenderedImage();
     ~StrongTowerView();
 
     cocos2d::Label *getUnitsLabel() const;

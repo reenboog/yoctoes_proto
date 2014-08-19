@@ -6,6 +6,7 @@
 class WeakTowerView : public TowerViewNode {
 public:
     static WeakTowerView *create();
+    static cocos2d::Sprite *getRenderedImage();
     ~WeakTowerView();
 
     cocos2d::Label *getUnitsLabel() const;

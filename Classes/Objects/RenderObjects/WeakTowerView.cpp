@@ -1,4 +1,5 @@
 #include "WeakTowerView.h"
+#include "Func.h"
 
 using namespace cocos2d;
 
@@ -28,7 +29,6 @@ bool WeakTowerView::init() {
     unitsLabel_->setPosition(16.0f, 16.0f); //fixme
     this->addChild(unitsLabel_);
 
-
     return true;
 }
 
@@ -46,9 +46,14 @@ void WeakTowerView::unselectTower() {
 }
 
 void WeakTowerView::showUpgdare() {
-    //
 }
 
 void WeakTowerView::hideUpgrade() {
     //
+}
+
+cocos2d::Sprite *WeakTowerView::getRenderedImage() {
+    Sprite *body = Sprite::create("weak_tower.png");
+
+    return body;
 }

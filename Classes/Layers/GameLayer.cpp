@@ -12,12 +12,12 @@ const int n = 9;
 const int testMap_[n][n] = {
         {6, 1, 1, 1, 1, 2, 0, 0, 4},/*{h, _, _, _, _, j, _, _, i, }, 0 */
         {1, 0, 0, 1, 0, 1, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _, }, 1 */
-        {1, 2, 0, 2, 0, 1, 1, 2, 1},/*{_, m, _, b, _, _, _, k, _, }, 2 */
+        {1, 7/*2*/, 0, 2, 0, 1, 1, 2, 1},/*{_, m, _, b, _, _, _, k, _, }, 2 */
         {0, 1, 0, 0, 0, 1, 0, 0, 1},/*{_, _, _, _, _, _, _, _, _, }, 3 */
         {0, 1, 0, 0, 0, 1, 1, 1, 1},/*{_, _, _, _, _, _, _, _, _, }, 4 */
-        {1, 1, 7, 0, 0, 2, 0, 2, 0},/*{_, _, c, _, _, e, _, f, _, }, 5 */
+        {1, 1, 8, 0, 0, 2, 0, 2, 0},/*{_, _, c, _, _, e, _, f, _, }, 5 */
         {3, 0, 1, 0, 0, 1, 0, 0, 0},/*{a, _, _, _, _, _, _, _, _, }, 6 */
-        {0, 0, 2, 0, 0, 1, 1, 1, 5},/*{_, _, d, _, _, _, _, _, l, }, 7 */
+        {0, 0, 2/*7*/, 0, 0, 1, 1, 1, 5},/*{_, _, d, _, _, _, _, _, l, }, 7 */
         {0, 0, 1, 1, 2, 1, 0, 0, 0},/*{_, _, _, _, g, _, _, _, _, }, 8 */
         /*                             0  1  2  3  4  5  6  7  8       */
 };
@@ -68,25 +68,25 @@ void GameLayer::update(float dt) {
         Tower *ct = towers_.at((unsigned long) i);
         ct->update(dt);
 
-        int chanse = randInRangei(0, 2);
-        if (chanse > 0)
-            continue;
-        //npc tower actions
-        if (ct->getTeamColor() != TeamColor::blue) {
-            if (ct->getActionCooldown() < 0) {
-                vector<Tower *> towers = findAvailableTowersFromTower(ct);
-                int sizeT = towers.size();
-                if (sizeT > 0) {
-                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
-                    towers.clear();
-                    towers.push_back(ct);
-                    this->sendUnitsFromTowersToTower(towers, dst);
-                }
-                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
-            }
-        }
+//        int chanse = randInRangei(0, 2);
+//        if (chanse > 0)
+//            continue;
+//        //npc tower actions
+//        if (ct->getTeamColor() != TeamColor::blue) {
+//            if (ct->getActionCooldown() < 0) {
+//                vector<Tower *> towers = findAvailableTowersFromTower(ct);
+//                int sizeT = towers.size();
+//                if (sizeT > 0) {
+//                    Tower *dst = towers.at((unsigned long) randInRangei(0, sizeT - 1));
+//                    towers.clear();
+//                    towers.push_back(ct);
+//                    this->sendUnitsFromTowersToTower(towers, dst);
+//                }
+//                ct->setActionCooldown(randInRangef(10.0f, 15.0f));
+//            }
+//        }
     }
-    this->checkUitsCollision();
+    this->checkUnitsCollision();
     this->removeUnits();
 }
 
@@ -110,18 +110,20 @@ void GameLayer::createBoard() {
             } else {
                 Tower *tower = nullptr;
                 if (testMap_[i][j] == 2) {  //unfilled
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::unfilled, NatureType::neutral, 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat_weak_neutral, TeamColor::unfilled);
                 } else if (testMap_[i][j] == 3) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::blue, NatureType::neutral, 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat_weak_neutral, TeamColor::blue);
                     playerColor_ = tower->getTeamColor();
                 } else if (testMap_[i][j] == 4) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::red, NatureType::neutral, 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat_weak_neutral, TeamColor::red);
                 } else if (testMap_[i][j] == 5) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::yellow, NatureType::neutral, 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat_weak_neutral, TeamColor::yellow);
                 } else if (testMap_[i][j] == 6) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat, TeamColor::green, NatureType::neutral, 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::combat_weak_neutral, TeamColor::green);
                 } else if (testMap_[i][j] == 7) {
-                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::power, TeamColor::unfilled, NatureType::neutral, 1);
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::power, TeamColor::unfilled);
+                } else if (testMap_[i][j] == 8) {
+                    tower = TowersManager::sharedInstance()->createTowerWithParams(TowerType::pit, TeamColor::unfilled);
                 }
 
                 tower->setPosition({tileWidth * j + tileWidth / 2, tileWidth * (n - i)});
@@ -425,7 +427,7 @@ void GameLayer::sendUnitsFromTowersToTower(std::vector<Tower *> source, Tower *d
     for (int i = 0; i < size; ++i) {
         Tower *currentSource = source.at((unsigned long) i);
 
-        if (currentSource->getTowerType() == TowerType::power) {
+        if (currentSource->getTowerFunction() == TowerFunction::power) {
             if (currentSource->getTeamGroup() == destination->getTeamGroup()) {
                 this->applyPowerUp(currentSource, destination);
                 continue;
@@ -667,7 +669,7 @@ void GameLayer::win() {
     this->addChild(winLabel, 100);
 }
 
-void GameLayer::checkUitsCollision() {
+void GameLayer::checkUnitsCollision() {
     int size = units_.size();
     for (int i = 0; i < size; ++i) {
         for (int j = (i + 1); j < size; ++j) {
@@ -724,3 +726,30 @@ void GameLayer::removeUnits() {
         }
     }
 }
+
+#pragma mark - draw
+
+//void GameLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) {
+//    customCommand_.init(_globalZOrder);
+//    customCommand_.func = CC_CALLBACK_0(GameLayer::onDrawPrimitives, this, transform, transformUpdated);
+//    renderer->addCommand(&customCommand_);
+//}
+//
+//void GameLayer::onDrawPrimitives(const kmMat4 &transform, bool transformUpdated) {
+//    kmGLPushMatrix();
+//    kmGLLoadMatrix(&transform);
+//
+//    glLineWidth(1);
+//    DrawPrimitives::setDrawColor4B(255,255,255,255);
+//    DrawPrimitives::setPointSize(1);
+//
+//    // Anti-Aliased
+//    glEnable(GL_LINE_SMOOTH);
+//
+//    // filled poly
+//    glLineWidth(1);
+//    Point filledVertices[] = { Point(10,120), Point(50,120), Point(50,170), Point(25,200), Point(10,170) };
+//    DrawPrimitives::drawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
+//
+////    DrawPrimitives::drawLine({0.0f, 0.0f}, {500.0f, 500.0f});
+//}

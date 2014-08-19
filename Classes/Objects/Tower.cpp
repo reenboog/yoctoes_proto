@@ -53,7 +53,7 @@ bool Tower::initWithType(TeamColor color) {
 void Tower::update(float dt) {
     //unit generation
     readyForUpdate_ = false;
-    if (TeamColor::unfilled != color_) {
+    if (TeamColor::unfilled != color_ && TowerFunction::pit != towerFunction_) {
         if (unitsCount_ < unitsLimit_ * power_) {
             if (timeAfterLastUnit_ <= generateUnitCooldown_) {
                 timeAfterLastUnit_ += dt;
@@ -63,7 +63,7 @@ void Tower::update(float dt) {
                 this->updateUnitsLabel();
             }
         }
-        if (currentLevel_ < LEVEL_CUP && towerType_ == TowerType::combat) {
+        if (currentLevel_ < LEVEL_CUP && towerFunction_ == TowerFunction::combat) {
             readyForUpdate_ = unitsCount_ >= unitsLimit_ * currentLevel_;
         }
     }
@@ -131,7 +131,9 @@ void Tower::applyUnit(Unit *unit) {
     }
 
     if (color_ == TeamColor::unfilled) {
-        unitsCount_ = unitsCount_ + count;
+        if (towerFunction_ != TowerFunction::pit) {
+            unitsCount_ = unitsCount_ + count;
+        }
         this->changeTeam(this, unit->getTeamColor());
     } else if (group_ == unit->getTeamGroup()) {
         unitsCount_ = unitsCount_ + count * (int) influenceOfTheFirstToSecond(this->getNatureType(), unit->getNatureType());

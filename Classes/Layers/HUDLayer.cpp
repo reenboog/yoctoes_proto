@@ -27,16 +27,15 @@ bool HUDLayer::init() {
     MenuItemSprite *restart = MenuItemSprite::create(
             Sprite::create("restart.png"),
             Sprite::create("restart.png"),
-            this,
-            menu_selector(HUDLayer::restartCallback));
+            CC_CALLBACK_1(HUDLayer::restartCallback, this));
     restart->setPosition(210, 160); //FIXME
-    
+
     menu_ = Menu::create(restart, NULL);
     this->addChild(menu_);
 
     return true;
 }
 
-void HUDLayer::restartCallback(Ref* pSender) {
+void HUDLayer::restartCallback(Ref *pSender) {
     GameState::sharedInstance()->startGameLayer();
 }

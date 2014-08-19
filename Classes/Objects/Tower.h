@@ -46,16 +46,13 @@ public:
     void setSelected(bool selected);
     const TeamGroup &getTeamGroup() const;
     void setGroup(TeamGroup const &group);
-    float getActionCooldown() const;
-    void setActionCooldown(float actionCooldown);
     NatureType const &getNatureType() const;
     TowerViewNode *getTowerView() const;
     void setTowerView(TowerViewNode *towerView);
     void setGenerateUnitCooldown(float generateUnitCooldown);
-    int getCurrentLevel() const;
-    void setCurrentLevel(int currentLevel);
     float getUnitsSpeed() const;
     void setParams(TowerParams const &params);
+    TowerFunction const &getTowerFunction() const;
     TowerType const &getTowerType() const;
     void setTowerType(TowerType const &towerType);
     int getPower() const;
@@ -80,6 +77,7 @@ private:
     char id_;
     TeamColor color_;
     TeamGroup group_;
+    TowerFunction towerFunction_;
     TowerType towerType_;
     int currentLevel_;
     float generateUnitCooldown_;
@@ -128,14 +126,6 @@ inline void Tower::setGroup(TeamGroup const &group) {
     group_ = group;
 }
 
-inline float Tower::getActionCooldown() const {
-    return actionCooldown_;
-}
-
-inline void Tower::setActionCooldown(float actionCooldown) {
-    actionCooldown_ = actionCooldown;
-}
-
 inline NatureType const &Tower::getNatureType() const {
     return natureType_;
 }
@@ -152,14 +142,6 @@ inline void Tower::setGenerateUnitCooldown(float generateUnitCooldown) {
     generateUnitCooldown_ = generateUnitCooldown;
 }
 
-inline int Tower::getCurrentLevel() const {
-    return currentLevel_;
-}
-
-inline void Tower::setCurrentLevel(int currentLevel) {
-    currentLevel_ = currentLevel;
-}
-
 inline float Tower::getUnitsSpeed() const {
     return unitsSpeed_;
 }
@@ -168,14 +150,11 @@ inline void Tower::setParams(TowerParams const &params) {
     params_ = params;
     unitsLimit_ = params.unitCap;
     unitsSpeed_ = params.unitSpeed;
+    generateUnitCooldown_ = params.unitCooldown;
 }
 
-inline TowerType const &Tower::getTowerType() const {
-    return towerType_;
-}
-
-inline void Tower::setTowerType(TowerType const &towerType) {
-    towerType_ = towerType;
+inline TowerFunction const &Tower::getTowerFunction() const {
+    return towerFunction_;
 }
 
 inline int Tower::getPower() const {
@@ -184,6 +163,25 @@ inline int Tower::getPower() const {
 
 inline void Tower::setPower(int power) {
     power_ = power;
+}
+
+inline TowerType const &Tower::getTowerType() const {
+    return towerType_;
+}
+
+inline void Tower::setTowerType(TowerType const &towerType) {
+    towerType_ = towerType;
+
+    switch (towerType) {
+        case TowerType::power:
+            towerFunction_ = TowerFunction::power;
+            break;
+        case TowerType::pit:
+            towerFunction_ = TowerFunction::pit;
+            break;
+        default:
+            towerFunction_ = TowerFunction::combat;
+    }
 }
 
 #endif //__TOWER_H_

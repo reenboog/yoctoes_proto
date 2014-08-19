@@ -6,6 +6,7 @@
 class PowerTowerView : public TowerViewNode {
 public:
     static PowerTowerView *create();
+    static cocos2d::Sprite *getRenderedImage();
     ~PowerTowerView();
 
     cocos2d::Label *getUnitsLabel() const;
@@ -15,7 +16,6 @@ public:
     void applyColor(cocos2d::Color3B);
     void showUpgdare();
     void hideUpgrade();
-
 private:
     bool init();
 

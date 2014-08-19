@@ -54,3 +54,12 @@ void PowerTowerView::showUpgdare() {
 void PowerTowerView::hideUpgrade() {
     //
 }
+
+cocos2d::Sprite *PowerTowerView::getRenderedImage() {
+    Sprite *body = Sprite::create("empty.png");
+
+    Sprite *cross = Sprite::create("cross.png");
+    body->addChild(cross);
+
+    return body;
+}

@@ -55,9 +55,13 @@ private:
     Tower *towerWithID(char id);
     bool isTowerSelected(Tower *tower);
     TeamGroup groupForColor(TeamColor color);
-    void checkUitsCollision();
+    void checkUnitsCollision();
     bool checkCollisionBetweenUnits(Unit *unitOne, Unit *unitTwo);
     void removeUnits();
+
+//    void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
+//    void onDrawPrimitives(const kmMat4 &transform, bool transformUpdated);
+//    cocos2d::CustomCommand customCommand_;
 };
 
 #endif // __GAME_LAYER_H__

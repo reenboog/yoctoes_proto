@@ -6,9 +6,16 @@
 #define SCREEN_SIZE Director::getInstance()->getWinSize()
 #define SCREEN_CENTER cocos2d::Point(Director::getInstance()->getWinSize().width / 2, Director::getInstance()->getWinSize().height / 2)
 
-enum class TowerType : int {
-    basis = 0,
+enum class TowerFunction : int {
+    pit = 0,
     combat,
+    power,
+};
+
+enum class TowerType : int {
+    pit = 0,
+    combat_weak_neutral,
+    combat_strong_neutral,
     power,
 };
 
@@ -39,8 +46,8 @@ enum class NatureType : int {
     evil,
 };
 
-const TowerParams weakTowerParams = {15, 1.0f};
-const TowerParams strongTowerParams = {30, 0.5f};
+const TowerParams weakTowerParams = {15, 1.0f, 1.0f};
+const TowerParams strongTowerParams = {30, 0.5f, 1.0f};
 
 
 #endif // __CONSTANTS_H__

@@ -4,6 +4,7 @@
 struct TowerParams {
     int unitCap;
     float unitSpeed;
+    float unitCooldown;
 };
 
 #endif // __TYPES_H__

@@ -52,3 +52,9 @@ void StrongTowerView::showUpgdare() {
 void StrongTowerView::hideUpgrade() {
     //
 }
+
+cocos2d::Sprite *StrongTowerView::getRenderedImage() {
+    Sprite *body = Sprite::create("strong_tower.png");
+
+    return body;
+}
